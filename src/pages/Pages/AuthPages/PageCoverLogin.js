@@ -19,12 +19,19 @@ import FeatherIcon from "feather-icons-react";
 // import images
 import user01 from "../../../assets/images/user/01.jpg";
 
+const x = 'none';
+const y = 'none';
+
 class PageCoverLogin extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
+  login = () =>{
+  console.log('login')
+}
+  
   render() {
     return (
       <React.Fragment>
@@ -48,7 +55,7 @@ class PageCoverLogin extends Component {
                         style={{ zIndex: "1" }}
                       >
                         <CardBody className="p-0">
-                          <h4 className="card-title text-center">Log-in</h4>
+                          <h4 className="card-title text-center">Login</h4>
                           <AvForm className="llogin-form mt-4">
                             <Row>
                               <Col lg={12}>
@@ -160,8 +167,8 @@ class PageCoverLogin extends Component {
 
                               <Col lg={12} className="mb-0">
                                 <div className="d-grid">
-                                  <Button color="primary">
-                                    Log-in
+                                  <Button color="primary" onClick={this.Login} >
+                                    Login
                                 </Button>
                                 </div>
                               </Col>

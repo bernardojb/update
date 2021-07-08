@@ -251,7 +251,7 @@ class PageCoverSignup extends Component {
                                     to="/auth-cover-login"
                                     className="text-dark fw-bold"
                                   >
-                                    Log-In !
+                                    Login !
                                   </Link>
                                 </p>
                               </div>

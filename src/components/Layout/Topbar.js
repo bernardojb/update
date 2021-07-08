@@ -31,9 +31,9 @@ class Topbar extends Component {
       dropdownOpenShop: false,
       navLinks: [
         //Note : each child and nested child must have unique id
-        { id: 1, title: "Log-In", link: "/auth-cover-login" }
+        { id: 1, title: "Login", link: "/auth-cover-login" }
         ,
-        { id: 2, title: "Sign-Up", link: "/auth-cover-signup"},
+        { id: 2, title: "Sign up", link: "/auth-cover-signup"},
         // {
         //   id: 3,
         //   title: "Pages",
@@ -1035,7 +1035,7 @@ class Topbar extends Component {
                   rel="noopener noreferrer"
                   className="btn btn-primary"
                 >
-                  Log-In
+                  Login
                 </Link>
               </div>
             </div>
