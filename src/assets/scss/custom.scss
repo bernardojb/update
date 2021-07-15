@@ -200,7 +200,10 @@
 //   border-bottom: 1px solid #283353;
 // }
 
-.btn-primary{
-  border: none !important;
-  background-color: red !important;
+.btn-registrar {
+  a {
+    font-family: "Bebas Neue", cursive;
+    font-size: 18px;
+    font-weight: unset;
+  }
 }

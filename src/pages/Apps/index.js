@@ -78,7 +78,7 @@ class Index extends Component {
         <Pricing />
 
         {/* Testi */}
-        <Testi />
+        {/* <Testi /> */}
         <div className="position-relative">
           <div className="shape overflow-hidden text-footer">
             <svg

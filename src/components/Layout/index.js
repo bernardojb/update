@@ -122,7 +122,7 @@ class Layout extends Component {
           {/* </div> */}
 
           {/* theme switcher */}
-          <ThemeSwitcher />
+          {/* <ThemeSwitcher /> */}
         </Suspense>
       </React.Fragment>
     );

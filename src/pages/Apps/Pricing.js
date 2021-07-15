@@ -13,9 +13,9 @@ class Pricing extends Component {
       pricings: [
         {
           id: 1,
-          title: "Free",
-          price: 0,
-          duration: "mo",
+          title: "PLANO MENSAL",
+          price: 39.99,
+          duration: "POR MES",
           buttonText: "Buy Now",
           btnLink: "",
           features: [
@@ -65,7 +65,7 @@ class Pricing extends Component {
           <Container>
             {/* section title */}
             <SectionTitle
-              title="Choose The Pricing Plan"
+              title="não perca tempo, registre-se agora!"
               desc="that can provide everything you need to generate awareness, drive traffic, connect"
             />
 

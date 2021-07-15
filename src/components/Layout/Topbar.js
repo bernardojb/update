@@ -23,6 +23,9 @@ import shop2 from "../../assets/images/shop/product/s-2.jpg";
 import shop3 from "../../assets/images/shop/product/s-3.jpg";
 import NavbarButtons from "../Shared/NavbarButtons";
 
+//
+import axios from 'axios'
+
 class Topbar extends Component {
   constructor(props) {
     super(props);
@@ -33,7 +36,7 @@ class Topbar extends Component {
         //Note : each child and nested child must have unique id
         { id: 1, title: "Login", link: "/auth-cover-login" }
         ,
-        { id: 2, title: "Sign up", link: "/auth-cover-signup"},
+        // { id: 2, title: "Sign up", link: "/auth-cover-signup" },
         // {
         //   id: 3,
         //   title: "Pages",
@@ -322,6 +325,13 @@ class Topbar extends Component {
     if (matchingMenuItem) {
       this.activateParentDropdown(matchingMenuItem);
     }
+
+    const fetchData = () => {
+      return axios.get("https://my-json-server.typicode.com/bernardojb/update/user")
+        .then((response) => console.log(response.data));
+    }
+    fetchData();
+    console.log();
   }
 
   activateParentDropdown = (item) => {
@@ -772,7 +782,7 @@ class Topbar extends Component {
                 return (
                   <div className="buy-button">
                     <Link
-                      to="/page-pricing"
+                      to="/shop-myaccount"
                       // target="_blank"
                       className="btn btn-pills btn-primary"
                     >
@@ -782,15 +792,15 @@ class Topbar extends Component {
                 );
               } else {
                 return (
-                  <div className="buy-button">
+                  <div className="buy-button btn-registrar">
                     <Link
-                      to="/page-pricing"
+                      to="/shop-myaccount"
                       // target="_blank"
                       rel="noopener noreferrer"
                       id="buyButton"
                       className="btn btn-primary"
                     >
-                      Assine
+                      REGISTRAR
                     </Link>
                   </div>
                 );

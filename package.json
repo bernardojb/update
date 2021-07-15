@@ -6,6 +6,7 @@
     "@iconscout/react-unicons": "^1.1.6",
     "aos": "^2.3.4",
     "availity-reactstrap-validation": "^2.7.1",
+    "axios": "^0.21.1",
     "bootstrap": "^5.0.0-beta2",
     "feather-icons-react": "^0.4.3",
     "node-sass": "^6.0.0",

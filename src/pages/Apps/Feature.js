@@ -60,15 +60,20 @@ class Feature extends Component {
         <section className="section bg-light">
           <Container>
             {/* section title */}
-            <SectionTitle
+            {/* <SectionTitle
               title="App Features"
               desc="that can provide everything you need to generate awareness, drive traffic, connect."
-            />
+            /> */}
 
             <Row className="justify-content-center align-items-center">
               <Col lg="8" md="8">
                 <Row>
-                  <FeatureBox features={this.state.features} />
+                  <p className="text-muted mb-0"><span className="text-primary">IDEALIZADOR DO PROJETO</span></p>
+                  <h1 className="heading mb-5">PROF. DR. LUIZ FERNANDO <span className="text-primary">FALCÃO</span></h1>
+                  <h1 className="heading mb-0"><span className="text-primary">MD. MBA. PHD. TSA</span></h1>
+                  <p style={{fontSize:'16px'}} className="mb-0">Professor da disciplina</p>
+                  <p style={{fontSize:'20px'}} className="mb-5"><span className="text-primary">Anestesiologia, dor e medicina intensiva</span></p>
+                  <h4>unifesp - universidade federal de são paulo</h4>
                 </Row>
               </Col>
               <Col

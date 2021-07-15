@@ -14,7 +14,7 @@ class Section extends Component {
             <Row className="mt-5 align-items-center">
               <Col lg={7} md={7}>
                 <div className="title-heading">
-                  <h1 className="heading mb-3" style={{textTransform:'uppercase'}}>
+                  <h1 className="heading mb-3" style={{textTransform:'uppercase', maxWidth:'550px'}}>
                      Quer se manter atualizado sobre as últimas publicações em {" "}
                     <span className="text-primary">ANESTESIOLOGIA?</span> 
                   </h1>
@@ -25,7 +25,7 @@ class Section extends Component {
                     <Link to="#" className="btn btn-primary mt-2 me-2">
                       <i className="uil uil-apple"></i> App Store
                     </Link>
-                    <Link to="#" className="btn btn-outline-primary mt-2 ms-1">
+                    <Link to="#" className="btn btn-primary mt-2 ms-1">
                       <i className="uil uil-google-play"></i> Play Store
                     </Link>
                   </div>
