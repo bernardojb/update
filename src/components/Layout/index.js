@@ -77,7 +77,8 @@ class Layout extends Component {
           {this.props.location.pathname === "/index-onepage" ? (
             <NavbarPage />
           ) : (
-            <Topbar tagline={tagLineContent} hasDarkTopBar={this.props.hasDarkTopBar} />
+            // <Topbar tagline={tagLineContent} hasDarkTopBar={this.props.hasDarkTopBar} />
+            <span></span>
           )}
 
           {this.props.children}
@@ -106,19 +107,22 @@ class Layout extends Component {
             ) {
               return <FooterWithoutMenuLightSocialOnly className="" />;
             } else {
-              return <Footer />;
+              return(
+                // <Footer />
+                <span></span>
+              ) 
             }
           })()}
 
           {/* <div className="btn btn-icon btn-soft-primary back-to-top"> */}
           {/* scrollup button */}
-          <ScrollUpButton
+          {/* <ScrollUpButton
             ContainerClassName="classForContainer"
             style={{ height: 36, width: 36 }}
             TransitionClassName="classForTransition"
           >
             <CustomDot />
-          </ScrollUpButton>
+          </ScrollUpButton> */}
           {/* </div> */}
 
           {/* theme switcher */}
