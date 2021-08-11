@@ -208,6 +208,20 @@
   }
 }
 
-.font-size-important{
+.font-size-important {
   font-size: 100px !important;
+}
+
+.footerzinho {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  width: 100vw;
+
+  span {
+    font-size: 12px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
 }

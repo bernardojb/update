@@ -36,8 +36,8 @@ class Index extends Component {
             <Row className="mt-5 align-items-center">
               <Col lg={7} md={7}>
                 <div className="font-size-important">
-                  <h1 className="mb-3 font-size-important" style={{ textTransform: 'uppercase', maxWidth: '550px'}}>
-                    Em breve {" "} <br/><span className="text-primary">APP UPDATE!</span></h1>
+                  <h1 className="mb-3 font-size-important" style={{ textTransform: 'uppercase', maxWidth: '550px' }}>
+                    Em breve {" "} <br /><span className="text-primary">APP UPDATE!</span></h1>
                   {/* <p className="para-desc text-muted">
                   A única forma de se manter atualizado no mundo da anestesiologia. Baixe agora o App UPDATE e faça a diferença na sua jornada de estudos.
                 </p> */}
@@ -48,6 +48,9 @@ class Index extends Component {
                   <img src={homeImage} className="img-fluid" alt="" />
                 </div>
               </Col>
+            </Row>
+            <Row className="footerzinho">
+              <span>© LIFESAVERS TREINAMENTO PROFISSIONAL E GERENCIAL LTDA - 10.535.504/0001-60 - Todos os direitos reservados</span>
             </Row>
           </Container>
         </section>
