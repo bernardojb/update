@@ -5418,11 +5418,11 @@ a.text-muted:hover, a.text-muted:focus {
 }
 
 .bg-light {
-  background-color: red !important;
+  background-color: #253649 !important;
 }
 
 .text-light {
-  color: red !important;
+  color: #253649 !important;
 }
 
 a.text-light:hover, a.text-light:focus {
@@ -5860,8 +5860,8 @@ a.text-footer:hover, a.text-footer:focus {
 }
 
 .btn-light {
-  background-color: red !important;
-  border: 1px solid red !important;
+  background-color: #253649 !important;
+  border: 1px solid #253649 !important;
   color: #ffffff !important;
   -webkit-box-shadow: 0 3px 5px 0 rgba(37, 54, 73, 0.3);
           box-shadow: 0 3px 5px 0 rgba(37, 54, 73, 0.3);
@@ -5876,26 +5876,26 @@ a.text-footer:hover, a.text-footer:focus {
 .btn-soft-light {
   background-color: rgba(37, 54, 73, 0.2) !important;
   border: 1px solid rgba(37, 54, 73, 0.2) !important;
-  color: red !important;
+  color: #253649 !important;
   -webkit-box-shadow: 0 3px 5px 0 rgba(37, 54, 73, 0.3);
           box-shadow: 0 3px 5px 0 rgba(37, 54, 73, 0.3);
 }
 
 .btn-soft-light:hover, .btn-soft-light:focus, .btn-soft-light:active, .btn-soft-light.active, .btn-soft-light.focus {
-  background-color: red !important;
-  border-color: red !important;
+  background-color: #253649 !important;
+  border-color: #253649 !important;
   color: #ffffff !important;
 }
 
 .btn-outline-light {
-  border: 1px solid red;
-  color: red;
+  border: 1px solid #253649;
+  color: #253649;
   background-color: transparent;
 }
 
 .btn-outline-light:hover, .btn-outline-light:focus, .btn-outline-light:active, .btn-outline-light.active, .btn-outline-light.focus, .btn-outline-light:not(:disabled):not(.disabled):active {
-  background-color: red;
-  border-color: red;
+  background-color: #253649;
+  border-color: #253649;
   color: #ffffff !important;
   -webkit-box-shadow: 0 3px 5px 0 rgba(37, 54, 73, 0.3);
           box-shadow: 0 3px 5px 0 rgba(37, 54, 73, 0.3);
@@ -6159,14 +6159,14 @@ button:not(:disabled) {
 }
 
 .badge-light {
-  background-color: red !important;
+  background-color: #253649 !important;
   color: #ffffff !important;
 }
 
 .badge-outline-light {
   background-color: transparent !important;
-  color: red !important;
-  border: 1px solid red !important;
+  color: #253649 !important;
+  border: 1px solid #253649 !important;
 }
 
 .badge-blue {
@@ -6204,11 +6204,11 @@ button:not(:disabled) {
 
 .badge.badge-light {
   color: #ffffff !important;
-  background-color: red !important;
+  background-color: #253649 !important;
 }
 
 .badge.badge-outline-light {
-  border: 1px solid red !important;
+  border: 1px solid #253649 !important;
 }
 
 .alert-white {
@@ -6358,7 +6358,7 @@ button:not(:disabled) {
 .alert-light {
   background-color: #2e435a;
   color: #ffffff;
-  border-color: red;
+  border-color: #253649;
 }
 
 .alert-light .alert-link {
@@ -6367,8 +6367,8 @@ button:not(:disabled) {
 
 .alert-outline-light {
   background-color: #1f2d3d;
-  color: red;
-  border-color: red;
+  color: #253649;
+  border-color: #253649;
 }
 
 .alert-blue {
@@ -6405,14 +6405,14 @@ button:not(:disabled) {
 
 .alert.alert-dark {
   background-color: #ffffff;
-  color: red;
+  color: #253649;
   border-color: #495057;
 }
 
 .alert.alert-light {
-  background-color: red;
+  background-color: #253649;
   color: #ffffff;
-  border-color: red;
+  border-color: #253649;
 }
 
 .breadcrumb .breadcrumb-item a {
@@ -6554,7 +6554,7 @@ button:not(:disabled) {
 
 .table-responsive .table-center tbody tr:hover {
   color: #ffffff;
-  background-color: red;
+  background-color: #253649;
 }
 
 .table {
@@ -6563,7 +6563,7 @@ button:not(:disabled) {
 
 .table-responsive .table-center tbody tr:hover {
   color: #fff;
-  background-color: red;
+  background-color: #253649;
 }
 
 .modal-content {
@@ -6647,7 +6647,7 @@ button:not(:disabled) {
 }
 
 .sidebar .tagcloud > a {
-  background: red !important;
+  background: #253649 !important;
   color: #adb5bd !important;
 }
 
@@ -6693,7 +6693,7 @@ button:not(:disabled) {
 .footer .foot-subscribe .form-control {
   background-color: #28394e;
   border: 1px solid #28394e;
-  color: red;
+  color: #253649;
 }
 
 .footer .foot-subscribe.foot-white .form-control {
@@ -6729,7 +6729,7 @@ button:not(:disabled) {
 }
 
 .agency-wrapper:before {
-  background-color: red;
+  background-color: #253649;
 }
 
 .flex-control-paging li a {
@@ -6775,7 +6775,7 @@ button:not(:disabled) {
 .event-schedule:hover {
   -webkit-box-shadow: 0 0 3px rgba(255, 255, 255, 0.15);
           box-shadow: 0 0 3px rgba(255, 255, 255, 0.15);
-  background: red !important;
+  background: #253649 !important;
 }
 
 .courses-desc:hover {

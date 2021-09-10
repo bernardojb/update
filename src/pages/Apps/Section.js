@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Badge } from "reactstrap";
 
 // Import images
-import homeImage from "../../assets/images/app/home.png";
+// import homeImage from "../../assets/images/app/home.png";
+import phoneImage from "../../assets/images/app/phone-01-web.png";
 
 class Section extends Component {
   render() {
@@ -12,28 +13,28 @@ class Section extends Component {
         <section className="bg-half-170 d-table w-100" id="home">
           <Container>
             <Row className="mt-5 align-items-center">
-              <Col lg={7} md={7}>
+              <Col lg={6} md={7}>
                 <div className="title-heading">
-                  <h1 className="heading mb-3" style={{textTransform:'uppercase', maxWidth:'550px'}}>
-                     Quer se manter atualizado sobre as últimas publicações em {" "}
-                    <span className="text-primary">ANESTESIOLOGIA?</span> 
+                  <Badge color="danger"> Novidade! </Badge>
+                  <h1 className="heading mb-3">
+                  O APP QUE VAI TE MANTER ATUALIZADO SOBRE AS ÚLTIMAS PUBLICAÇÕES EM {" "}
+                    <span className="text-primary">ANESTESIOLOGIA.</span>
                   </h1>
-                  {/* <p className="para-desc text-muted">
-                    A única forma de se manter atualizado no mundo da anestesiologia. Baixe agora o App UPDATE e faça a diferença na sua jornada de estudos.
-                  </p> */}
+
                   <div className="mt-4">
                     <Link to="#" className="btn btn-primary mt-2 me-2">
-                      <i className="uil uil-apple"></i> App Store
+                      {/* <i className="uil uil-apple"></i>  */}
+                      TESTAR 7 DIAS GRÁTIS
                     </Link>
-                    <Link to="#" className="btn btn-primary mt-2 ms-1">
+                    {/* <Link to="#" className="btn btn-outline-primary mt-2 ms-1">
                       <i className="uil uil-google-play"></i> Play Store
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
               </Col>
-              <Col lg={5} md={5} className="mt-4 pt-2 mt-sm-0 pt-sm-0">
+              <Col lg={6} md={5} className="mt-4 pt-2 mt-sm-0 pt-sm-0">
                 <div className="text-md-end text-center ms-lg-4">
-                  <img src={homeImage} className="img-fluid" alt="" />
+                  <img src={phoneImage} className="img-fluid" alt="" />
                 </div>
               </Col>
             </Row>

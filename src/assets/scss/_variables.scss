@@ -7,7 +7,7 @@
 // Color
 $white:                     #ffffff;
 
-$primary:                   #2f55d4; //2f55d4
+$primary:                   #1AC45E; //2f55d4
 $secondary:                 #5a6d90;
 $success:                   #2eca8b;
 $warning:                   #f17425;
@@ -17,6 +17,7 @@ $dark:                      #3c4858;
 $black:                     #161c2d;
 $muted:                     #8492a6;
 $light:                     #f8f9fc;
+$custom:                    #0C0D0D;
 
 // Gray
 $gray-100:                  #f8f9fa;
@@ -40,9 +41,8 @@ $footer:                    lighten($black, 6%);
 // Base font
 $font-size-base:            16px;
 
-$font-family-base:          'Bebas Neue', cursive ;
+$font-family-base:          'Bebas Neue', sans-serif;
 $font-family-secondary:     'Nunito', sans-serif;
-
 
 //Color Picker/Switcher
 $default:                   #2f55d4;
@@ -68,11 +68,12 @@ $colors: (
     "muted": $muted,
     "light": $light,
     "blue": $primary,
-    "footer": $footer
+    "footer": $footer,
+    "custom": $custom
 );
 
 $heading-font-sizes: (
-    "h1": 42px,
+    "h1": 50px,
     "h2": 36px,
     "h3": 30px,
     "h4": 24px,

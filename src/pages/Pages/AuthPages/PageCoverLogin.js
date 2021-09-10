@@ -19,19 +19,12 @@ import FeatherIcon from "feather-icons-react";
 // import images
 import user01 from "../../../assets/images/user/01.jpg";
 
-const x = 'none';
-const y = 'none';
-
 class PageCoverLogin extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
-  login = () =>{
-  console.log('login')
-}
-  
   render() {
     return (
       <React.Fragment>
@@ -61,7 +54,7 @@ class PageCoverLogin extends Component {
                               <Col lg={12}>
                                 <div className="mb-3">
                                   <Label className="form-label" htmlFor="email">
-                                    E-mail{" "}
+                                    Your Email{" "}
                                     <span className="text-danger">*</span>
                                   </Label>
                                   <div className="form-icon position-relative">
@@ -77,18 +70,18 @@ class PageCoverLogin extends Component {
                                     className="form-control ps-5"
                                     name="email"
                                     id="email"
-                                    placeholder="E-mail"
+                                    placeholder="Enter Email"
                                     required
                                     errorMessage=""
                                     validate={{
                                       required: {
                                         value: true,
-                                        errorMessage: "Por favor, coloque um e-mail válido!",
+                                        errorMessage: "Please enter your email",
                                       },
                                       pattern: {
                                         value:
                                           "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$",
-                                        errorMessage: "Seu e-mail não é válido!",
+                                        errorMessage: "E-Mail is not valid!",
                                       },
                                     }}
                                   />
@@ -98,7 +91,7 @@ class PageCoverLogin extends Component {
                               <Col lg={12}>
                                 <div className="mb-3">
                                   <Label className="form-label" htmlFor="password">
-                                    Senha
+                                    Password
                                     <span className="text-danger">*</span>
                                   </Label>
                                   <div className="form-icon position-relative">
@@ -114,7 +107,7 @@ class PageCoverLogin extends Component {
                                     className="form-control ps-5"
                                     name="password"
                                     id="password"
-                                    placeholder="Senha"
+                                    placeholder="Enter password"
                                     required
                                     errorMessage=""
                                     validate={{
@@ -150,7 +143,7 @@ class PageCoverLogin extends Component {
                                         className="form-check-label"
                                         htmlFor="customCheck1"
                                       >
-                                        Manter-se conectado
+                                        Remember me
                                       </Label>
                                     </div>
                                   </div>
@@ -159,7 +152,7 @@ class PageCoverLogin extends Component {
                                       to="auth-cover-re-password"
                                       className="text-dark fw-bold"
                                     >
-                                      Esqueceu a senha ?
+                                      Forgot password ?
                                     </Link>
                                   </p>
                                 </div>
@@ -167,14 +160,14 @@ class PageCoverLogin extends Component {
 
                               <Col lg={12} className="mb-0">
                                 <div className="d-grid">
-                                  <Button color="primary" onClick={this.Login} >
-                                    Login
+                                  <Button color="primary">
+                                    Sign in
                                 </Button>
                                 </div>
                               </Col>
 
                               <Col lg={12} className="mt-4 text-center">
-                                <h6>Ou faça o log-in com:</h6>
+                                <h6>Or Login With</h6>
                                 <Row>
                                   <div className="col-6 mt-3">
                                     <div className="d-grid">
@@ -193,13 +186,13 @@ class PageCoverLogin extends Component {
                               <Col className="text-center">
                                 <p className="mb-0 mt-3">
                                   <small className="text-dark me-2">
-                                    Quer se cadastrar ?
+                                    Don't have an account ?
                                   </small>{" "}
                                   <Link
-                                    to="auth-cover-signup"
+                                    to="page-cover-signup"
                                     className="text-dark fw-bold"
                                   >
-                                    Fazer cadastro !
+                                    Sign Up
                                   </Link>
                                 </p>
                               </Col>

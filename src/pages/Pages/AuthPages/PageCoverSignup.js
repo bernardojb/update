@@ -25,15 +25,7 @@ class PageCoverSignup extends Component {
     this.state = {};
   }
 
-  
-
   render() {
-
-    const credenciais = {
-      account: 'bernardojbraga@gmail.com',
-      password: '123'
-  }
-
     return (
       <React.Fragment>
         <div className="back-to-home rounded d-none d-sm-block">
@@ -55,13 +47,13 @@ class PageCoverSignup extends Component {
                         style={{ zIndex: 1 }}
                       >
                         <CardBody className="p-0">
-                          <h4 className="card-title text-center">Sign-up</h4>
+                          <h4 className="card-title text-center">Signup</h4>
                           <AvForm className="login-form mt-4">
                             <Row>
                               <Col md="6">
                                 <div className="mb-3">
                                   <Label className="form-label" for="firstname">
-                                    Nome{" "}
+                                    First name{" "}
                                     <span className="text-danger">*</span>
                                   </Label>
                                   <div className="form-icon position-relative">
@@ -77,13 +69,13 @@ class PageCoverSignup extends Component {
                                     className="form-control ps-5"
                                     name="firstname"
                                     id="firstname"
-                                    placeholder="Nome"
+                                    placeholder="First Name"
                                     required
                                     errorMessage=""
                                     validate={{
                                       required: {
                                         value: true,
-                                        errorMessage: "Por favor, digite seu nome!",
+                                        errorMessage: "Please enter first name",
                                       },
                                     }}
                                   />
@@ -92,7 +84,7 @@ class PageCoverSignup extends Component {
                               <Col md="6">
                                 <div className="mb-3">
                                   <Label className="form-label" for="lastname">
-                                    Sobrenome{" "}
+                                    Last name{" "}
                                     <span className="text-danger">*</span>
                                   </Label>
                                   <div className="form-icon position-relative">
@@ -108,13 +100,13 @@ class PageCoverSignup extends Component {
                                     className="form-control ps-5"
                                     name="lastname"
                                     id="lastname"
-                                    placeholder="Sobrenome"
+                                    placeholder="Last Name"
                                     required
                                     errorMessage=""
                                     validate={{
                                       required: {
                                         value: true,
-                                        errorMessage: "Por favor, digite seu sobrenome!",
+                                        errorMessage: "Please enter first name",
                                       },
                                     }}
                                   />
@@ -123,7 +115,7 @@ class PageCoverSignup extends Component {
                               <Col md="12">
                                 <div className="mb-3">
                                   <Label className="form-label" for="email">
-                                    E-mail{" "}
+                                    Your Email{" "}
                                     <span className="text-danger">*</span>
                                   </Label>
                                   <div className="form-icon position-relative">
@@ -139,13 +131,13 @@ class PageCoverSignup extends Component {
                                     className="form-control ps-5"
                                     name="email"
                                     id="email"
-                                    placeholder="E-mail"
+                                    placeholder="Enter Email"
                                     required
                                     errorMessage=""
                                     validate={{
                                       required: {
                                         value: true,
-                                        errorMessage: "Por favor, digite seu e-mail!",
+                                        errorMessage: "Please enter your email",
                                       },
                                       pattern: {
                                         value:
@@ -160,7 +152,7 @@ class PageCoverSignup extends Component {
                               <Col md="12">
                                 <div className="mb-3">
                                   <Label className="form-label" for="password">
-                                    Senha{" "}
+                                    Password{" "}
                                     <span className="text-danger">*</span>
                                   </Label>
                                   <div className="form-icon position-relative">
@@ -176,13 +168,13 @@ class PageCoverSignup extends Component {
                                     className="form-control ps-5"
                                     name="password"
                                     id="password"
-                                    placeholder="Senha"
+                                    placeholder="Enter password"
                                     required
                                     errorMessage=""
                                     validate={{
                                       required: {
                                         value: true,
-                                        errorMessage: "Por favor, digite uma senha!",
+                                        errorMessage: "Please enter Password",
                                       },
                                       minLength: {
                                         value: 6,
@@ -211,9 +203,9 @@ class PageCoverSignup extends Component {
                                       className="form-check-label"
                                       for="customCheck1"
                                     >
-                                      Eu aceito os{" "}
+                                      I Accept{" "}
                                       <Link to="#" className="text-primary">
-                                        Termos e Condições
+                                        Terms And Condition
                                       </Link>
                                     </Label>
                                   </div>
@@ -222,12 +214,12 @@ class PageCoverSignup extends Component {
                               <Col md="12">
                                 <div className="d-grid">
                                   <Button color="primary">
-                                    Registrar
+                                    Register
                                 </Button>
                                 </div>
                               </Col>
                               <Col lg="12" className="mt-4 text-center">
-                                <h6>Ou registre-se com:</h6>
+                                <h6>Or Signup With</h6>
                                 <Row>
                                   <div className="col-6 mt-3">
                                     <div className="d-grid">
@@ -245,13 +237,13 @@ class PageCoverSignup extends Component {
                               <div className="mx-auto">
                                 <p className="mb-0 mt-3">
                                   <small className="text-dark me-2">
-                                    Já possui uma conta ?
+                                    Already have an account ?
                                   </small>{" "}
                                   <Link
                                     to="/auth-cover-login"
                                     className="text-dark fw-bold"
                                   >
-                                    Login !
+                                    Sign In
                                   </Link>
                                 </p>
                               </div>

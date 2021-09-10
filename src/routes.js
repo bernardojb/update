@@ -64,7 +64,14 @@ const ClassicApp = React.lazy(() =>
 );
 const Agency = React.lazy(() => import("./pages/Agency/index"));
 const Saas = React.lazy(() => import("./pages/Saas/index"));
+//Update Imports
 const Apps = React.lazy(() => import("./pages/Apps/index"));
+const Sobre = React.lazy(() => import("./pages/Apps/Sobre"));
+const Termos = React.lazy(() => import("./pages/Apps/Termos"));
+const Politica = React.lazy(() => import("./pages/Apps/Politica"));
+const Ajuda = React.lazy(() => import("./pages/Apps/Ajuda"));
+const Landing = React.lazy(() => import("./pages/Apps/Landing"));
+//
 const Studio = React.lazy(() => import("./pages/Studio/index"));
 const Business = React.lazy(() => import("./pages/Business/index"));
 const ITSolution = React.lazy(() => import("./pages/ITSolution/index"));
@@ -379,7 +386,14 @@ const routes = [
   { path: "/index-classic-saas", component: IndexclassicSaas, isTopbarDark: true },
   { path: "/index-classic-app", component: ClassicApp, isTopbarDark: true },
   { path: "/index-saas", component: Saas, isTopbarDark: true },
-  { path: "/index-apps", component: Root, isWithoutLayout: true, exact: false},
+  //New Index
+  { path: "/home", component: Apps, isTopbarDark: true },
+  { path: "/sobre", component: Sobre, isTopbarDark: true },
+  { path: "/termos-de-uso", component: Termos, isTopbarDark: true },
+  { path: "/politica-de-privacidade", component: Politica, isTopbarDark: true },
+  { path: "/ajuda", component: Ajuda, isTopbarDark: true },
+  { path: "/", component: Landing, isTopbarDark: false },
+  //
   { path: "/index-agency", component: Agency, isTopbarDark: true },
   { path: "/index-studio", component: Studio, isTopbarDark: true },
   { path: "/index-business", component: Business, isTopbarDark: true },
@@ -509,9 +523,8 @@ const routes = [
 
   //Index root
 
-  { path: "/", component: Apps,  exact: true, isTopbarDark: true },
+  { path: "/root", component: Root, isWithoutLayout: true, exact: true },
   { component: PageError, isWithoutLayout: true, exact: false },
-  // { path: "/index-apps", component: Apps,  }
 ];
 
 export default routes;

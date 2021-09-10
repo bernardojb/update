@@ -22,6 +22,8 @@ import app1 from "../../assets/images/app/1.png";
 import app2 from "../../assets/images/app/2.png";
 import app3 from "../../assets/images/app/3.png";
 import app4 from "../../assets/images/app/4.png";
+import phone2Image from "../../assets/images/app/phone-02-web.png";
+
 
 class ShowCase extends Component {
   constructor(props) {
@@ -59,7 +61,7 @@ class ShowCase extends Component {
   render() {
     return (
       <React.Fragment>
-        <section className="section pt-0 bg-light">
+        <section className="section pt-0">
           <Container>
             {/* section title */}
             {/* <SectionTitle
@@ -69,35 +71,211 @@ class ShowCase extends Component {
 
             <Row className="align-items-center">
               <Col lg="5" md="6" className="mt-4 pt-2">
-                <img src={app1} className="img-fluid mx-auto d-block" alt="" />
+                <img src={phone2Image} className="img-fluid mx-auto d-block" alt="" />
               </Col>
 
               <Col lg={7} md={6} className="mt-4 pt-2">
                 <div className="section-title ms-lg-5">
                   <SectionTitleLeft
-                    desc="You can combine all the Landrick templates into a single one, you can take a component from the Application theme and use it in the Website."
-                    features={this.state.features}>
-                    <h1 className="heading mb-4" style={{ textTransform: 'capitalize' }}>
-                      nascemos para otimizar  <br /> <span className="text-primary">informação com tecnologia</span>
+                    desc="Faça o download do UPDATE e veja na prática como a nossa ferramenta pode te ajudar com um conteúdo prático."
+                    features={this.state.features}
+                  >
+                    <h1 className="mb-4">
+                    artigos, matérias e novidades <span className="text-primary">em formato de vídeos didáticos!</span>
                     </h1>
                   </SectionTitleLeft>
-                  <div className="buy-button btn-registrar">
-                    <Link
-                      to="/shop-myaccount"
-                      // target="_blank"
-                      rel="noopener noreferrer"
-                      id="buyButton"
-                      className="btn btn-primary"
-                    >
-                      REGISTRAR
+                  <p className="mt-5 mb-0">Baixe Agora:</p>
+                  <Link to="#" className="btn btn-primary mt-2 me-2">
+                      <i className="uil uil-apple"></i> 
+                      App Store
                     </Link>
-                  </div>
+                    <Link to="#" className="btn btn-primary mt-2 me-2">
+                      <i className="uil uil-google-play"></i> Play Store
+                    </Link>
                 </div>
               </Col>
             </Row>
           </Container>
 
+          {/* <Container className="mt-100 mt-60">
+            <Row className="justify-content-center">
+              <Col xs="12" className="text-center">
+                <div className="section-title mb-4 pb-2">
+                  <h4 className="title mb-4">
+                    <span className="text-primary">Landrick</span> App Showcase
+                  </h4>
+                  <p className="text-muted para-desc mb-0 mx-auto">
+                    Start working with{" "}
+                    <span className="text-primary fw-bold">
+                      Landrick
+                    </span>{" "}
+                    that can provide everything you need to generate awareness,
+                    drive traffic, connect.
+                  </p>
+                </div>
+              </Col>
+            </Row>
 
+            <Row className="justify-content-center">
+              <Col lg={8} md={12} className="mt-4 pt-2 text-center">
+                <Nav
+                  pills
+                  justified
+                  id="pills-tab"
+                  className="flex-column flex-sm-row rounded"
+                >
+                  <NavItem>
+                    <NavLink
+                      className={classnames(
+                        { active: this.state.activeTab === "1" },
+                        "rounded"
+                      )}
+                      onClick={() => {
+                        this.toggle("1");
+                      }}
+                    >
+                      <div className="text-center py-2">
+                        <h6 className="mb-0">
+                          High Performance
+                        </h6>
+                      </div>
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      className={classnames(
+                        { active: this.state.activeTab === "2" },
+                        "rounded"
+                      )}
+                      onClick={() => {
+                        this.toggle("2");
+                      }}
+                    >
+                      <div className="text-center py-2">
+                        <h6 className="mb-0">
+                          Creative Design
+                        </h6>
+                      </div>
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      className={classnames(
+                        { active: this.state.activeTab === "3" },
+                        "rounded"
+                      )}
+                      onClick={() => {
+                        this.toggle("3");
+                      }}
+                    >
+                      <div className="text-center py-2">
+                        <h6 className="mb-0">
+                          24 / 7 Support
+                        </h6>
+                      </div>
+                    </NavLink>
+                  </NavItem>
+                </Nav>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col xs="12" className="mt-4 pt-2">
+                <TabContent activeTab={this.state.activeTab}>
+                  <TabPane tabId="1">
+                    <Row className="align-items-center">
+                      <Col md={6}>
+                        <img
+                          src={app2}
+                          className="img-fluid mx-auto d-block"
+                          alt=""
+                        />
+                      </Col>
+
+                      <Col md={6} className="mt-4 mt-sm-0 pt-2 pt-sm-0">
+                        <div className="section-title">
+                          <SectionTitleLeft
+                            desc="You can combine all the Landrick templates into a single one, you can take a component from the Application theme and use it in the Website."
+                            features={this.state.features1}
+                            className=""
+                          >
+                            <h4 className="title mb-4">
+                              <i className="uil uil-angle-double-right text-primary"></i>{" "}
+                              High Performing Landing App
+                            </h4>
+                          </SectionTitleLeft>
+                          <Link to="#" className="mt-3 h6 text-primary">
+                            Find Out More{" "}
+                            <i className="uil uil-angle-right-b"></i>
+                          </Link>
+                        </div>
+                      </Col>
+                    </Row>
+                  </TabPane>
+                  <TabPane tabId="2">
+                    <Row className="align-items-center">
+                      <Col md={6}>
+                        <img
+                          src={app3}
+                          className="img-fluid mx-auto d-block"
+                          alt=""
+                        />
+                      </Col>
+
+                      <Col md={6} className="mt-4 mt-sm-0 pt-2 pt-sm-0">
+                        <div className="section-title">
+                          <SectionTitleLeft
+                            desc="You can combine all the Landrick templates into a single one, you can take a component from the Application theme and use it in the Website."
+                            features={this.state.features2}
+                            className=""
+                          >
+                            <h4 className="title mb-4">
+                              <i className="uil uil-angle-double-right text-primary"></i>{" "}
+                              Creative Design and Clean Code
+                            </h4>
+                          </SectionTitleLeft>
+                          <Link to="#" className="mt-3 h6 text-primary">
+                            Find Out More{" "}
+                            <i className="uil uil-angle-right-b"></i>
+                          </Link>
+                        </div>
+                      </Col>
+                    </Row>
+                  </TabPane>
+                  <TabPane tabId="3">
+                    <Row className="align-items-center">
+                      <Col md={6}>
+                        <img
+                          src={app4}
+                          className="img-fluid mx-auto d-block"
+                          alt=""
+                        />
+                      </Col>
+
+                      <Col md={6} className="mt-4 mt-sm-0 pt-2 pt-sm-0">
+                        <div className="section-title">
+                          <SectionTitleLeft
+                            desc="You can combine all the Landrick templates into a single one, you can take a component from the Application theme and use it in the Website."
+                            features={this.state.features3}
+                            className=""
+                          >
+                            <h4 className="title mb-4">
+                              <i className="uil uil-angle-double-right text-primary"></i>
+                              24 / 7 App Supports and Responsive
+                            </h4>
+                          </SectionTitleLeft>
+                          <Link to="#" className="mt-3 h6 text-primary">
+                            Find Out More{" "}
+                            <i className="uil uil-angle-right-b"></i>
+                          </Link>
+                        </div>
+                      </Col>
+                    </Row>
+                  </TabPane>
+                </TabContent>
+              </Col>
+            </Row>
+          </Container> */}
         </section>
       </React.Fragment>
     );

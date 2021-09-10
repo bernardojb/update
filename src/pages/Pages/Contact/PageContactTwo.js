@@ -63,24 +63,10 @@ class PageContactTwo extends Component {
     return (
       <React.Fragment>
         <section className="section pt-5 mt-4">
-          <Container fluid>
-            <Row>
-              <Col xs={12} className="p-0">
-                <Card className=" map border-0">
-                  <CardBody className="p-0">
-                    <iframe
-                      title="Landrick"
-                      src="//www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d39206.002432144705!2d-95.4973981212445!3d29.709510002925988!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640c16de81f3ca5%3A0xf43e0b60ae539ac9!2sGerald+D.+Hines+Waterwall+Park!5e0!3m2!1sen!2sin!4v1566305861440!5m2!1sen!2sin"
-                      style={{ border: 0 }}
-                      allowFullScreen
-                    ></iframe>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-          </Container>
+         
+        <h1 className="text-center">Contato</h1>
 
-          <Container className="mt-100 mt-60">
+          <Container className="mt-5">
             <Row className="align-items-center">
               <Col
                 lg={5}
@@ -112,22 +98,22 @@ class PageContactTwo extends Component {
                         <Col lg={6}>
                           <div className="mb-3">
                             <Label className="form-label">
-                              Your Name <span className="text-danger">*</span>
+                              Seu nome <span className="text-danger">*</span>
                             </Label>
-                            <div className="form-icon position-relative">
+                            {/* <div className="form-icon position-relative">
                               <i>
                                 <FeatherIcon
                                   icon="user"
                                   className="fea icon-sm icons"
                                 />
                               </i>
-                            </div>
+                            </div> */}
                             <Input
                               name="name"
                               id="name"
                               type="text"
-                              className="form-control ps-5"
-                              placeholder="First Name :"
+                              className="form-control "
+                              placeholder="Primeiro Nome"
                               required
                             />
                           </div>
@@ -135,63 +121,63 @@ class PageContactTwo extends Component {
                         <Col lg={6}>
                           <div className="mb-3">
                             <Label className="form-label">
-                              Your Email <span className="text-danger">*</span>
+                              Seu email <span className="text-danger">*</span>
                             </Label>
                             <div className="form-icon position-relative">
-                              <i>
+                              {/* <i>
                                 <FeatherIcon
                                   icon="mail"
                                   className="fea icon-sm icons"
                                 />
-                              </i>
+                              </i> */}
                             </div>
                             <Input
                               name="email"
                               id="email"
                               type="email"
-                              className="form-control ps-5"
-                              placeholder="Your email :"
+                              className="form-control"
+                              placeholder="Email"
                               required
                             />
                           </div>
                         </Col>
                         <Col md={12}>
                           <div className="mb-3">
-                            <Label className="form-label">Subject</Label>
+                            <Label className="form-label">Assunto</Label>
                             <div className="form-icon position-relative">
-                              <i>
+                              {/* <i>
                                 <FeatherIcon
                                   icon="book"
                                   className="fea icon-sm icons"
                                 />
-                              </i>
+                              </i> */}
                             </div>
                             <Input
                               name="subject"
                               id="subject"
-                              className="form-control ps-5"
-                              placeholder="Your subject :"
+                              className="form-control"
+                              placeholder="Como podemos te ajudar?"
                               required
                             />
                           </div>
                         </Col>
                         <Col lg={12}>
                           <div className="mb-3">
-                            <Label className="form-label">Comments</Label>
+                            <Label className="form-label">Mensagem</Label>
                             <div className="form-icon position-relative">
-                              <i>
+                              {/* <i>
                                 <FeatherIcon
                                   icon="message-circle"
                                   className="fea icon-sm icons"
                                 />
-                              </i>
+                              </i> */}
                             </div>
                             <textarea
                               name="comments"
                               id="comments"
                               rows="4"
-                              className="form-control ps-5"
-                              placeholder="Your Message :"
+                              className="form-control"
+                              placeholder="Qual a sua dificuldade?"
                             ></textarea>
                           </div>
                         </Col>
@@ -204,7 +190,7 @@ class PageContactTwo extends Component {
                               id="submit"
                               name="send"
                               className="submitBnt btn btn-primary btn-block"
-                              value="Send Message"
+                              value="Enviar Mensagem"
                             />
                           </div>
                           <div id="simple-msg"></div>
@@ -217,14 +203,9 @@ class PageContactTwo extends Component {
 
               <Col lg={7} md={{ size: 6, order: 2 }} xs={{ order: 1 }}>
                 <div className="title-heading ms-lg-4">
-                  <h4 className="mb-4">Contact Details</h4>
-                  <p className="text-muted">
-                    Start working with{" "}
-                    <span className="text-primary fw-bold">
-                      Landrick
-                    </span>{" "}
-                    that can provide everything you need to generate awareness,
-                    drive traffic, connect.
+                  <p className="text-dark">
+                  Você pode entrar em contato com nosso suporte caso esteja com dúvidas sobre o app Update! 
+                  <br/><br/>Também temos uma página de <span className="text-primary fw-bold">Perguntas Frequentes</span>
                   </p>
                   <div className="d-flex contact-detail align-items-center mt-3">
                     <div className="icon">
@@ -236,13 +217,13 @@ class PageContactTwo extends Component {
                       </i>
                     </div>
                     <div className="flex-1 content">
-                      <h6 className="title fw-bold mb-0">Email</h6>
+                      <h6 className="title mb-0">Email</h6>
                       <Link
                         to="#"
                         onClick={this.sendMail}
                         className="text-primary "
                       >
-                        contact@example.com
+                        contato@grupoupdate.com.br
                       </Link>
                     </div>
                   </div>
@@ -257,13 +238,13 @@ class PageContactTwo extends Component {
                       </i>
                     </div>
                     <div className="flex-1 content">
-                      <h6 className="title fw-bold mb-0">Phone</h6>
+                      <h6 className="title mb-0">Telefone</h6>
                       <Link
                         to="#"
                         onClick={this.callNumber}
                         className="text-primary "
                       >
-                        +152 534-468-854
+                        +55 (11) 9 9999-8181
                       </Link>
                     </div>
                   </div>
@@ -278,9 +259,9 @@ class PageContactTwo extends Component {
                       </i>
                     </div>
                     <div className="flex-1 content">
-                      <h6 className="title fw-bold mb-0">Location</h6>
+                      <h6 className="title mb-0">Endereço</h6>
                       <Link to="#" className="video-play-icon  text-primary">
-                        View on Google map
+                        Ver no Google Maps
                       </Link>
                     </div>
                   </div>

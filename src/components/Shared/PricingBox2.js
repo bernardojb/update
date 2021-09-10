@@ -12,8 +12,8 @@ class PricingBox2 extends Component {
             <Card
               className={
                 pricing.isActive
-                  ? "pricing-rates starter-plan bg-light py-5 border-0 rounded text-center"
-                  : "pricing-rates bg-light py-5 border-0 rounded text-center"
+                  ? "pricing-rates starter-plan bg-custom py-5 border-0 rounded text-center"
+                  : "pricing-rates bg-custom py-5 border-0 rounded text-center"
               }
             >
               <CardBody>
@@ -35,7 +35,7 @@ class PricingBox2 extends Component {
                 </div>
                 <ul className="list-unstyled mb-0 ps-0">
                   {pricing.features.map((feature, key) => (
-                    <li key={key} className="h6 text-muted mb-0">
+                    <li key={key} className="mb-0">
                     <span className="text-primary h5 me-2">
                       <i className="uil uil-check-circle align-middle">
                       </i>

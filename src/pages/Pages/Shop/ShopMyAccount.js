@@ -34,8 +34,9 @@ class ShopMyAccount extends Component {
       activeTab: "1",
       pathItems: [
         //id must required
-        { id: 1, name: "update", link: "/" },
-        { id: 2, name: "Minha Conta" },
+        { id: 1, name: "Landrick", link: "/index" },
+        { id: 2, name: "Shop", link: "#" },
+        { id: 3, name: "My Account" },
       ],
     };
     this.toggleTab = this.toggleTab.bind(this);
@@ -68,7 +69,7 @@ class ShopMyAccount extends Component {
       <React.Fragment>
         {/* breadcrumb */}
         <PageBreadcrumb
-          title="Meu Perfil"
+          title="My Profile / Account"
           pathItems={this.state.pathItems}
         />
         <div className="position-relative">
@@ -96,8 +97,8 @@ class ShopMyAccount extends Component {
                     alt=""
                   />
                   <div className="ms-3">
-                    <h6 className="text-muted mb-0">Bem vindo,</h6>
-                    <h5 className="mb-0">Bernardo Braga</h5>
+                    <h6 className="text-muted mb-0">Hello,</h6>
+                    <h5 className="mb-0">Cally Joseph</h5>
                   </div>
                 </div>
 
@@ -140,13 +141,13 @@ class ShopMyAccount extends Component {
                       <div className="text-start py-1 px-3">
                         <h6 className="mb-0">
                           <i className="uil uil-list-ul h5 align-middle me-2 mb-0"></i>{" "}
-                          Plano
+                          Orders
                         </h6>
                       </div>
                     </NavLink>
                   </NavItem>
 
-                  {/* <NavItem className="mt-2">
+                  <NavItem className="mt-2">
                     <NavLink
                       className={classnames(
                         { active: this.state.activeTab === "3" },
@@ -164,7 +165,7 @@ class ShopMyAccount extends Component {
                         </h6>
                       </div>
                     </NavLink>
-                  </NavItem> */}
+                  </NavItem>
 
                   <NavItem className="mt-2">
                     <NavLink
@@ -180,7 +181,7 @@ class ShopMyAccount extends Component {
                       <div className="text-start py-1 px-3">
                         <h6 className="mb-0">
                           <i className="uil uil-map-marker h5 align-middle me-2 mb-0"></i>{" "}
-                          Endereço
+                          Addresses
                         </h6>
                       </div>
                     </NavLink>
@@ -200,7 +201,7 @@ class ShopMyAccount extends Component {
                       <div className="text-start py-1 px-3">
                         <h6 className="mb-0">
                           <i className="uil uil-user h5 align-middle me-2 mb-0"></i>{" "}
-                          Dados da conta
+                          Account Details
                         </h6>
                       </div>
                     </NavLink>
@@ -226,23 +227,28 @@ class ShopMyAccount extends Component {
                     tabId="1"
                   >
                     <h6 className="text-muted">
-                      Seja bem vindo <span className="text-dark">bernardo_braga</span>
+                      Hello <span className="text-dark">cally_joseph</span> (not{" "}
+                      <span className="text-dark">cally_joseph</span>?{" "}
+                      <Link to="#" className="text-danger">
+                        Log out
+                      </Link>
+                      )
                     </h6>
 
                     <h6 className="text-muted mb-0">
-                      Pelo Dashboard você pode acessar:{" "}
-                      <br />
+                      From your account dashboard you can view your{" "}
                       <Link to="#" className="text-danger">
-                       • Informações sobre seu plano
+                        recent orders
                       </Link>
-                      <br />
+                      , manage your{" "}
                       <Link to="#" className="text-danger">
-                       • Endereço
+                        shipping and billing addresses
                       </Link>
-                      <br />
+                      , and{" "}
                       <Link to="#" className="text-danger">
-                       • Detalhes da conta
+                        edit your password and account details
                       </Link>
+                      .
                     </h6>
                   </TabPane>
 

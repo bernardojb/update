@@ -13,18 +13,14 @@ import {
 } from "reactstrap";
 
 //Import images
-//Logo
 import logodark from "../../assets/images/logo-dark.png";
 import logolight from "../../assets/images/logo-light.png";
-import logoupdate from '../../assets/images/logo-update.svg';
-//
+// import logoUpdate from "../../assets/images/logo-update.svg";
+import logoUpdate from "../../assets/images/LogoUpdate.svg";
 import shop1 from "../../assets/images/shop/product/s-1.jpg";
 import shop2 from "../../assets/images/shop/product/s-2.jpg";
 import shop3 from "../../assets/images/shop/product/s-3.jpg";
 import NavbarButtons from "../Shared/NavbarButtons";
-
-//
-import axios from 'axios'
 
 class Topbar extends Component {
   constructor(props) {
@@ -34,9 +30,215 @@ class Topbar extends Component {
       dropdownOpenShop: false,
       navLinks: [
         //Note : each child and nested child must have unique id
-        { id: 1, title: "Login", link: "/auth-cover-login" }
-        ,
-        // { id: 2, title: "Sign up", link: "/auth-cover-signup" },
+        //Novo Login
+        { id: 1, title: "Login", link: "/index" },
+        // {
+        //   id: 2,
+        //   title: "Landing",
+        //   link: "/#",
+        //   isMegaMenu: true,
+        //   isOpenSubMenu: false,
+        //   child: [
+        //     { id: 1, title: "Saas", link: "/index-saas" },
+        //     { id: 2, title: "Classic Saas", link: "/index-classic-saas" },
+        //     { id: 3, title: "Agency", link: "/index-agency" },
+        //     { id: 4, title: "Application", link: "/index-apps" },
+        //     { id: 5, title: "Classic Application", link: "/index-classic-app" },
+        //     { id: 6, title: "Studio", link: "/index-studio" },
+        //     { id: 7, title: "Marketing", link: "/index-marketing" },
+        //     { id: 8, title: "Enterprise", link: "/index-enterprise" },
+        //     { id: 9, title: "Services", link: "/index-services" },
+        //     { id: 10, title: "Payments", link: "/index-payments" },
+        //     { id: 11, title: "Cryptocurrency", link: "/index-crypto" },
+        //     {
+        //       id: 12,
+        //       title: "IT Solution",
+        //       link: "/index-it-solution",
+        //       isDark: false
+        //     },
+        //     { id: 13, title: "Business", link: "/index-business" },
+        //     {
+        //       id: 14,
+        //       title: "Modern Business",
+        //       link: "/index-modern-business",
+        //       isDark: false
+        //     },
+        //     {
+        //       id: 15,
+        //       title: "Corporate Business",
+        //       link: "/index-corporate",
+        //       isDark: false
+        //     },
+        //     { id: 16, title: "Hotel", link: "/index-hotel" },
+        //     {
+        //       id: 17,
+        //       title: "Construction",
+        //       link: "/index-construction",
+        //       isDark: false
+        //     },
+        //     {
+        //       id: 18,
+        //       title: "Real Estate",
+        //       link: "/index-real-estate",
+        //       isDark: false
+        //     },
+        //     {
+        //       id: 19,
+        //       title: "Developer",
+        //       link: "/index-developer",
+        //       isDark: false
+        //     },
+        //     {
+        //       id: 20,
+        //       title: "SEO Agency",
+        //       link: "/index-seo-agency",
+        //       isDark: false
+        //     },
+        //     {
+        //       id: 21,
+        //       title: "Hospital",
+        //       link: "/index-hospital",
+        //       isDark: false
+        //     },
+        //     { id: 22, title: "Hosting & Domain", link: "/index-hosting" },
+
+        //     {
+        //       id: 23,
+        //       title: "Finance",
+        //       link: "/index-finance",
+        //       isNew: true,
+        //       isDark: false
+        //     },
+        //     {
+        //       id: 24,
+        //       title: "Video Conference",
+        //       link: "/index-videocall",
+        //       isNew: true,
+        //       isDark: false
+        //     },
+        //     {
+        //       id: 25,
+        //       title: "IT Solution Two",
+        //       link: "/index-it-solution-two",
+        //       isNew: true,
+        //       isDark: false
+        //     },
+        //     {
+        //       id: 26,
+        //       title: "Freelancer",
+        //       link: "/index-freelancer",
+        //       isNew: true,
+        //       isDark: false
+        //     },
+        //     {
+        //       id: 27,
+        //       title: "Blockchain",
+        //       link: "/index-blockchain",
+        //       isNew: true,
+        //       isDark: false
+        //     },
+        //     {
+        //       id: 28,
+        //       title: "Cryptocurrency Two",
+        //       link: "/index-crypto-two",
+        //       isNew: true
+
+        //     },
+        //     {
+        //       id: 29,
+        //       title: "Integration",
+        //       link: "/index-integration"
+
+        //     },
+        //     {
+        //       id: 30,
+        //       title: "Task Management",
+        //       link: "/index-task-management"
+
+        //     },
+
+        //     {
+        //       id: 31,
+        //       title: "Email Inbox",
+        //       link: "/index-email-inbox",
+        //       isDark: false
+        //     },
+        //     {
+        //       id: 32,
+        //       title: "Travel",
+        //       link: "/index-travel",
+        //       isDark: false
+        //     },
+        //     {
+        //       id: 33,
+        //       title: "Blog",
+        //       link: "/index-blog",
+        //       isDark: false
+        //     },
+        //     {
+        //       id: 34,
+        //       title: "Landing One",
+        //       link: "/index-landing-one",
+        //       isDark: false
+        //     },
+        //     {
+        //       id: 35,
+        //       title: "Landing Two",
+        //       link: "/index-landing-two",
+        //       isDark: false
+        //     },
+        //     {
+        //       id: 36,
+        //       title: "Landing Three",
+        //       link: "/index-landing-three",
+        //       isDark: false
+        //     },
+        //     {
+        //       id: 37,
+        //       title: "LandingFour",
+        //       link: "/index-landing-four",
+        //       isDark: false
+        //     },
+        //     { id: 38, title: "Shop", link: "/index-shop" },
+        //     {
+        //       id: 39,
+        //       title: "Insurance",
+        //       link: "/index-insurance",
+        //       isDark: false
+        //     },
+        //     {
+        //       id: 40,
+        //       title: "Online Learning",
+        //       link: "/index-online-learning",
+        //       isDark: false
+        //     },
+        //     { id: 41, title: "Personal", link: "/index-personal" },
+        //     { id: 42, title: "Coworking", link: "/index-coworking" },
+        //     { id: 43, title: "Course", link: "/index-course" },
+        //     {
+        //       id: 44,
+        //       title: "Forums",
+        //       link: "/index-forums",
+        //       isDark: false
+        //     },
+        //     { id: 45, title: "Event", link: "/index-event" },
+        //     { id: 46, title: "Product", link: "/index-single" },
+        //     { id: 47, title: "Portfolio", link: "/index-portfolio" },
+        //     { id: 48, title: "Job", link: "/index-job" },
+        //     { id: 49, title: "Social Media", link: "/index-social-marketing" },
+        //     { id: 50, title: "Digital Agency", link: "/index-digital-agency" },
+        //     { id: 51, title: "Car Ride", link: "/index-car-riding" },
+        //     { id: 52, title: "Customer", link: "/index-customer" },
+        //     { id: 53, title: "Software", link: "/index-software" },
+        //     {
+        //       id: 54,
+        //       title: "E-Book",
+        //       link: "/index-ebook",
+        //       isDark: false
+        //     },
+        //     { id: 55, title: "Saas", link: "/index-onepage", isOnePage: true },
+        //   ],
+        // },
         // {
         //   id: 3,
         //   title: "Pages",
@@ -275,9 +477,15 @@ class Topbar extends Component {
         // },
         // {
         //   id: 4,
-        //   title: "Contato",
+        //   title: "Docs",
         //   link: "/#",
         //   isOpenSubMenu: false,
+        //   child: [
+        //     { title: "Documentations", link: "/documentation" },
+        //     { title: "Changelog", link: "/changelog" },
+        //     { title: "Components", link: "/components" },
+        //     { title: "Widget", link: "/widget" },
+        //   ],
         // },
       ],
       wishlistModal: false,
@@ -325,13 +533,6 @@ class Topbar extends Component {
     if (matchingMenuItem) {
       this.activateParentDropdown(matchingMenuItem);
     }
-
-    const fetchData = () => {
-      return axios.get("https://my-json-server.typicode.com/bernardojb/update/user")
-        .then((response) => console.log(response.data));
-    }
-    fetchData();
-    console.log();
   }
 
   activateParentDropdown = (item) => {
@@ -394,17 +595,18 @@ class Topbar extends Component {
 
               {this.props.hasDarkTopBar ? (
                 <a className="logo" href="/">
-                  <img src={logodark} height="24" className="logo-light-mode" alt="" />
-                  <img src={logoupdate} height="45" className="logo-dark-mode" alt="" />
+                  <img src={logoUpdate} height="24" className="logo-light-mode" alt="" />
+                  <img src={logoUpdate} height="24" className="logo-dark-mode" alt="" />
                 </a>
               ) :
-                <a className="logo" href="index.html">
-                  <span className="logo-light-mode">
-                    <img src={logodark} className="l-dark" height="24" alt="" />
-                    <img src={logolight} className="l-light" height="24" alt="" />
-                  </span>
-                  <img src={logolight} height="24" className="logo-dark-mode" alt="" />
-                </a>
+                // <a className="logo" href="/">
+                //   <span className="logo-light-mode">
+                //     <img src={logoUpdate} className="l-dark" height="24" alt="" />
+                //     <img src={logoUpdate} className="l-light" height="24" alt="" />
+                //   </span>
+                //   <img src={logoUpdate} height="24" className="logo-dark-mode" alt="" />
+                // </a>
+                <span></span>
               }
             </div>
             {(() => {
@@ -782,26 +984,30 @@ class Topbar extends Component {
                 return (
                   <div className="buy-button">
                     <Link
-                      to="/shop-myaccount"
-                      // target="_blank"
+                      to="//1.envato.market/landrickreactjs"
+                      target="_blank"
                       className="btn btn-pills btn-primary"
                     >
-                      Assine
+                      Buy Now
                     </Link>
                   </div>
                 );
               } else {
                 return (
-                  <div className="buy-button btn-registrar">
-                    <Link
-                      to="/shop-myaccount"
-                      // target="_blank"
-                      rel="noopener noreferrer"
-                      id="buyButton"
-                      className="btn btn-primary"
-                    >
-                      REGISTRAR
-                    </Link>
+                  <div className="buy-button">
+                    {this.props.hasDarkTopBar ? (
+                       <Link
+                       to="//1.envato.market/landrickreactjs"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       id="buyButton"
+                       className="btn btn-primary"
+                     >
+                       Registrar
+                     </Link>
+                    ) :
+                      <span></span>
+                    }
                   </div>
                 );
               }
@@ -829,7 +1035,7 @@ class Topbar extends Component {
               id="navigation"
               style={{ display: this.state.isOpen ? "block" : "none" }}
             >
-              <ul className="navigation-menu nav-right" id="top-menu">
+              <ul className="navigation-menu" id="top-menu">
                 {this.state.navLinks.map((navLink, key) =>
                   navLink.child ? (
                     <li className="has-submenu" key={key}>
@@ -1033,7 +1239,12 @@ class Topbar extends Component {
                     </li>
                   ) : (
                     <li key={key}>
+                      {this.props.hasDarkTopBar ? (
                       <Link to={navLink.link}>{navLink.title}</Link>
+                      ) : (
+                        <span></span>
+                      )
+                    }
                     </li>
                   )
                 )}
@@ -1045,7 +1256,7 @@ class Topbar extends Component {
                   rel="noopener noreferrer"
                   className="btn btn-primary"
                 >
-                  Login
+                  Buy Now
                 </Link>
               </div>
             </div>

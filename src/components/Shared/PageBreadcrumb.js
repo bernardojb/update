@@ -7,7 +7,7 @@ class PageBreadcrumb extends Component {
     const length = this.props.pathItems.length;
     return (
       <React.Fragment>
-        <section className="bg-half bg-light d-table w-100">
+        <section className="bg-half bg-custom d-table w-100">
           <Container>
             <Row className="justify-content-center">
               <Col lg="12" className="text-center">

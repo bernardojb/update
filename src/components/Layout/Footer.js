@@ -21,21 +21,20 @@ class Footer extends Component {
     super(props);
     this.state = {
       grid1: [
-        { title: "About us", link: "/page-aboutus" },
-        { title: "Services", link: "/page-services" },
-        { title: "Team", link: "/page-team" },
-        { title: "Pricing", link: "/page-pricing" },
-        { title: "Project", link: "/page-work" },
-        { title: "Careers", link: "/page-jobs" },
-        { title: "Blog", link: "/page-blog" },
-        { title: "Login", link: "/page-cover-login" },
+        { title: "Como funciona", link: "/" },
+        { title: "Planos", link: "/" },
+        { title: "Login", link: "/" },
+        { title: "Registrar", link: "/" },
       ],
       grid2: [
-        { title: "Terms of Services", link: "/page-terms" },
-        { title: "Privacy Policy", link: "/page-privacy" },
-        { title: "Documentation", link: "/documentation" },
-        { title: "Changelog", link: "/changelog" },
-        { title: "Components", link: "/components" },
+        { title: "Android", link: "/" },
+        { title: "iOS", link: "/" },
+      ],
+      grid3: [
+        { title: "Sobre o UPDATE", link: "/" },
+        { title: "Termos de Uso", link: "/" },
+        { title: "Política de Privacidade", link: "/" },
+        { title: "Ajuda", link: "/" },
       ],
     };
   }
@@ -43,7 +42,7 @@ class Footer extends Component {
   render() {
     return (
       <React.Fragment>
-        <footer className={this.props.isLight ? "footer bg-light" : "footer"}>
+        {/* <footer className={this.props.isLight ? "footer bg-light" : "footer"}>
           <Container>
             <Row>
               <Col
@@ -60,8 +59,7 @@ class Footer extends Component {
                   />
                 </Link>
                 <p className={this.props.isLight ? "mt-4 text-muted" : "mt-4"}>
-                  Start working with Landrick that can provide everything you
-                  need to generate awareness, drive traffic, connect.
+                  Uma plataforma digital com os mais recentes e importantes artigos médicos apresentados de forma fácil, rápida e didática. Acreditamos que a atualização deve estar ao alcance de todos.
                 </p>
                 <ul className={this.props.isLight ? "list-unstyled social-icon social mb-0 m t-4" : "list-unstyled social-icon foot-social-icon mb-0 mt-4"}>
                   <li className="list-inline-item me-1">
@@ -179,66 +177,28 @@ class Footer extends Component {
                       : "text-light footer-head"
                   }
                 >
-                  Newsletter
+                  Usefull Links
                 </h5>
-                <p className="mt-4">
-                  Sign up and receive the latest tips via email.
-                </p>
-                <Form>
-                  <Row>
-                    <Col lg="12">
-                      <div
+                <ul className="list-unstyled footer-list mt-4">
+                  {this.state.grid3.map((grid, key) => (
+                    <li key={key}>
+                      <Link
+                        to={grid.link}
                         className={
-                          this.props.isLight
-                            ? "foot-subscribe mb-3 foot-white"
-                            : "foot-subscribe mb-3"
+                          this.props.isLight ? "text-muted" : "text-foot"
                         }
                       >
-                        <Label
-                          className={this.props.isLight ? "form-label text-muted" : "form-label"}
-                        >
-                          Write your email{" "}
-                          <span className="text-danger">*</span>
-                        </Label>
-                        <div className="form-icon position-relative">
-                          <FeatherIcon
-                            icon="mail"
-                            className="fea icon-sm icons"
-                          />
-                        </div>
-                        <Input
-                          type="email"
-                          name="email"
-                          id="emailsubscribe"
-                          className={
-                            this.props.isLight
-                              ? "ps-5 rounded bg-light border"
-                              : "ps-5 rounded"
-                          }
-                          placeholder="Your email : "
-                          required
-                        />
-                      </div>
-                    </Col>
-                    <Col lg="12">
-                      <div className="d-grid">
-                        <Input
-                          type="submit"
-                          id="submitsubscribefooter"
-                          name="send"
-                          className="btn btn-primary"
-                          readOnly
-                          value="Subscribe"
-                        />
-                      </div>
-                    </Col>
-                  </Row>
-                </Form>
+                        <i className="mdi mdi-chevron-right me-1"></i>
+                        {grid.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </Col>
             </Row>
           </Container>
-        </footer>
-        <footer className="footer footer-bar">
+        </footer> */}
+        {/* <footer className="footer footer-bar">
           <Container className="text-center">
             <Row className="align-items-center">
               <Col sm="6">
@@ -315,7 +275,7 @@ class Footer extends Component {
               </Col>
             </Row>
           </Container>
-        </footer>
+        </footer> */}
       </React.Fragment>
     );
   }

@@ -21,7 +21,7 @@ class ThemeSwitcher extends Component {
       <React.Fragment>
         <div
           id="style-switcher"
-          style={{ left: this.state.isSwitchToggle ? "0px" : "-189px" }}
+          style={{ left: this.state.isSwitchToggle ? "0px" : "-189px", display:'none' }}
           className="bg-light border p-3 pt-2 pb-2"
         >
           <h3 className="title text-center pt-3 mb-0">Theme Option</h3>

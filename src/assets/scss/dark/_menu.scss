@@ -4,6 +4,7 @@
 #topnav {
   .logo {
     color: $dark !important;
+
     .l-dark,
     .logo-light-mode {
       display: none !important;
@@ -91,6 +92,15 @@
 
 @media (min-width: 992px) {
   #topnav {
+    height: 107px !important;
+    display: flex !important;
+    align-items: center;
+    
+    img{
+      width: 116px !important;
+      height: 61px !important;
+    }
+    
     .navigation-menu {
       > li {
         .submenu {
