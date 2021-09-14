@@ -337,7 +337,7 @@ const routes = [
   //User Pages
   { path: "/auth-login", component: PageLogin, isWithoutLayout: true },
   {
-    path: "/auth-cover-login",
+    path: "/login",
     component: PageCoverLogin,
     isWithoutLayout: true,
   },
@@ -349,7 +349,7 @@ const routes = [
 
   { path: "/auth-signup", component: PageSignup, isWithoutLayout: true },
   {
-    path: "/auth-cover-signup",
+    path: "/registro",
     component: PageCoverSignup,
     isWithoutLayout: true,
   },

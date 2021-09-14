@@ -87,15 +87,18 @@ a {
   bottom: 30px;
   transition: right 0.5s;
   cursor: pointer;
-  background-color: rgba(47, 85, 212, 0.2);
+  background-color: rgba(47, 212, 69, 0.2);
   padding: 5px;
   align-items: center;
   border-radius: 5px !important;
   outline: none;
+  transition: 0.15s ease-in;
 
   &:hover {
-    background-color: $primary !important;
+    transition: 0.15s ease-in;
+    background-color: #1AC45E !important;
     svg {
+      transition: 0.15s ease-in;
       stroke: $white !important;
     }
   }
@@ -108,7 +111,8 @@ a {
     margin-top: 2px;
     margin-left: 5px;
     fill: none;
-    stroke: $primary !important;
+    stroke: #1AC45E!important;
+    transition: 0.15s ease-in;
   }
 }
 
@@ -200,13 +204,17 @@ a {
   border-bottom: 1px solid #283353;
 }
 
+// ********************* Falcão mobile
+
 .falcao-container {
   width: 100%;
-  height: 417px;
+  height: unset;
   background: transparent linear-gradient(180deg, #1ac45e 0%, #00682a 100%) 0% 0% no-repeat padding-box !important;
   border-radius: 15px !important;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto;
 
   .falcao-texts {
     height: 100%;
@@ -214,75 +222,132 @@ a {
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
+    padding: 1rem;
     .falcao-badges {
       .badge {
         margin-right: 10px !important;
       }
     }
+
+    .btn-outline-falcao{
+      border: 1px solid #FFFFFF;   
+      color: white;
+      width: 200px;
+
+      &:hover{
+        color: black;
+        border: 1px solid white;   
+        background-color: white;
+      }
+    }
   }
 
-  .falcao-image{
+  .falcao-image {
     position: relative;
-    
-    img{
+    min-height: 485px;
+
+    img {
       position: absolute;
       bottom: 0;
-      left: -50px;
-      // height: 100%;
+      left: 50%;
+      height: 100%;
       max-height: 485px !important;
       width: auto;
+      margin-left: -224px;
+    }
+  }
+}
+//  ** Falcão Desktop
+
+@media (min-width: 992px) {
+  .falcao-container {
+    width: 100%;
+    height: 417px;
+    background: transparent linear-gradient(180deg, #1ac45e 0%, #00682a 100%) 0% 0% no-repeat padding-box !important;
+    border-radius: 15px !important;
+    display: flex;
+    flex-direction: row;
+    max-width: unset;
+
+    .falcao-texts {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 3rem;
+      .falcao-badges {
+        .badge {
+          margin-right: 10px !important;
+        }
+      }
+    }
+
+    .falcao-image {
+      position: relative;
+      min-height: unset;
+
+      img {
+        position: absolute;
+        bottom: 0;
+        left: -50px;
+        // height: 100%;
+        max-height: 485px !important;
+        width: auto;
+        margin-left: unset;
+      }
     }
   }
 }
 
-.perguntas-frequentes{
+// ****************
+.perguntas-frequentes {
   min-height: 218px;
-  background-color: #1AC45E;
+  background-color: #1ac45e;
   justify-content: center;
   align-items: center;
   display: flex;
   flex-direction: column;
 }
 
-.sobre-list{
+.sobre-list {
   list-style: none;
   padding-left: 0;
 }
 
-.info-bar{
+.info-bar {
   padding-left: 15px;
   position: relative;
-  
-  &::before{
+
+  &::before {
     position: absolute;
-    content: '';
+    content: "";
     left: 0px;
     height: 30px !important;
     width: 5px !important;
-    background-color: #1AC45E;
+    background-color: #1ac45e;
     margin: 0 auto;
   }
 }
 
-#home{
+#home {
   width: 100%;
   height: 100%;
   background-color: black;
 }
 
-.footerzinho{
+.footerzinho {
   position: absolute;
   bottom: 0;
   margin: 0 auto;
 }
 
-.pricing-selector{
+.pricing-selector {
   display: flex;
   justify-content: center;
   align-items: center;
 
-
-  ul{
+  ul {
     max-width: 450px;
     width: 100%;
     list-style: none;
@@ -295,7 +360,7 @@ a {
     height: 45px;
     padding: 0px;
 
-    li{
+    li {
       min-width: 150px;
       display: flex;
       flex-direction: row;
@@ -303,13 +368,13 @@ a {
       align-items: center;
       height: 100%;
 
-      p{
+      p {
         margin: 0;
       }
     }
 
-    .price-selected{
-      background-color: #1AC45E !important;
+    .price-selected {
+      background-color: #1ac45e !important;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -317,10 +382,19 @@ a {
     }
   }
 
-  .price-discount{
+  .price-discount {
     font-size: 12px;
-    background-color: #2F55D4;
+    background-color: #2f55d4;
     border-radius: 22px;
     padding: 0px 5px;
   }
+}
+
+.pricing-rates {
+  background: transparent linear-gradient(180deg, #101010 0%, #080808 100%) 0% 0% no-repeat padding-box !important;
+}
+
+.tab-pane {
+  width: 100% !important;
+  max-width: 733px;
 }

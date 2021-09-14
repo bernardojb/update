@@ -31,7 +31,7 @@ class Topbar extends Component {
       navLinks: [
         //Note : each child and nested child must have unique id
         //Novo Login
-        { id: 1, title: "Login", link: "/index" },
+        { id: 1, title: "Login", link: "/login" },
         // {
         //   id: 2,
         //   title: "Landing",
@@ -997,7 +997,7 @@ class Topbar extends Component {
                   <div className="buy-button">
                     {this.props.hasDarkTopBar ? (
                        <Link
-                       to="//1.envato.market/landrickreactjs"
+                       to="/registro"
                        target="_blank"
                        rel="noopener noreferrer"
                        id="buyButton"

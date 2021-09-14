@@ -226,9 +226,8 @@
     -webkit-text-stroke: 2px #1AC45E;
     -webkit-text-fill-color: #1AC45E;
 }
-a.text-primary:hover, 
-a.text-primary:focus {
-    color: #284bc1 !important;
+a.text-primary:hover {
+    color: #01692b !important;
 }
 
 .btn-primary:hover, 

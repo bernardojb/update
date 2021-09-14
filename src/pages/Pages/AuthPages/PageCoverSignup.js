@@ -47,7 +47,7 @@ class PageCoverSignup extends Component {
                         style={{ zIndex: 1 }}
                       >
                         <CardBody className="p-0">
-                          <h4 className="card-title text-center">Signup</h4>
+                          <h4 className="card-title text-center">REGISTRO</h4>
                           <AvForm className="login-form mt-4">
                             <Row>
                               <Col md="6">

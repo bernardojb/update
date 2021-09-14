@@ -4,6 +4,11 @@
 
 @import url('https://fonts.googleapis.com/css?family=Nunito:300,400,600,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Livvic:wght@400;500;600;700&display=swap');
+
+body{
+    overflow-x: hidden;
+}
+
 // Color
 $white:                     #ffffff;
 
@@ -13,11 +18,12 @@ $success:                   #2eca8b;
 $warning:                   #f17425;
 $info:                      #17a2b8;
 $danger:                    #e43f52;
-$dark:                      #3c4858;
+$dark:                      #ffffff;
 $black:                     #161c2d;
 $muted:                     #8492a6;
 $light:                     #f8f9fc;
 $custom:                    #0C0D0D;
+$bluepill:                  #2F55D4;
 
 // Gray
 $gray-100:                  #f8f9fa;
@@ -69,7 +75,8 @@ $colors: (
     "light": $light,
     "blue": $primary,
     "footer": $footer,
-    "custom": $custom
+    "custom": $custom,
+    "bluepill": $bluepill,
 );
 
 $heading-font-sizes: (

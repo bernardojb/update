@@ -54,7 +54,7 @@ class PageCoverLogin extends Component {
                               <Col lg={12}>
                                 <div className="mb-3">
                                   <Label className="form-label" htmlFor="email">
-                                    Your Email{" "}
+                                    Email{" "}
                                     <span className="text-danger">*</span>
                                   </Label>
                                   <div className="form-icon position-relative">
@@ -70,7 +70,7 @@ class PageCoverLogin extends Component {
                                     className="form-control ps-5"
                                     name="email"
                                     id="email"
-                                    placeholder="Enter Email"
+                                    placeholder="Seu email"
                                     required
                                     errorMessage=""
                                     validate={{
@@ -91,7 +91,7 @@ class PageCoverLogin extends Component {
                               <Col lg={12}>
                                 <div className="mb-3">
                                   <Label className="form-label" htmlFor="password">
-                                    Password
+                                    Senha
                                     <span className="text-danger">*</span>
                                   </Label>
                                   <div className="form-icon position-relative">
@@ -107,7 +107,7 @@ class PageCoverLogin extends Component {
                                     className="form-control ps-5"
                                     name="password"
                                     id="password"
-                                    placeholder="Enter password"
+                                    placeholder="Sua senha"
                                     required
                                     errorMessage=""
                                     validate={{
@@ -143,7 +143,7 @@ class PageCoverLogin extends Component {
                                         className="form-check-label"
                                         htmlFor="customCheck1"
                                       >
-                                        Remember me
+                                        Manter conectado
                                       </Label>
                                     </div>
                                   </div>
@@ -152,7 +152,7 @@ class PageCoverLogin extends Component {
                                       to="auth-cover-re-password"
                                       className="text-dark fw-bold"
                                     >
-                                      Forgot password ?
+                                      Esqueci minha senha
                                     </Link>
                                   </p>
                                 </div>
@@ -161,12 +161,12 @@ class PageCoverLogin extends Component {
                               <Col lg={12} className="mb-0">
                                 <div className="d-grid">
                                   <Button color="primary">
-                                    Sign in
+                                    Entrar
                                 </Button>
                                 </div>
                               </Col>
 
-                              <Col lg={12} className="mt-4 text-center">
+                              {/* <Col lg={12} className="mt-4 text-center">
                                 <h6>Or Login With</h6>
                                 <Row>
                                   <div className="col-6 mt-3">
@@ -181,18 +181,19 @@ class PageCoverLogin extends Component {
                                     </div>
                                   </div>
                                 </Row>
-                              </Col>
+                              </Col> */}
 
                               <Col className="text-center">
                                 <p className="mb-0 mt-3">
                                   <small className="text-dark me-2">
-                                    Don't have an account ?
+                                    Não possui uma conta?
                                   </small>{" "}
                                   <Link
                                     to="page-cover-signup"
                                     className="text-dark fw-bold"
-                                  >
-                                    Sign Up
+                                  ><span className="text-primary">
+                                    Registrar
+                                    </span>
                                   </Link>
                                 </p>
                               </Col>

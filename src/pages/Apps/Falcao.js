@@ -21,7 +21,7 @@ class Falcao extends Component {
 
                                     <div className="mt-5">
                                         <div className="falcao-container">
-                                            <Col lg="8" md="6" className="p-5 falcao-texts">
+                                            <Col lg="8" md="12" className="falcao-texts">
                                                 <div className="falcao-badges">
                                                     <Badge color="white"> MD. </Badge>
                                                     <Badge color="white"> MBA. </Badge>
@@ -35,9 +35,9 @@ class Falcao extends Component {
                                                     <p className="mb-0">Professor da UNIFESP - Universidade Federal de São Paulo</p>
                                                     <p className="pt-0" style={{ fontSize: '20px' }}>Anestesiologia, dor e medicina intensiva</p>
                                                 </div>
-                                                <Link to="#" className="btn btn-outline-dark mt-4"> VER VIDEO </Link>
+                                                <Link to="#" className="btn btn-outline-falcao mt-4"> VER VÍDEO </Link>
                                             </Col>
-                                            <Col lg="4" md="6" className="falcao-image">
+                                            <Col lg="4" md="12" className="falcao-image">
                                                 <img src={falcaoImage} className="" alt="" />
                                             </Col>
                                         </div>

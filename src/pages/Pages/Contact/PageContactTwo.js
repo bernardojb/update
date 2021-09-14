@@ -52,19 +52,23 @@ class PageContactTwo extends Component {
   };
 
   sendMail() {
-    window.location.href = "mailto:contact@example.com";
+    window.location.href = "mailto:contato@grupoupdate.com.br";
   }
 
   callNumber() {
-    window.location.href = "tel:+152534-468-854";
+    window.location.href = "tel:+5511999998181";
+  }
+  
+  openMap(){
+    window.location.href = "https://goo.gl/maps/u4TcwJZtMfisZWXM6";
   }
 
   render() {
     return (
       <React.Fragment>
         <section className="section pt-5 mt-4">
-         
-        <h1 className="text-center">Contato</h1>
+
+          <h1 className="text-center">Contato</h1>
 
           <Container className="mt-5">
             <Row className="align-items-center">
@@ -204,8 +208,10 @@ class PageContactTwo extends Component {
               <Col lg={7} md={{ size: 6, order: 2 }} xs={{ order: 1 }}>
                 <div className="title-heading ms-lg-4">
                   <p className="text-dark">
-                  Você pode entrar em contato com nosso suporte caso esteja com dúvidas sobre o app Update! 
-                  <br/><br/>Também temos uma página de <span className="text-primary fw-bold">Perguntas Frequentes</span>
+                    Você pode entrar em contato com nosso suporte caso esteja com dúvidas sobre o app Update!
+                    <br /><br />Também temos uma página de <Link to="/ajuda"><span className="text-primary fw-bold">
+                      Perguntas Frequentes
+                    </span></Link>
                   </p>
                   <div className="d-flex contact-detail align-items-center mt-3">
                     <div className="icon">
@@ -219,9 +225,9 @@ class PageContactTwo extends Component {
                     <div className="flex-1 content">
                       <h6 className="title mb-0">Email</h6>
                       <Link
-                        to="#"
+                        to=""
                         onClick={this.sendMail}
-                        className="text-primary "
+                        className="text-primary"
                       >
                         contato@grupoupdate.com.br
                       </Link>
@@ -260,7 +266,13 @@ class PageContactTwo extends Component {
                     </div>
                     <div className="flex-1 content">
                       <h6 className="title mb-0">Endereço</h6>
-                      <Link to="#" className="video-play-icon  text-primary">
+                      <Link 
+                      to="" 
+                      onClick={this.openMap}
+                      className="video-play-icon  text-primary" 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >
                         Ver no Google Maps
                       </Link>
                     </div>

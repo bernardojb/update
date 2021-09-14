@@ -168,7 +168,7 @@
         font-weight: unset;
         letter-spacing: 1px;
         line-height: 24px;
-        text-transform: uppercase;
+        // text-transform: uppercase;
         transition: all 0.5s;
         font-family: $font-family-secondary;
         padding-left: 15px;
@@ -383,7 +383,7 @@
               clear: both;
               white-space: nowrap;
               font-size: 11px;
-              text-transform: uppercase;
+              // text-transform: uppercase;
               letter-spacing: 0.04em;
               font-weight: 700;
               color: $dark !important;
@@ -576,7 +576,7 @@
               display: block;
               position: relative;
               padding: 7px 15px;
-              text-transform: uppercase;
+              // text-transform: uppercase;
               font-size: 11px;
               letter-spacing: 0.04em;
               font-weight: 700;
@@ -604,7 +604,7 @@
                     display: block;
                     position: relative;
                     padding: 10px 15px;
-                    text-transform: uppercase;
+                    // text-transform: uppercase;
                     font-size: 12px;
                     letter-spacing: 2px;
                     color: $muted;

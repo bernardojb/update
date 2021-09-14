@@ -22,7 +22,7 @@ class Section extends Component {
                   </h1>
 
                   <div className="mt-4">
-                    <Link to="#" className="btn btn-primary mt-2 me-2">
+                    <Link to="/registro" className="btn btn-primary mt-2 me-2">
                       {/* <i className="uil uil-apple"></i>  */}
                       TESTAR 7 DIAS GRÁTIS
                     </Link>

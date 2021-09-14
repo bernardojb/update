@@ -7,6 +7,7 @@ import Section from "./Section";
 import Falcao from "./Falcao";
 import ShowCase from "./ShowCase";
 import Pricing from "./Pricing";
+import Price from "./NewPricing";
 import Testi from "./Testi";
 import Contact from '../../pages/Pages/Contact/PageContactTwo'
 
@@ -62,13 +63,14 @@ class Index extends Component {
         <Falcao />
 
         {/* Pricing */}
-        <Pricing />
+        {/* <Pricing /> */}
+        <Price />
 
         <Contact />
 
         <div className="perguntas-frequentes p-4">
           <h1 className="text-center">Perguntas Frequentes</h1>
-          <Link to="#" className="btn btn-white mt-2 px-5">
+          <Link to="/ajuda" className="btn btn-white mt-2 px-5">
             {/* <i className="uil uil-apple"></i>  */}
             AJUDA
           </Link>
