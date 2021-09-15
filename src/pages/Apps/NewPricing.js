@@ -175,7 +175,7 @@ class Price extends Component {
 
                                                             <ul className="list-unstyled mb-0 ps-0 text-center">
                                                                 {pricing.features.map((feature, key) => (
-                                                                    <li key={key} className="text-dark mb-4">
+                                                                    <li key={key} className="text-dark mb-3">
                                                                         <span className="text-primary h5 me-2">
                                                                             <i className="uil uil-check-circle align-middle"></i>
                                                                         </span>

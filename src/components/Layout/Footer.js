@@ -6,11 +6,9 @@ import { Container, Row, Col, Form, Input, Label } from "reactstrap";
 import FeatherIcon from "feather-icons-react";
 
 // import images
-import americanEx from "../../assets/images/payments/american-ex.png";
-import discover from "../../assets/images/payments/discover.png";
-import masterCard from "../../assets/images/payments/master-card.png";
-import paypal from "../../assets/images/payments/paypal.png";
-import visa from "../../assets/images/payments/visa.png";
+import payment from "../../assets/images/app/payment.png";
+import logoUpdate from "../../assets/images/LogoUpdate.svg";
+
 
 //Import Images
 import logolight from "../../assets/images/logo-light.png";
@@ -21,20 +19,20 @@ class Footer extends Component {
     super(props);
     this.state = {
       grid1: [
-        { title: "Como funciona", link: "/" },
-        { title: "Planos", link: "/" },
-        { title: "Login", link: "/" },
-        { title: "Registrar", link: "/" },
+        { title: "Como funciona", link: "/sobre" },
+        { title: "Planos", link: "/home" },
+        { title: "Login", link: "/login" },
+        { title: "Registrar", link: "/registro" },
       ],
       grid2: [
         { title: "Android", link: "/" },
         { title: "iOS", link: "/" },
       ],
       grid3: [
-        { title: "Sobre o UPDATE", link: "/" },
-        { title: "Termos de Uso", link: "/" },
-        { title: "Política de Privacidade", link: "/" },
-        { title: "Ajuda", link: "/" },
+        { title: "Sobre o UPDATE", link: "/sobre" },
+        { title: "Termos de Uso", link: "/termos-de-uso" },
+        { title: "Política de Privacidade", link: "/politica-de-privacidade" },
+        { title: "Ajuda", link: "/ajuda" },
       ],
     };
   }
@@ -42,19 +40,19 @@ class Footer extends Component {
   render() {
     return (
       <React.Fragment>
-        {/* <footer className={this.props.isLight ? "footer bg-light" : "footer"}>
+        <footer className={this.props.isLight ? "footer bg-light" : "footer"}>
           <Container>
-            <Row>
+            <Row className="d-flex flex-row justify-content-between">
               <Col
                 lg="4"
                 xs="12"
                 className="mb-0 mb-md-4 pb-0 pb-md-2"
                 name="footercolumn"
               >
-                <Link to="#" className="logo-footer">
+                <Link to="/" className="logo-footer">
                   <img
-                    src={this.props.isLight ? logodark : logolight}
-                    height="24"
+                    src={logoUpdate}
+                    height="53"
                     alt=""
                   />
                 </Link>
@@ -63,34 +61,34 @@ class Footer extends Component {
                 </p>
                 <ul className={this.props.isLight ? "list-unstyled social-icon social mb-0 m t-4" : "list-unstyled social-icon foot-social-icon mb-0 mt-4"}>
                   <li className="list-inline-item me-1">
-                    <Link to="" className="rounded">
-                      <FeatherIcon
-                        icon="facebook"
-                        className="fea icon-sm fea-social"
-                      />
-                    </Link>
-                  </li>
-                  <li className="list-inline-item me-1">
-                    <Link to="" className="rounded">
+                    <Link to="" className="social-media-icons">
                       <FeatherIcon
                         icon="instagram"
-                        className="fea icon-sm fea-social"
+                        className="fea icon-sm"
                       />
                     </Link>
                   </li>
                   <li className="list-inline-item me-1">
-                    <Link to="" className="rounded">
-                      <FeatherIcon
-                        icon="twitter"
-                        className="fea icon-sm fea-social"
-                      />
-                    </Link>
-                  </li>
-                  <li className="list-inline-item me-1">
-                    <Link to="" className="rounded">
+                    <Link to="" className="social-media-icons">
                       <FeatherIcon
                         icon="linkedin"
-                        className="fea icon-sm fea-social"
+                        className="fea icon-sm"
+                      />
+                    </Link>
+                  </li>
+                  <li className="list-inline-item me-1">
+                    <Link to="" className="social-media-icons">
+                      <FeatherIcon
+                        icon="facebook"
+                        className="fea icon-sm"
+                      />
+                    </Link>
+                  </li>
+                  <li className="list-inline-item me-1">
+                    <Link to="" className="social-media-icons">
+                      <FeatherIcon
+                        icon="youtube"
+                        className="fea icon-sm"
                       />
                     </Link>
                   </li>
@@ -111,7 +109,7 @@ class Footer extends Component {
                       : "text-light footer-head"
                   }
                 >
-                  Company
+                  Informações
                 </h5>
                 <ul className="list-unstyled footer-list mt-4">
                   {this.state.grid1.map((grid, key) => (
@@ -131,7 +129,7 @@ class Footer extends Component {
               </Col>
 
               <Col
-                lg="3"
+                lg="2"
                 md="4"
                 xs="12"
                 className="mt-4 mt-sm-0 pt-2 pt-sm-0"
@@ -144,7 +142,7 @@ class Footer extends Component {
                       : "text-light footer-head"
                   }
                 >
-                  Usefull Links
+                  Download
                 </h5>
                 <ul className="list-unstyled footer-list mt-4">
                   {this.state.grid2.map((grid, key) => (
@@ -177,7 +175,7 @@ class Footer extends Component {
                       : "text-light footer-head"
                   }
                 >
-                  Usefull Links
+                  Sobre
                 </h5>
                 <ul className="list-unstyled footer-list mt-4">
                   {this.state.grid3.map((grid, key) => (
@@ -197,85 +195,29 @@ class Footer extends Component {
               </Col>
             </Row>
           </Container>
-        </footer> */}
-        {/* <footer className="footer footer-bar">
+        </footer>
+        <footer className="footer footer-bar">
           <Container className="text-center">
             <Row className="align-items-center">
               <Col sm="6">
                 <div className="text-sm-start">
                   <p className="mb-0">
-                    © 2020-21 Landrick. Develop by{" "}
-                    <i className="mdi mdi-heart text-danger"></i>{" "}
-                    <a
-                      href="https://themesbrand.com/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-reset"
-                    >
-                      Themesbrand
-                    </a>
-                    .
+                    © 2021 UPDATE - Todos Os Direitos Reservados
                   </p>
                 </div>
               </Col>
 
               <Col sm="6" className="mt-4 mt-sm-0 pt-2 pt-sm-0">
-                <ul className="list-unstyled text-sm-end mb-0">
-                  <li className="list-inline-item me-1">
-                    <Link to="">
-                      <img
-                        src={americanEx}
-                        className="avatar avatar-ex-sm"
-                        title="American Express"
-                        alt=""
-                      />
-                    </Link>
-                  </li>
-                  <li className="list-inline-item me-1">
-                    <Link to="">
-                      <img
-                        src={discover}
-                        className="avatar avatar-ex-sm"
-                        title="Discover"
-                        alt=""
-                      />
-                    </Link>
-                  </li>
-                  <li className="list-inline-item me-1">
-                    <Link to="">
-                      <img
-                        src={masterCard}
-                        className="avatar avatar-ex-sm"
-                        title="Master Card"
-                        alt=""
-                      />
-                    </Link>
-                  </li>
-                  <li className="list-inline-item me-1">
-                    <Link to="">
-                      <img
-                        src={paypal}
-                        className="avatar avatar-ex-sm"
-                        title="Paypal"
-                        alt=""
-                      />
-                    </Link>
-                  </li>
-                  <li className="list-inline-item me-1">
-                    <Link to="">
-                      <img
-                        src={visa}
-                        className="avatar avatar-ex-sm"
-                        title="Visa"
-                        alt=""
-                      />
-                    </Link>
-                  </li>
-                </ul>
+                <img
+                  src={payment}
+                  className="avatar avatar-ex-sm"
+                  title="American Express"
+                  alt=""
+                />
               </Col>
             </Row>
           </Container>
-        </footer> */}
+        </footer>
       </React.Fragment>
     );
   }

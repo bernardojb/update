@@ -30,24 +30,9 @@ class ShowCase extends Component {
     super(props);
     this.state = {
       features: [
-        { title: "Focado 100% em anestesiologia" },
-        { title: "Didático, prático, rápido" },
-        { title: "Conteúdo próprio e exclusivo" },
-      ],
-      features1: [
-        { title: "Digital Marketing Solutions for Tomorrow" },
-        { title: "Our Talented & Experienced Marketing Agency" },
-        { title: "Create your own skin to match your brand" },
-      ],
-      features2: [
-        { title: "Digital Marketing Solutions for Tomorrow" },
-        { title: "Our Talented & Experienced Marketing Agency" },
-        { title: "Create your own skin to match your brand" },
-      ],
-      features3: [
-        { title: "Digital Marketing Solutions for Tomorrow" },
-        { title: "Our Talented & Experienced Marketing Agency" },
-        { title: "Create your own skin to match your brand" },
+        { title: "Focado 100% em anestesiologia", icon: "crosshair" },
+        { title: "Didático, prático, rápido", icon: "clock" },
+        { title: "Conteúdo próprio e exclusivo", icon: "award" },
       ],
       activeTab: "1",
     };
@@ -71,7 +56,16 @@ class ShowCase extends Component {
 
             <Row className="align-items-center">
               <Col lg="5" md="6" className="mt-4 pt-2">
-                <img src={phone2Image} className="img-fluid mx-auto d-block" alt="" />
+                {/* <img src={phone2Image} className="img-fluid mx-auto d-block" alt="" /> */}
+                <div className="classic-app-image position-relative">
+                  <div className="bg-app-shape position-relative">
+                    <img
+                      src={phone2Image}
+                      className="img-fluid mx-auto d-block"
+                      alt=""
+                    />
+                  </div>
+                </div>
               </Col>
 
               <Col lg={7} md={6} className="mt-4 pt-2">
@@ -81,17 +75,17 @@ class ShowCase extends Component {
                     features={this.state.features}
                   >
                     <h1 className="mb-4">
-                    artigos, matérias e novidades <span className="text-primary">em formato de vídeos didáticos!</span>
+                      artigos, matérias e novidades <span className="text-primary">em formato de vídeos didáticos!</span>
                     </h1>
                   </SectionTitleLeft>
-                  <p className="mt-5 mb-0">Baixe Agora:</p>
+                  {/* <p className="mt-5 mb-0">Baixe Agora:</p>
                   <Link to="#" className="btn btn-primary mt-2 me-2">
                       <i className="uil uil-apple"></i> 
                       App Store
                     </Link>
                     <Link to="#" className="btn btn-primary mt-2 me-2">
                       <i className="uil uil-google-play"></i> Play Store
-                    </Link>
+                    </Link> */}
                 </div>
               </Col>
             </Row>

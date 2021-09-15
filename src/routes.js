@@ -387,12 +387,12 @@ const routes = [
   { path: "/index-classic-app", component: ClassicApp, isTopbarDark: true },
   { path: "/index-saas", component: Saas, isTopbarDark: true },
   //New Index
-  { path: "/home", component: Apps, isTopbarDark: true },
+  { path: "/", component: Apps, isTopbarDark: true },
   { path: "/sobre", component: Sobre, isTopbarDark: true },
   { path: "/termos-de-uso", component: Termos, isTopbarDark: true },
   { path: "/politica-de-privacidade", component: Politica, isTopbarDark: true },
   { path: "/ajuda", component: Ajuda, isTopbarDark: true },
-  { path: "/", component: Landing, isTopbarDark: false },
+  // { path: "/", component: Landing, isTopbarDark: false },
   //
   { path: "/index-agency", component: Agency, isTopbarDark: true },
   { path: "/index-studio", component: Studio, isTopbarDark: true },
@@ -522,9 +522,8 @@ const routes = [
   { path: "/index", component: Main, isTopbarDark: true },
 
   //Index root
-
   { path: "/root", component: Root, isWithoutLayout: true, exact: true },
-  { component: PageError, isWithoutLayout: true, exact: false },
+  { component: Apps, isTopbarDark: true},
 ];
 
 export default routes;

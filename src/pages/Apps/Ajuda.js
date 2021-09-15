@@ -171,8 +171,8 @@ class PageTerms extends Component {
                               </p>
                               <br/>
                               <div className="d-flex flex-column">
-                              <a className="text-primary">{'>'} Download iOS </a>
-                              <a className="text-primary">{'>'} Download Android </a>
+                              {/* <a className="text-primary">{'>'} Download iOS </a>
+                              <a className="text-primary">{'>'} Download Android </a> */}
                               </div>
                             </CardBody>
                           </Collapse>

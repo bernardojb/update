@@ -16,7 +16,7 @@ class Section extends Component {
               <Col lg={6} md={7}>
                 <div className="title-heading">
                   <Badge color="danger"> Novidade! </Badge>
-                  <h1 className="heading mb-3">
+                  <h1 className="mb-3 landing-title">
                   O APP QUE VAI TE MANTER ATUALIZADO SOBRE AS ÚLTIMAS PUBLICAÇÕES EM {" "}
                     <span className="text-primary">ANESTESIOLOGIA.</span>
                   </h1>
@@ -33,8 +33,13 @@ class Section extends Component {
                 </div>
               </Col>
               <Col lg={6} md={5} className="mt-4 pt-2 mt-sm-0 pt-sm-0">
-                <div className="text-md-end text-center ms-lg-4">
+                {/* <div className="text-md-end text-center ms-lg-4">
                   <img src={phoneImage} className="img-fluid" alt="" />
+                </div> */}
+                 <div className="classic-saas-image position-relative">
+                  <div className="bg-saas-shape position-relative">
+                    <img src={phoneImage} className="mx-auto d-block" alt="" />
+                  </div>
                 </div>
               </Col>
             </Row>

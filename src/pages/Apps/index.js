@@ -6,10 +6,9 @@ import { Link } from "react-router-dom";
 import Section from "./Section";
 import Falcao from "./Falcao";
 import ShowCase from "./ShowCase";
-import Pricing from "./Pricing";
 import Price from "./NewPricing";
-import Testi from "./Testi";
 import Contact from '../../pages/Pages/Contact/PageContactTwo'
+import Section2 from '../Classic Saas/section'
 
 class Index extends Component {
   constructor(props) {

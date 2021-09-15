@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import FeatherIcon from 'feather-icons-react';
 
 class SectionTitleLeft extends Component {
   render() {
@@ -15,14 +16,9 @@ class SectionTitleLeft extends Component {
           name="featurelines"
         >
           {this.props.features.map((feature, key) => (
-            <li key={key} className="mb-0">
+            <li key={key} className="mb-3">
               <span className="text-primary h5 me-2">
-                <i
-                  // className="uil uil-check-circle align-middle"
-                  className={
-                    "uil uil-check-circle align-middle" + this.props.class
-                  }
-                ></i>
+                <FeatherIcon icon={feature.icon} size="20" className="align-middle" />
               </span>
               {feature.title}
             </li>

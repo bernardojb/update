@@ -2,10 +2,25 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Badge } from "reactstrap";
 
+import ModalVideo from "react-modal-video";
+import "../../../node_modules/react-modal-video/scss/modal-video.scss";
+
 // Import images
 import falcaoImage from "../../assets/images/app/falcao.png";
 
 class Falcao extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isOpen: false,
+        };
+        this.openModal = this.openModal.bind(this);
+    }
+
+    openModal() {
+        this.setState({ isOpen: true });
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -21,7 +36,7 @@ class Falcao extends Component {
 
                                     <div className="mt-5">
                                         <div className="falcao-container">
-                                            <Col lg="8" md="12" className="falcao-texts">
+                                            <Col xl="8" lg="7" md="12" className="falcao-texts">
                                                 <div className="falcao-badges">
                                                     <Badge color="white"> MD. </Badge>
                                                     <Badge color="white"> MBA. </Badge>
@@ -35,9 +50,9 @@ class Falcao extends Component {
                                                     <p className="mb-0">Professor da UNIFESP - Universidade Federal de São Paulo</p>
                                                     <p className="pt-0" style={{ fontSize: '20px' }}>Anestesiologia, dor e medicina intensiva</p>
                                                 </div>
-                                                <Link to="#" className="btn btn-outline-falcao mt-4"> VER VÍDEO </Link>
+                                                <Link to="#" onClick={this.openModal} className="btn btn-outline-falcao lighttbox mt-4"> VER VÍDEO </Link>
                                             </Col>
-                                            <Col lg="4" md="12" className="falcao-image">
+                                            <Col xl="4" lg="5" md="12" className="falcao-image">
                                                 <img src={falcaoImage} className="" alt="" />
                                             </Col>
                                         </div>
@@ -46,6 +61,12 @@ class Falcao extends Component {
                             </Col>
                         </Row>
                     </Container>
+                    <ModalVideo
+                        channel="vimeo"
+                        isOpen={this.state.isOpen}
+                        videoId="99025203"
+                        onClose={() => this.setState({ isOpen: false })}
+                    />
                 </section>
             </React.Fragment>
         );
