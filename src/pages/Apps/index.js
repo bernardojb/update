@@ -8,7 +8,7 @@ import Section from "./Section";
 import Falcao from "./Falcao";
 import ShowCase from "./ShowCase";
 import Price from "./NewPricing";
-import Contact from '../../pages/Pages/Contact/PageContactTwo'
+import Contact from './PageContactTwo'
 import Section2 from '../Classic Saas/section'
 
 class Index extends Component {
