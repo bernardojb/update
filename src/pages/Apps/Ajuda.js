@@ -10,6 +10,7 @@ import {
   CardHeader,
   Collapse,
 } from "reactstrap";
+import {Helmet} from "react-helmet";
 
 import Contact from '../../pages/Pages/Contact/PageContactTwo'
 
@@ -109,6 +110,11 @@ class PageTerms extends Component {
   render() {
     return (
       <React.Fragment>
+        <Helmet>
+                <meta charSet="utf-8" />
+                <title>Ajuda | Update Anestesiologia</title>
+                <link rel="canonical" href="https://www.grupoupdate.com.br/sobre" />
+                </Helmet>
         {/* breadcrumb */}
         <PageBreadcrumb pathItems={this.state.pathItems} >
             <h1>perguntas frequentes</h1>

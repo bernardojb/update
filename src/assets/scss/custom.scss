@@ -254,6 +254,10 @@ a {
 }
 //  ** Falcão Desktop
 
+.header-btn{
+  display: none;
+}
+
 @media (min-width: 992px) {
   .falcao-container {
     width: 100%;
@@ -291,6 +295,10 @@ a {
         margin-left: unset;
       }
     }
+  }
+
+  .header-btn{
+    display: inline;
   }
 }
 
@@ -418,12 +426,17 @@ a {
   &::after{
     transform: rotate(40deg) !important;
     left: -25rem !important;
-    opacity: 6% !important;
+    background: transparent linear-gradient(90deg, #000000 0%, #052311 100%);
+    box-shadow: none !important;
+    border: none;
+
   }
 }
 .bg-saas-shape{
   &::after{
-    opacity: 6% !important;
+    background: transparent linear-gradient(90deg, #000000 0%, #052311 100%);
+    box-shadow: none !important;
+    border: none;
   }
 }
 

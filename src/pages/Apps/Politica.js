@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, Container, CardBody, Card } from "reactstrap";
+import {Helmet} from "react-helmet";
 
 //Import Icons
 import FeatherIcon from "feather-icons-react";
@@ -43,6 +44,11 @@ class Politica extends Component {
     render() {
         return (
             <React.Fragment>
+                <Helmet>
+                <meta charSet="utf-8" />
+                <title>Política de Privacidade | Update Anestesiologia</title>
+                <link rel="canonical" href="https://www.grupoupdate.com.br/politica-de-privacidade" />
+                </Helmet>
                 {/* breadcrumb */}
                 <PageBreadcrumb pathItems={this.state.pathItems}>
                     <h1>POLÍTICA DE PRIVACIDADE E TRATAMENTO DE DADOS</h1>

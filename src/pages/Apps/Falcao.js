@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Badge } from "reactstrap";
+import FeatherIcon from "feather-icons-react";
 
 import ModalVideo from "react-modal-video";
 import "../../../node_modules/react-modal-video/scss/modal-video.scss";
@@ -50,7 +51,9 @@ class Falcao extends Component {
                                                     <p className="mb-0">Professor da UNIFESP - Universidade Federal de São Paulo</p>
                                                     <p className="pt-0" style={{ fontSize: '20px' }}>Anestesiologia, dor e medicina intensiva</p>
                                                 </div>
-                                                <Link to="#" onClick={this.openModal} className="btn btn-outline-falcao lighttbox mt-4"> VER VÍDEO </Link>
+                                                <Link to="#" onClick={this.openModal} className="btn btn-outline-falcao lighttbox mt-4" style={{display:'flex', flexDirection:'row', justifyContent:'center'}} >
+                                                    <FeatherIcon icon="video" size={20} style={{marginRight:'10px'}} /> VER VÍDEO 
+                                                </Link>
                                             </Col>
                                             <Col xl="4" lg="5" md="12" className="falcao-image">
                                                 <img src={falcaoImage} className="" alt="" />
@@ -62,9 +65,9 @@ class Falcao extends Component {
                         </Row>
                     </Container>
                     <ModalVideo
-                        channel="vimeo"
+                        channel="youtube"
                         isOpen={this.state.isOpen}
-                        videoId="99025203"
+                        videoId="pjjK-E_QNBI"
                         onClose={() => this.setState({ isOpen: false })}
                     />
                 </section>

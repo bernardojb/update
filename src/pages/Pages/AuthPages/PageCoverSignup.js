@@ -12,6 +12,7 @@ import {
   CardBody,
 } from "reactstrap";
 import { AvForm, AvField } from "availity-reactstrap-validation";
+import { Helmet } from "react-helmet";
 
 //Import Icons
 import FeatherIcon from "feather-icons-react";
@@ -28,6 +29,11 @@ class PageCoverSignup extends Component {
   render() {
     return (
       <React.Fragment>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Registro | Update Anestesiologia</title>
+          <link rel="canonical" href="https://www.grupoupdate.com.br/registro" />
+        </Helmet>
         <div className="back-to-home rounded d-none d-sm-block">
           <Link to="/" className="btn btn-icon btn-primary">
             <i>
@@ -50,10 +56,10 @@ class PageCoverSignup extends Component {
                           <h4 className="card-title text-center">REGISTRO</h4>
                           <AvForm className="login-form mt-4">
                             <Row>
-                              <Col md="6">
+                              <Col md="12">
                                 <div className="mb-3">
                                   <Label className="form-label" for="firstname">
-                                    First name{" "}
+                                    Primeiro Nome{" "}
                                     <span className="text-danger">*</span>
                                   </Label>
                                   <div className="form-icon position-relative">
@@ -69,22 +75,22 @@ class PageCoverSignup extends Component {
                                     className="form-control ps-5"
                                     name="firstname"
                                     id="firstname"
-                                    placeholder="First Name"
+                                    placeholder="Primeiro nome"
                                     required
                                     errorMessage=""
                                     validate={{
                                       required: {
                                         value: true,
-                                        errorMessage: "Please enter first name",
+                                        errorMessage: "Por favor, digite seu primeiro nome",
                                       },
                                     }}
                                   />
                                 </div>
                               </Col>
-                              <Col md="6">
+                              <Col md="12">
                                 <div className="mb-3">
                                   <Label className="form-label" for="lastname">
-                                    Last name{" "}
+                                    Último nome{" "}
                                     <span className="text-danger">*</span>
                                   </Label>
                                   <div className="form-icon position-relative">
@@ -100,13 +106,13 @@ class PageCoverSignup extends Component {
                                     className="form-control ps-5"
                                     name="lastname"
                                     id="lastname"
-                                    placeholder="Last Name"
+                                    placeholder="Último nome"
                                     required
                                     errorMessage=""
                                     validate={{
                                       required: {
                                         value: true,
-                                        errorMessage: "Please enter first name",
+                                        errorMessage: "Por favor, digite seu último nome",
                                       },
                                     }}
                                   />
@@ -115,7 +121,7 @@ class PageCoverSignup extends Component {
                               <Col md="12">
                                 <div className="mb-3">
                                   <Label className="form-label" for="email">
-                                    Your Email{" "}
+                                    Seu email{" "}
                                     <span className="text-danger">*</span>
                                   </Label>
                                   <div className="form-icon position-relative">
@@ -131,18 +137,18 @@ class PageCoverSignup extends Component {
                                     className="form-control ps-5"
                                     name="email"
                                     id="email"
-                                    placeholder="Enter Email"
+                                    placeholder="Email"
                                     required
                                     errorMessage=""
                                     validate={{
                                       required: {
                                         value: true,
-                                        errorMessage: "Please enter your email",
+                                        errorMessage: "Por favor, digite seu email",
                                       },
                                       pattern: {
                                         value:
                                           "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$",
-                                        errorMessage: "E-Mail is not valid!",
+                                        errorMessage: "Email inválido!",
                                       },
                                     }}
                                   />
@@ -152,7 +158,7 @@ class PageCoverSignup extends Component {
                               <Col md="12">
                                 <div className="mb-3">
                                   <Label className="form-label" for="password">
-                                    Password{" "}
+                                    Sua senha{" "}
                                     <span className="text-danger">*</span>
                                   </Label>
                                   <div className="form-icon position-relative">
@@ -168,18 +174,18 @@ class PageCoverSignup extends Component {
                                     className="form-control ps-5"
                                     name="password"
                                     id="password"
-                                    placeholder="Enter password"
+                                    placeholder="Senha"
                                     required
                                     errorMessage=""
                                     validate={{
                                       required: {
                                         value: true,
-                                        errorMessage: "Please enter Password",
+                                        errorMessage: "Por favor, digite uma senha",
                                       },
                                       minLength: {
                                         value: 6,
                                         errorMessage:
-                                          "Your password must be between 6 and 8 characters",
+                                          "Sua senha deve ter no mínimo 6 caracteres",
                                       },
                                       maxLength: {
                                         value: 16,
@@ -190,8 +196,38 @@ class PageCoverSignup extends Component {
                                   />
                                 </div>
                               </Col>
-
                               <Col md="12">
+                                <div className="mb-3">
+                                  <Label className="form-label" for="lastname">
+                                    Endereço{" "}
+                                    <span className="text-danger">*</span>
+                                  </Label>
+                                  <div className="form-icon position-relative">
+                                    <i>
+                                      <FeatherIcon
+                                        icon="user-check"
+                                        className="fea icon-sm icons"
+                                      />
+                                    </i>
+                                  </div>
+                                  <AvField
+                                    type="text"
+                                    className="form-control ps-5"
+                                    name="adress"
+                                    id="adress"
+                                    placeholder="Seu endereço"
+                                    required
+                                    errorMessage=""
+                                    validate={{
+                                      required: {
+                                        value: true,
+                                        errorMessage: "Por favor, digite seu endereço",
+                                      },
+                                    }}
+                                  />
+                                </div>
+                              </Col>
+                              {/* <Col md="12">
                                 <div className="mb-3">
                                   <div className="form-check">
                                     <Input
@@ -210,15 +246,15 @@ class PageCoverSignup extends Component {
                                     </Label>
                                   </div>
                                 </div>
-                              </Col>
+                              </Col> */}
                               <Col md="12">
                                 <div className="d-grid">
                                   <Button color="primary">
-                                    Register
-                                </Button>
+                                    Próximo
+                                  </Button>
                                 </div>
                               </Col>
-                              <Col lg="12" className="mt-4 text-center">
+                              {/* <Col lg="12" className="mt-4 text-center">
                                 <h6>Or Signup With</h6>
                                 <Row>
                                   <div className="col-6 mt-3">
@@ -233,17 +269,17 @@ class PageCoverSignup extends Component {
                                     </div>
                                   </div>
                                 </Row>
-                              </Col>
+                              </Col> */}
                               <div className="mx-auto">
                                 <p className="mb-0 mt-3">
                                   <small className="text-dark me-2">
-                                    Already have an account ?
+                                    Já tem uma conta?
                                   </small>{" "}
                                   <Link
                                     to="/auth-cover-login"
-                                    className="text-dark fw-bold"
+                                    className="text-primary fw-bold"
                                   >
-                                    Sign In
+                                    Login
                                   </Link>
                                 </p>
                               </div>

@@ -61,23 +61,23 @@ class Footer extends Component {
                 </p>
                 <ul className={this.props.isLight ? "list-unstyled social-icon social mb-0 m t-4" : "list-unstyled social-icon foot-social-icon mb-0 mt-4"}>
                   <li className="list-inline-item me-1">
-                    <Link to="" className="social-media-icons">
+                    <Link to="https://www.instagram.com/update.anestesiologia/" className="social-media-icons" target="_blank">
                       <FeatherIcon
                         icon="instagram"
                         className="fea icon-sm"
                       />
                     </Link>
                   </li>
-                  <li className="list-inline-item me-1">
+                  {/* <li className="list-inline-item me-1">
                     <Link to="" className="social-media-icons">
                       <FeatherIcon
                         icon="linkedin"
                         className="fea icon-sm"
                       />
                     </Link>
-                  </li>
+                  </li> */}
                   <li className="list-inline-item me-1">
-                    <Link to="" className="social-media-icons">
+                    <Link to="https://www.facebook.com/update.anestesiologia" className="social-media-icons" target="_blank">
                       <FeatherIcon
                         icon="facebook"
                         className="fea icon-sm"
@@ -85,7 +85,7 @@ class Footer extends Component {
                     </Link>
                   </li>
                   <li className="list-inline-item me-1">
-                    <Link to="" className="social-media-icons">
+                    <Link to="https://www.youtube.com/channel/UCYj9LGmNHSefNYHrgXQKARw/featured" className="social-media-icons" target="_blank">
                       <FeatherIcon
                         icon="youtube"
                         className="fea icon-sm"
@@ -207,7 +207,7 @@ class Footer extends Component {
                 </div>
               </Col>
 
-              <Col sm="6" className="mt-4 mt-sm-0 pt-2 pt-sm-0">
+              <Col sm="6" className="mt-4 mt-sm-0 pt-2 pt-sm-0 d-flex justify-content-end">
                 <img
                   src={payment}
                   className="avatar avatar-ex-sm"
