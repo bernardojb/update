@@ -55,20 +55,18 @@ class ShowCase extends Component {
             /> */}
 
             <Row className="align-items-center">
-              <Col lg="5" md="6" className="mt-4 pt-2">
+              <Col lg="5" md="6" className="mt-4 pt-2 order-md-1 order-2">
                 {/* <img src={phone2Image} className="img-fluid mx-auto d-block" alt="" /> */}
                 <div className="classic-app-image position-relative">
-                  <div className="bg-app-shape position-relative">
                     <img
                       src={phone2Image}
                       className="img-fluid mx-auto d-block"
                       alt=""
                     />
-                  </div>
                 </div>
               </Col>
 
-              <Col lg={7} md={6} className="mt-4 pt-2">
+              <Col lg={7} md={6} className="mt-4 pt-2 order-md-2 order-1">
                 <div className="section-title ms-lg-5">
                   <SectionTitleLeft
                     desc="Faça o download do UPDATE e veja na prática como a nossa ferramenta pode te ajudar com um conteúdo prático."
