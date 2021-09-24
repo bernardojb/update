@@ -1,6 +1,7 @@
 // React Basic and Bootstrap
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import {Helmet} from "react-helmet";
 
 // import generic component
 import Section from "./Section";
@@ -38,6 +39,11 @@ class Index extends Component {
   render() {
     return (
       <React.Fragment>
+         <Helmet>
+                <meta charSet="utf-8" />
+                <title>Home | Update Anestesiologia</title>
+                <link rel="canonical" href="https://www.grupoupdate.com.br/" />
+            </Helmet>
         {/* section */}
         <Section />
 

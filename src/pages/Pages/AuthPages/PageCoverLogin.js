@@ -12,6 +12,7 @@ import {
   CardBody,
 } from "reactstrap";
 import { AvForm, AvField } from "availity-reactstrap-validation";
+import {Helmet} from "react-helmet";
 
 //Import Icons
 import FeatherIcon from "feather-icons-react";
@@ -28,6 +29,11 @@ class PageCoverLogin extends Component {
   render() {
     return (
       <React.Fragment>
+         <Helmet>
+                <meta charSet="utf-8" />
+                <title>Login | Update Anestesiologia</title>
+                <link rel="canonical" href="https://www.grupoupdate.com.br/login" />
+            </Helmet>
         <div className="back-to-home rounded d-none d-sm-block">
           <Link to="/" className="btn btn-icon btn-soft-primary">
             <i>
@@ -76,12 +82,12 @@ class PageCoverLogin extends Component {
                                     validate={{
                                       required: {
                                         value: true,
-                                        errorMessage: "Please enter your email",
+                                        errorMessage: "Por favor, digite seu e-mail",
                                       },
                                       pattern: {
                                         value:
                                           "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$",
-                                        errorMessage: "E-Mail is not valid!",
+                                        errorMessage: "E-mail inválido",
                                       },
                                     }}
                                   />
@@ -113,12 +119,12 @@ class PageCoverLogin extends Component {
                                     validate={{
                                       required: {
                                         value: true,
-                                        errorMessage: "Please enter Password",
+                                        errorMessage: "Por favor, digite sua senha",
                                       },
                                       minLength: {
                                         value: 6,
                                         errorMessage:
-                                          "Your password must be between 6 and 8 characters",
+                                          "Sua senha deve ter no mínimo 6 caracteres",
                                       },
                                       maxLength: {
                                         value: 16,
