@@ -58,13 +58,11 @@ class ShowCase extends Component {
               <Col lg="5" md="6" className="mt-4 pt-2 order-md-1 order-2">
                 {/* <img src={phone2Image} className="img-fluid mx-auto d-block" alt="" /> */}
                 <div className="classic-app-image position-relative">
-                  <div className="bg-app-shape position-relative">
                     <img
                       src={phone2Image}
                       className="img-fluid mx-auto d-block"
                       alt=""
                     />
-                  </div>
                 </div>
               </Col>
 
