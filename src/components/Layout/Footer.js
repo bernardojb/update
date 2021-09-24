@@ -37,6 +37,16 @@ class Footer extends Component {
     };
   }
 
+  openInsta() {
+    window.location.href = "https://www.instagram.com/update.anestesiologia/";
+  }
+  openFace() {
+    window.location.href = "https://www.facebook.com/update.anestesiologia";
+  }
+  openYt() {
+    window.location.href = "https://www.youtube.com/channel/UCYj9LGmNHSefNYHrgXQKARw/featured";
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -61,7 +71,7 @@ class Footer extends Component {
                 </p>
                 <ul className={this.props.isLight ? "list-unstyled social-icon social mb-0 m t-4" : "list-unstyled social-icon foot-social-icon mb-0 mt-4"}>
                   <li className="list-inline-item me-1">
-                    <Link to="https://www.instagram.com/update.anestesiologia/" className="social-media-icons" target="_blank">
+                    <Link to="" className="social-media-icons" onClick={this.openInsta} target="_blank">
                       <FeatherIcon
                         icon="instagram"
                         className="fea icon-sm"
@@ -77,7 +87,7 @@ class Footer extends Component {
                     </Link>
                   </li> */}
                   <li className="list-inline-item me-1">
-                    <Link to="https://www.facebook.com/update.anestesiologia" className="social-media-icons" target="_blank">
+                    <Link to="" className="social-media-icons" onClick={this.openFace} target="_blank">
                       <FeatherIcon
                         icon="facebook"
                         className="fea icon-sm"
@@ -85,7 +95,7 @@ class Footer extends Component {
                     </Link>
                   </li>
                   <li className="list-inline-item me-1">
-                    <Link to="https://www.youtube.com/channel/UCYj9LGmNHSefNYHrgXQKARw/featured" className="social-media-icons" target="_blank">
+                    <Link to="" className="social-media-icons" onClick={this.openYt} target="_blank">
                       <FeatherIcon
                         icon="youtube"
                         className="fea icon-sm"
