@@ -195,7 +195,7 @@ class PageCoverLogin extends Component {
                                     Não possui uma conta?
                                   </small>{" "}
                                   <Link
-                                    to="page-cover-signup"
+                                    to="/registro"
                                     className="text-dark fw-bold"
                                   ><span className="text-primary">
                                     Registrar
