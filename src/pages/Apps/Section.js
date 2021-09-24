@@ -70,8 +70,10 @@ class Section extends Component {
               </Col>
 
               <Col lg="5" md="6" className="mt-4 pt-2 mt-sm-0 pt-sm-0">
-                <div className="classic-saas-image position-relative">
-                  <img src={phoneImage} className="mx-auto d-block" alt="" />
+              <div className="classic-saas-image position-relative">
+                  <div className="bg-saas-shape position-relative">
+                    <img src={phoneImage} className="mx-auto d-block section-img" alt="" />
+                  </div>
                 </div>
               </Col>
             </Row>

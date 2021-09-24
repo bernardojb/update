@@ -429,7 +429,7 @@ a {
 .bg-app-shape{
   &::after{
     transform: rotate(40deg) !important;
-    left: -25rem !important;
+    left: -42rem !important;
     background: transparent linear-gradient(90deg, #000000 0%, #052311 100%);
     box-shadow: none !important;
     border: none;
@@ -446,4 +446,22 @@ a {
 
 .landing-title{
   font-size: 49px !important;
+}
+
+.section-img{
+  display: flex;
+  width: 100%;
+}
+
+@media (min-width: 576px){
+  .bg-app-shape{
+    &::after{
+      left: -25rem !important;  
+    }
+  }
+  
+}
+
+.showcase{
+  z-index: 0 !important;
 }
