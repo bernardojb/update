@@ -30,8 +30,8 @@ class Topbar extends Component {
       dropdownOpenShop: false,
       navLinks: [
         //Note : each child and nested child must have unique id
-        { id: 1, title: "Login", link: "/login" },
-        { id: 2, title: "Registrar", link: "/registro" },
+        { id: 1, title: "Login", link: "/login", class: "login-header" },
+        { id: 2, title: "Registrar", link: "/registro", class: "registro-header" },
       ],
       wishlistModal: false,
       dropdownIsOpen: false,
@@ -144,14 +144,7 @@ class Topbar extends Component {
                   <img src={logoUpdate} height="24" className="logo-dark-mode" alt="" />
                 </a>
               ) :
-                // <a className="logo" href="/">
-                //   <span className="logo-light-mode">
-                //     <img src={logoUpdate} className="l-dark" height="24" alt="" />
-                //     <img src={logoUpdate} className="l-light" height="24" alt="" />
-                //   </span>
-                //   <img src={logoUpdate} height="24" className="logo-dark-mode" alt="" />
-                // </a>
-                <span></span>
+              <span></span>
               }
             </div>
             {(() => {
@@ -309,7 +302,7 @@ class Topbar extends Component {
                   ) : (
                     <li key={key}>
                       {this.props.hasDarkTopBar ? (
-                        <Link to={navLink.link}>{navLink.title}</Link>
+                        <Link className={navLink.class} to={navLink.link}>{navLink.title}</Link>
                       ) : (
                         <span></span>
                       )
