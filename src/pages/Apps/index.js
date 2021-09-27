@@ -1,7 +1,7 @@
 // React Basic and Bootstrap
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 
 // import generic component
 import Section from "./Section";
@@ -10,6 +10,7 @@ import ShowCase from "./ShowCase";
 import Price from "./NewPricing";
 import Contact from './PageContactTwo'
 import Section2 from '../Classic Saas/section'
+import CookieConsent from 'react-cookie-consent';
 
 class Index extends Component {
   constructor(props) {
@@ -39,11 +40,20 @@ class Index extends Component {
   render() {
     return (
       <React.Fragment>
-         <Helmet>
-                <meta charSet="utf-8" />
-                <title>Home | Update Anestesiologia</title>
-                <link rel="canonical" href="https://www.grupoupdate.com.br/" />
-            </Helmet>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Home | Update Anestesiologia</title>
+          <link rel="canonical" href="https://www.grupoupdate.com.br/" />
+        </Helmet>
+        <CookieConsent 
+        style={{ backgroundColor:'#080808' }}
+        buttonStyle={{ backgroundColor:'#1AC45E', color:'white' }}
+        buttonText="Entendi!"
+        >
+          O Update utiliza cookies para melhorar sua experiência na plataforma. Ao continuar navegando você concorda com nossos <Link className="text-primary" to="/termos-de-uso">"Termos de Serviço"</Link> e <Link className="text-primary" to="/politica-de-privacidade">"Política de Privacidade"</Link>.
+          </CookieConsent>
+
+
         {/* section */}
         <Section />
 
