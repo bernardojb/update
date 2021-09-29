@@ -52,6 +52,7 @@ const Contato = () => {
                       {contactVisible ? (
                       <Alert
                       color="primary"
+                      style={{backgroundColor:'#008d38'}}
                       isOpen={contactVisible}
                     >
                       Email enviado com sucesso!
