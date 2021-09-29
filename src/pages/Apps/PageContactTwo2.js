@@ -17,9 +17,8 @@ import useForm from './useForm';
 import validate from './validateInfo';
 
 const Contato = () => {
-    const { isSubmitting, handleChange, values, handlePress, errors, setValues } =
+    const { isSubmitting, handleChange, values, handlePress, errors, setValues, contactVisible } =
         useForm(validate);
-
 
     // function resetInfos() {
     //     setValues({
@@ -80,6 +79,7 @@ const Contato = () => {
                               onChange={handleChange}
                               required
                             />
+                            {errors.name && <p className="validator-msg text-danger">{errors.name}</p>}
                           </div>
                         </Col>
                         <Col lg={6}>
@@ -105,11 +105,12 @@ const Contato = () => {
                               value={values.email}
                               onChange={handleChange}
                             />
+                            {errors.email && <p className="validator-msg text-danger">{errors.email}</p>}
                           </div>
                         </Col>
                         <Col md={12}>
                           <div className="mb-3">
-                            <Label className="form-label">Assunto</Label>
+                            <Label className="form-label">Assunto<span className="text-danger"> *</span></Label>
                             <div className="form-icon position-relative">
                               {/* <i>
                                 <FeatherIcon
@@ -123,15 +124,16 @@ const Contato = () => {
                               id="subject"
                               className="form-control"
                               placeholder="Como podemos te ajudar?"
-                              required
                               value={values.subject}
+                              required
                               onChange={handleChange}
                             />
+                            {errors.subject && <p className="validator-msg text-danger">{errors.subject}</p>}
                           </div>
                         </Col>
                         <Col lg={12}>
                           <div className="mb-3">
-                            <Label className="form-label">Mensagem</Label>
+                            <Label className="form-label">Mensagem<span className="text-danger"> *</span></Label>
                             <Input
                               name="message"
                               id="message"
@@ -141,6 +143,7 @@ const Contato = () => {
                               value={values.message}
                               onChange={handleChange}
                             />
+                            {errors.message && <p className="validator-msg text-danger">{errors.message}</p>}
                           </div>
                         </Col>
                       </Row>

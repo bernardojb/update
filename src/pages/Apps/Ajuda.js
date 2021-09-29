@@ -12,7 +12,7 @@ import {
 } from "reactstrap";
 import {Helmet} from "react-helmet";
 
-import Contact from '../../pages/Pages/Contact/PageContactTwo'
+import Contact from './PageContactTwo2'
 
 //Import Icons
 import FeatherIcon from "feather-icons-react";
@@ -157,7 +157,7 @@ class PageTerms extends Component {
                               id="headingOne"
                             >
                               <h6 className="title mb-0">
-                              Onde posso fazer o download do app
+                              Onde posso fazer o download do app?
                                 <i
                                   className={
                                     this.state.col1
@@ -171,9 +171,7 @@ class PageTerms extends Component {
                           <Collapse isOpen={this.state.col1}>
                             <CardBody>
                               <p className="mb-0 faq-ans">
-                                There are many variations of passages of Lorem
-                                Ipsum available, but the majority have suffered
-                                alteration in some form.
+                              Nosso app ainda está em desenvolvimento! Acompanhe nossas redes sociais para ficar por dentro das novidades. <a className="text-primary" target="_blank" href="https://www.instagram.com/update.anestesiologia/">@update.anestesiologia</a>
                               </p>
                               <br/>
                               <div className="d-flex flex-column">
@@ -199,7 +197,7 @@ class PageTerms extends Component {
                               id="headingTwo"
                             >
                               <h6 className="title mb-0">
-                                What is the main process open account ?
+                                Quais as formas de pagamento?
                                 <i
                                   className={
                                     this.state.col2
@@ -213,9 +211,7 @@ class PageTerms extends Component {
                           <Collapse isOpen={this.state.col2}>
                             <CardBody>
                               <p className="mb-0 faq-ans">
-                                There are many variations of passages of Lorem
-                                Ipsum available, but the majority have suffered
-                                alteration in some form.
+                              Aceitamos os seguintes cartões de crédito: American Express, Diners, Elo, MasterCard, Visa.
                               </p>
                             </CardBody>
                           </Collapse>
@@ -236,7 +232,7 @@ class PageTerms extends Component {
                               id="headingfive"
                             >
                               <h6 className="title mb-0">
-                                How to make unlimited data entry ?
+                              Quais planos disponíveis?
                                 <i
                                   className={
                                     this.state.col3
@@ -250,9 +246,7 @@ class PageTerms extends Component {
                           <Collapse isOpen={this.state.col3}>
                             <CardBody>
                               <p className="mb-0 faq-ans">
-                                There are many variations of passages of Lorem
-                                Ipsum available, but the majority have suffered
-                                alteration in some form.
+                              Plano mensal, Semestral e Anual!
                               </p>
                             </CardBody>
                           </Collapse>
@@ -273,63 +267,14 @@ class PageTerms extends Component {
                               id="headingfive"
                             >
                               <h6 className="title mb-0">
-                                Is{" "}
-                                <span className="text-primary">Landrick</span>{" "}
-                                safer to use with my account ?
-                                <i
-                                  className={
-                                    this.state.col4
-                                      ? "mdi mdi-chevron-up float-end"
-                                      : "mdi mdi-chevron-down float-end"
-                                  }
-                                ></i>
+                              O app está disponível em quais plataformas?
                               </h6>
                             </CardHeader>
                           </Link>
                           <Collapse isOpen={this.state.col4}>
                             <CardBody>
                               <p className="mb-0 faq-ans">
-                                There are many variations of passages of Lorem
-                                Ipsum available, but the majority have suffered
-                                alteration in some form.
-                              </p>
-                            </CardBody>
-                          </Collapse>
-                        </Card>
-
-                        <Card className="border-0 rounded">
-                          <Link
-                            to="#"
-                            onClick={this.t_col5}
-                            className={
-                              this.state.col5
-                                ? "faq position-relative text-primary"
-                                : "faq position-relative text-dark"
-                            }
-                          >
-                            <CardHeader
-                              className="border-0 bg-custom p-3"
-                              id="headingfive"
-                            >
-                              <h6 className="title mb-0">
-                                {" "}
-                                How can i contact your technical team ?
-                                <i
-                                  className={
-                                    this.state.col5
-                                      ? "mdi mdi-chevron-up float-end"
-                                      : "mdi mdi-chevron-down float-end"
-                                  }
-                                ></i>
-                              </h6>
-                            </CardHeader>
-                          </Link>
-                          <Collapse isOpen={this.state.col5}>
-                            <CardBody>
-                              <p className="mb-0 faq-ans">
-                                There are many variations of passages of Lorem
-                                Ipsum available, but the majority have suffered
-                                alteration in some form.
+                              O app será disponibilizado para iOS e Android!
                               </p>
                             </CardBody>
                           </Collapse>

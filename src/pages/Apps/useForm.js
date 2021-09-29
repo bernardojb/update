@@ -9,6 +9,8 @@ const useForm = validate => {
     });
 
     const [isSubmitting, setSubmitting] = useState(false)
+    const [contactVisible, setContactVisible] = useState(false)
+    
 
     const [errors, setErrors] = useState({});
 
@@ -27,11 +29,14 @@ const useForm = validate => {
 
     const handlePress = e => {
         console.log(isSubmitting)
+        console.log(contactVisible)
+        
         e.preventDefault();
 
         setErrors(validate(values));
 
         setSubmitting(true);
+        setContactVisible(true);
         
         fetch(
             '../../../api/send-email',

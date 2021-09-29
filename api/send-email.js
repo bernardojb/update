@@ -3,29 +3,29 @@ require('dotenv').config()
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SG_API);
 
-class LepyValidator {
-    constructor() {
-        this.rules = {
-            name: new SimpleValidator(2),
-            email: new EmailValidator(),
-            subject: new SimpleValidator(2),
-            message: new SimpleValidator()
-        }
-    }
+// class LepyValidator {
+//     constructor() {
+//         this.rules = {
+//             name: new SimpleValidator(2),
+//             email: new EmailValidator(),
+//             subject: new SimpleValidator(2),
+//             message: new SimpleValidator()
+//         }
+//     }
 
-    cycle(fields) {
-        let report = { fields: {}, valid: true }
+//     cycle(fields) {
+//         let report = { fields: {}, valid: true }
 
-        Object.entries(this.rules).forEach((entry) => {
-            let [key, val] = entry
-            report.fields[key] = val.validate(fields[key])
-            console.log(val.validate(fields[key]))
-            if(val.validate(fields[key]) === false) report.valid = false
-        })
+//         Object.entries(this.rules).forEach((entry) => {
+//             let [key, val] = entry
+//             report.fields[key] = val.validate(fields[key])
+//             console.log(val.validate(fields[key]))
+//             if(val.validate(fields[key]) === false) report.valid = false
+//         })
 
-        return report
-    }
-}
+//         return report
+//     }
+// }
 
 /* ================================== */
 class ValidatorRule {
