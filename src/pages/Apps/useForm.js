@@ -9,6 +9,7 @@ const useForm = validate => {
     });
 
     const [isSubmitting, setSubmitting] = useState(false)
+    const [contactVisible, setContactVisible] = useState(false)
 
     const [errors, setErrors] = useState({});
 
@@ -54,6 +55,7 @@ const useForm = validate => {
             })
             .finally(() => {
                 setSubmitting(false);
+                setContactVisible(true)
             });
     };
 
@@ -66,6 +68,7 @@ const useForm = validate => {
         modalSuccess,
         modalFail,
         setValues,
+        contactVisible
         };
 
 };
