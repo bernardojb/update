@@ -268,6 +268,13 @@ class PageTerms extends Component {
                             >
                               <h6 className="title mb-0">
                               O app está disponível em quais plataformas?
+                                <i
+                                  className={
+                                    this.state.col4
+                                      ? "mdi mdi-chevron-up float-end"
+                                      : "mdi mdi-chevron-down float-end"
+                                  }
+                                ></i>
                               </h6>
                             </CardHeader>
                           </Link>
@@ -279,6 +286,7 @@ class PageTerms extends Component {
                             </CardBody>
                           </Collapse>
                         </Card>
+
                       </div>
                     </div>
 

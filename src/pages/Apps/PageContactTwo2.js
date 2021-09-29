@@ -48,17 +48,16 @@ const Contato = () => {
               >
                 <Card className="custom-form rounded shadow border-0">
                   <CardBody>
-                    {/* <Alert
+                      
+                      {contactVisible ? (
+                      <Alert
                       color="primary"
-                      isOpen={this.state.Contactvisible}
-                      toggle={() => {
-                        this.setState({
-                          Contactvisible: !this.state.Contactvisible,
-                        });
-                      }}
                     >
                       Contact details send successfully.
-                    </Alert> */}
+                    </Alert>
+                    ) : (
+                        <span></span>
+                    )}
                     <div
                       name="contact-form"
                       id="contact-form"
