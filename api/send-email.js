@@ -9,7 +9,7 @@ class LepyValidator {
             name: new SimpleValidator(5),
             email: new EmailValidator(),
             subject: new SimpleValidator(5),
-            message: new SimpleValidator()
+            message: new SimpleValidator(10)
         }
     }
 
