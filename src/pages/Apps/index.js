@@ -8,7 +8,7 @@ import Section from "./Section";
 import Falcao from "./Falcao";
 import ShowCase from "./ShowCase";
 import Price from "./NewPricing";
-import Contact from './PageContactTwo'
+import Contact from './PageContactTwo2'
 import Section2 from '../Classic Saas/section'
 import CookieConsent from 'react-cookie-consent';
 

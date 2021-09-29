@@ -21,20 +21,20 @@ const Contato = () => {
         useForm(validate);
 
 
-    function resetInfos() {
-        setValues({
-            ...values,
-            name: '',
-            email: '',
-            subject: '',
-            message: ''
-        })
-    }
+    // function resetInfos() {
+    //     setValues({
+    //         ...values,
+    //         name: '',
+    //         email: '',
+    //         subject: '',
+    //         message: ''
+    //     })
+    // }
 
-    resetInfos();
+    // resetInfos();
 
     return (
-        <React.Fragment>
+        <div>
         <section className="section pt-5 mt-4">
 
           <h1 className="text-center">Contato</h1>
@@ -49,7 +49,7 @@ const Contato = () => {
               >
                 <Card className="custom-form rounded shadow border-0">
                   <CardBody>
-                    <Alert
+                    {/* <Alert
                       color="primary"
                       isOpen={this.state.Contactvisible}
                       toggle={() => {
@@ -59,7 +59,7 @@ const Contato = () => {
                       }}
                     >
                       Contact details send successfully.
-                    </Alert>
+                    </Alert> */}
                     <div
                       name="contact-form"
                       id="contact-form"
@@ -184,13 +184,12 @@ const Contato = () => {
                     </div>
                     <div className="flex-1 content">
                       <h6 className="title mb-0">Email</h6>
-                      <Link
-                        to=""
-                        onClick={this.sendMail}
+                      <a
+                        href="mailto:contato@grupoupdate.com.br"
                         className="text-primary"
                       >
                         contato@grupoupdate.com.br
-                      </Link>
+                      </a>
                     </div>
                   </div>
 
@@ -205,13 +204,12 @@ const Contato = () => {
                     </div>
                     <div className="flex-1 content">
                       <h6 className="title mb-0">Telefone</h6>
-                      <Link
-                        to="#"
-                        onClick={this.callNumber}
+                      <a
+                        href="tel:+5511999998181"
                         className="text-primary "
                       >
                         +55 (11) 9 9999-8181
-                      </Link>
+                      </a>
                     </div>
                   </div>
 
@@ -226,15 +224,14 @@ const Contato = () => {
                     </div>
                     <div className="flex-1 content">
                       <h6 className="title mb-0">Endereço</h6>
-                      <Link
-                        to=""
-                        onClick={this.openMap}
-                        className="video-play-icon  text-primary"
+                      <a
+                        href="https://goo.gl/maps/u4TcwJZtMfisZWXM6"
+                        className="video-play-icon text-primary"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
                         Ver no Google Maps
-                      </Link>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -242,7 +239,7 @@ const Contato = () => {
             </Row>
           </Container>
         </section>
-      </React.Fragment>
+      </div>
     )
 };
 
