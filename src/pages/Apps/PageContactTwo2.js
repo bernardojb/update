@@ -53,12 +53,11 @@ const Contato = () => {
                       <Alert
                       color="primary"
                       isOpen={contactVisible}
-                      toggle={}
                     >
                       Email enviado com sucesso!
                     </Alert>
                     ) : (
-                      null
+                      <span></span>
                     )}
                     <div
                       name="contact-form"
