@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@iconscout/react-unicons": "^1.1.6",
+    "@sendgrid/mail": "^7.4.7",
     "aos": "^2.3.4",
     "availity-reactstrap-validation": "^2.7.1",
     "bootstrap": "^5.0.0-beta2",

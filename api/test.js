@@ -6,7 +6,7 @@ let req = {
     body: {
         name: 'Teste',
         email: 'teste@gmail.com',
-        phone: '(11) 12345-6789',
+        subject: 'assunto teste',
         message: 'uhapodiushdpiaushdpiaushd'
     }
 }

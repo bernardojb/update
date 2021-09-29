@@ -12,84 +12,37 @@ import {
   Card,
   CardBody,
 } from "reactstrap";
-
-//Import Icons
 import FeatherIcon from "feather-icons-react";
+import useForm from './useForm';
+import validate from './validateInfo';
 
-class PageContactTwo extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      Contactvisible: false,
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    };
+const Contato = () => {
+    const { isSubmitting, handleChange, values, handlePress, errors, setValues } =
+        useForm(validate);
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
 
-    this.sendMail.bind(this);
-    this.callNumber.bind(this);
-  }
+    function resetInfos() {
+        setValues({
+            ...values,
+            //solução
+            app: null,
+            website: null,
+            branding: null,
+            uiux: null,
 
-  handleSubmit(event) {
-    event.preventDefault();
-    this.setState({ Contactvisible: true });
-    alert('Um nome foi enviado: ' + this.state.value);
-    console.log(this.state);
-  }
+            //orcamento
+            orcamento: '',
 
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
-
-  componentDidMount() {
-    document.getElementById("topnav").classList.add("bg-white");
-    window.addEventListener("scroll", this.scrollNavigation, true);
-  }
-
-  componentDidUpdate() {
-    console.log('nome >>>>>' + this.state.name);
-    console.log('email >>>>>' + this.state.email);
-    console.log('assunto >>>>>' +this.state.subject);
-    console.log('mensagem >>>>>' +this.state.message);
-  }
-
-  // Make sure to remove the DOM listener when the component is unmounted.
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.scrollNavigation, true);
-  }
-
-  scrollNavigation = () => {
-    var doc = document.documentElement;
-    var top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
-    if (top > 80) {
-      document.getElementById("topnav").classList.add("nav-sticky");
-    } else {
-      document.getElementById("topnav").classList.remove("nav-sticky");
+            //inputs
+            name: '',
+            email: '',
+            phone: '',
+            message: ''
+        })
     }
-  };
-
-  sendMail() {
-    window.location.href = "mailto:contato@grupoupdate.com.br";
-  }
-
-  callNumber() {
-    window.location.href = "tel:+5511999998181";
-  }
-
-  openMap() {
-    window.location.href = "https://goo.gl/maps/u4TcwJZtMfisZWXM6";
-  }
-
-  render() {
 
     return (
-      <React.Fragment>
+        <React.Fragment>
         <section className="section pt-5 mt-4">
 
           <h1 className="text-center">Contato</h1>
@@ -133,8 +86,8 @@ class PageContactTwo extends Component {
                               type="text"
                               className="form-control "
                               placeholder="Primeiro Nome"
-                              value={this.state.name}
-                              onChange={this.handleChange}
+                              value={values.name}
+                              onChange={handleChange}
                               required
                             />
                           </div>
@@ -159,8 +112,8 @@ class PageContactTwo extends Component {
                               className="form-control"
                               placeholder="Email"
                               required
-                              value={this.state.email}
-                              onChange={this.handleChange}
+                              value={values.email}
+                              onChange={handleChange}
                             />
                           </div>
                         </Col>
@@ -181,8 +134,8 @@ class PageContactTwo extends Component {
                               className="form-control"
                               placeholder="Como podemos te ajudar?"
                               required
-                              value={this.state.subject}
-                              onChange={this.handleChange}
+                              value={values.subject}
+                              onChange={handleChange}
                             />
                           </div>
                         </Col>
@@ -195,9 +148,8 @@ class PageContactTwo extends Component {
                               className="form-control"
                               placeholder="Qual a sua dificuldade?"
                               required
-                              value={this.state.message}
-                              onChange={this.handleChange}
-                              style={{display:'flex', flexDirection:'column', alignItems:'start', justifyContent:'start'}}
+                              value={values.message}
+                              onChange={handleChange}
                             />
                           </div>
                         </Col>
@@ -299,8 +251,7 @@ class PageContactTwo extends Component {
           </Container>
         </section>
       </React.Fragment>
-    );
-  }
-}
+    )
+};
 
-export default PageContactTwo;
+export default Contato;

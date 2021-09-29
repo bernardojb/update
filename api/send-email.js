@@ -8,7 +8,7 @@ class LepyValidator {
         this.rules = {
             name: new SimpleValidator(2),
             email: new EmailValidator(),
-            phone: new PhoneValidator(),
+            subject: new SimpleValidator(2),
             message: new SimpleValidator()
         }
     }
@@ -161,11 +161,7 @@ module.exports = (req, res) => {
             <ul>
                 <li><strong> Nome: ![name]</strong>  </li>
                 <li><strong> E-mail: ![email]</strong>  </li>
-                <li><strong> Telefone: ![phone]</strong>  </li>
-                <li><strong> Soluções:</strong> <br/>
-                    ![app] ![website] ![branding] ![uiux]
-                </li>
-                <li><strong> Orçamento: ![orcamento]</strong></li>
+                <li><strong> Assunto: ![subject]</strong>  </li>
                 <li><strong> Mensagem: ![message]</strong>  </li>
             </ul>
         `
