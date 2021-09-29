@@ -163,6 +163,7 @@ const Contato = () => {
                               name="submit"
                               className="submitBnt btn btn-primary btn-block"
                               value="Enviar Mensagem"
+                              disabled={isSubmitting}
                               onClick={handlePress}
                             />
                           </div>
