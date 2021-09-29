@@ -24,22 +24,14 @@ const Contato = () => {
     function resetInfos() {
         setValues({
             ...values,
-            //solução
-            app: null,
-            website: null,
-            branding: null,
-            uiux: null,
-
-            //orcamento
-            orcamento: '',
-
-            //inputs
             name: '',
             email: '',
-            phone: '',
+            subject: '',
             message: ''
         })
     }
+
+    resetInfos();
 
     return (
         <React.Fragment>
@@ -68,9 +60,7 @@ const Contato = () => {
                     >
                       Contact details send successfully.
                     </Alert>
-                    <Form
-                      method="post"
-                      onSubmit={this.handleSubmit}
+                    <div
                       name="contact-form"
                       id="contact-form"
                     >
@@ -170,7 +160,7 @@ const Contato = () => {
                           <div id="simple-msg"></div>
                         </Col>
                       </Row>
-                    </Form>
+                    </div>
                   </CardBody>
                 </Card>
               </Col>
