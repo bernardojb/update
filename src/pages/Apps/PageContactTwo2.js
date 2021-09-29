@@ -160,9 +160,10 @@ const Contato = () => {
                             <input
                               type="submit"
                               id="submit"
-                              name="send"
+                              name="submit"
                               className="submitBnt btn btn-primary btn-block"
                               value="Enviar Mensagem"
+                              onClick={handlePress}
                             />
                           </div>
                           <div id="simple-msg"></div>
