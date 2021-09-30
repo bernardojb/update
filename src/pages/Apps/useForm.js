@@ -48,6 +48,7 @@ const useForm = validate => {
 
                 if (res.status == 202) {
                     setModalSuccess(true);
+                    setContactVisible(true)
                 }
 
             }).catch(function (err) {
@@ -55,8 +56,6 @@ const useForm = validate => {
             })
             .finally(() => {
                 setSubmitting(false);
-                setContactVisible(true)
-                console.log(modalSuccess)
             });
     };
 

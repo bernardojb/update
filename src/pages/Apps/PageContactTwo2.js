@@ -50,7 +50,7 @@ const Contato = () => {
                   <CardBody>
                       {contactVisible ? (
                       <Alert
-                      color="primary"
+                      color="success"
                       // style={{backgroundColor:'#008d38'}}
                       isOpen={contactVisible}
                     >
