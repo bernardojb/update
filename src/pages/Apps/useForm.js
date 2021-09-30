@@ -56,6 +56,7 @@ const useForm = validate => {
             .finally(() => {
                 setSubmitting(false);
                 setContactVisible(true)
+                console.log(modalSuccess)
             });
     };
 

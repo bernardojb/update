@@ -48,11 +48,10 @@ const Contato = () => {
               >
                 <Card className="custom-form rounded shadow border-0">
                   <CardBody>
-                      
                       {contactVisible ? (
                       <Alert
                       color="primary"
-                      style={{backgroundColor:'#008d38'}}
+                      // style={{backgroundColor:'#008d38'}}
                       isOpen={contactVisible}
                     >
                       Email enviado com sucesso!
