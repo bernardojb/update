@@ -47,6 +47,7 @@ class PageProfile extends Component {
     this.onChangeCurrentPassword = this.onChangeCurrentPassword.bind(this);
     this.onChangeNewPassword = this.onChangeNewPassword.bind(this);
     this.onChangeConfirmNewPassword = this.onChangeConfirmNewPassword.bind(this);
+    this.handleChangePassword = this.handleChangePassword.bind(this)
 
 
     this.state = {
@@ -293,7 +294,7 @@ class PageProfile extends Component {
       })
   }
 
-  changePassword(e) {
+  handleChangePassword(e) {
     e.preventDefault();
 
     this.setState({
@@ -737,7 +738,7 @@ class PageProfile extends Component {
                       <Col md="6" className="mt-5 pt-2">
                         <h3>Alterar Senha</h3>
                         <Form
-                          onSubmit={this.changePassword}
+                          onSubmit={this.handleChangePassword}
                           ref={c => { this.form = c }}
                         >
                           <Row className="mt-4">

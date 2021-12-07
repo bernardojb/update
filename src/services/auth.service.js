@@ -340,7 +340,11 @@ class AuthService {
       currentPassword,
       newPassword,
       confirmNewPassword,
-    });
+    },
+    {
+      headers: authHeader()
+    }
+    );
   }
 
   // isLogged() {
