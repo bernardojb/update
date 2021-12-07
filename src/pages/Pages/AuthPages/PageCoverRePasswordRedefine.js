@@ -1,6 +1,6 @@
 // React Basic and Bootstrap
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   Container,
   Row,
@@ -14,7 +14,6 @@ import {
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import { isEmail } from "validator";
 
 import authService from "../../../services/auth.service";
 //Import Icons
@@ -27,24 +26,34 @@ class PageCoverRePassword extends Component {
   constructor(props) {
     super(props);
 
-    this.handleForgotPassword = this.handleForgotPassword.bind(this)
-    this.onChangeEmail = this.onChangeEmail.bind(this)
+    this.handleForgotPasswordRedefine = this.handleForgotPasswordRedefine.bind(this)
+    this.onChangePassword = this.onChangePassword.bind(this)
+    this.onChangeConfirmPassword = this.onChangeConfirmPassword.bind(this)
 
     this.state = {
-      email: "",
-      passo1: true,
-      passo2: false,
+      signature: props.location.search.replace(/\?signature=(.*)/gi, '$1').replace(/&.*/gi, ''),
+      email: props.location.pathname.replace('/forgot/', ''),
+      password: "",
+      confirmPassword: "",
       message: ""
     }
+
+    console.log(this.state)
   }
 
-  onChangeEmail(e) {
+  onChangePassword(e) {
     this.setState({
-      email: e.target.value
+      password: e.target.value
     });
   }
 
-  handleForgotPassword(e) {
+  onChangeConfirmPassword(e) {
+    this.setState({
+      confirmPassword: e.target.value
+    });
+  }
+
+  handleForgotPasswordRedefine(e) {
     e.preventDefault();
 
     this.setState({
@@ -53,13 +62,14 @@ class PageCoverRePassword extends Component {
 
     this.form.validateAll();
 
-    authService.forgotPassword(
+    authService.forgotPasswordRedefine(
       this.state.email,
+      this.state.signature,
+      this.state.password,
+      this.state.confirmPassword,
     ).then(
       response => {
         this.setState({
-          passo1: false,
-          passo2: true,
           message: response.data.message,
         });
       },
@@ -94,8 +104,7 @@ class PageCoverRePassword extends Component {
             <Row className="g-0 position-relative">
               <Col lg={4} xs={{ order: 2 }} className="cover-my-30">
                 <div className="cover-user-img d-flex align-items-center">
-
-                  {this.state.passo1 ? (<Row>
+                  <Row>
                     <Col xs={12}>
                       <Card
                         className="border-0"
@@ -107,7 +116,7 @@ class PageCoverRePassword extends Component {
                           </h1>
                           <Form
                             className="login-form mt-4"
-                            onSubmit={this.handleForgotPassword}
+                            onSubmit={this.handleForgotPasswordRedefine}
                             ref={c => {
                               this.form = c
                             }}
@@ -115,21 +124,40 @@ class PageCoverRePassword extends Component {
                             <Row>
                               <Col lg="12">
                                 <p className="etapa" style={{ fontSize: "14px" }}>
-                                  Por favor insira seu email em que sua conta Update foi criada. Você receberá um link para criar uma nova senha.
+                                  Por favor insira as informações abaixo para concluir o processo de redefinição de senha.
                                 </p>
+                              </Col>
+                              <Col lg="12">
                                 <div className="mb-3">
-                                  <Label className="form-label" for="email">
-                                    Seu email{" "}
+                                  <Label className="form-label" for="password">
+                                    Senha{" "}
                                     <span className="text-danger">*</span>
                                   </Label>
                                   <Input
-                                    type="text"
+                                    type="password"
                                     className="form-control ps-3"
-                                    name="email"
-                                    id="email"
-                                    placeholder="Email"
-                                    value={this.state.email}
-                                    onChange={this.onChangeEmail}
+                                    name="password"
+                                    id="password"
+                                    placeholder="Senha"
+                                    value={this.state.password}
+                                    onChange={this.onChangePassword}
+                                  />
+                                </div>
+                              </Col>
+                              <Col lg="12">
+                                <div className="mb-3">
+                                  <Label className="form-label" for="confirmPassword">
+                                    Confirmação de senha{" "}
+                                    <span className="text-danger">*</span>
+                                  </Label>
+                                  <Input
+                                    type="password"
+                                    className="form-control ps-3"
+                                    name="confirmPassword"
+                                    id="confirmPassword"
+                                    placeholder="Senha"
+                                    value={this.state.confirmPassword}
+                                    onChange={this.onChangeConfirmPassword}
                                   />
                                 </div>
                               </Col>
@@ -178,43 +206,7 @@ class PageCoverRePassword extends Component {
                         </CardBody>
                       </Card>
                     </Col>
-                  </Row>) : null}
-                  {this.state.passo2 ? (
-                    <Row>
-                      <Col xs={12}>
-                        <Card
-                          className="border-0"
-                          style={{ zIndex: 1 }}
-                        >
-                          <CardBody className="p-0">
-                            <h1 className="card-title text-center mb-3">
-                              Email enviado!
-                            </h1>
-                            <p className="etapa mb-5" style={{ fontSize: "14px" }}>
-                              Acesse o link que enviamos em seu email para redefinir a sua senha. Certifique-se de conferir a caixa de SPAM.                            </p>
-                            <a className="btn btn-primary w-100" onClick={()=>{
-                              this.setState({
-                                passo1: true,
-                                passo2: false
-                              })
-                            }}>Não recebi o email</a>
-                            <div className="mx-auto">
-                              <p className="mb-0 mt-3">
-                                <small className="text-dark me-2">
-                                  Já recuperou a sua senha?
-                                </small>{" "}
-                                <Link
-                                  to="/login"
-                                  className="text-dark fw-bold text-primary"
-                                >
-                                  Login
-                                </Link>
-                              </p>
-                            </div>
-                          </CardBody>
-                        </Card>
-                      </Col>
-                    </Row>) : null}
+                  </Row>
                 </div>
               </Col>
               <Col

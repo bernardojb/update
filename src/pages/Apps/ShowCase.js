@@ -78,14 +78,14 @@ class ShowCase extends Component {
                       artigos, matérias e novidades <span className="text-primary">em formato de vídeos didáticos!</span>
                     </h1>
                   </SectionTitleLeft>
-                  {/* <p className="mt-5 mb-0">Baixe Agora:</p>
-                  <Link to="#" className="btn btn-primary mt-2 me-2">
-                      <i className="uil uil-apple"></i> 
-                      App Store
-                    </Link>
-                    <Link to="#" className="btn btn-primary mt-2 me-2">
-                      <i className="uil uil-google-play"></i> Play Store
-                    </Link> */}
+                  <p className="mt-5 mb-0">Baixe Agora:</p>
+                  <a href="https://apps.apple.com/us/app/update-anestesiologia/id1583086674" target="_blank" className="btn btn-primary mt-2 me-2">
+                    <i className="uil uil-apple"></i>
+                    App Store
+                  </a>
+                  <a href="https://play.google.com/store/apps/details?id=com.grupoupdate.anestesiologia" target="_blank" className="btn btn-primary mt-2 me-2">
+                    <i className="uil uil-google-play"></i> Play Store
+                  </a>
                 </div>
               </Col>
             </Row>

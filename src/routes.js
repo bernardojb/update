@@ -36,12 +36,18 @@ const PageSignup = React.lazy(() =>
 const PageCoverSignup = React.lazy(() =>
   import("./pages/Pages/AuthPages/PageCoverSignup")
 );
+const PageUpdateCard = React.lazy(() =>
+  import("./pages/Pages/AuthPages/PageUpdateCard")
+);
 const PageSignupThree = React.lazy(() =>
   import("./pages/Pages/AuthPages/PageSignupThree")
 );
 
 const PageCoverRePassword = React.lazy(() =>
   import("./pages/Pages/AuthPages/PageCoverRePassword")
+);
+const PageCoverRePasswordRedefine = React.lazy(() =>
+  import("./pages/Pages/AuthPages/PageCoverRePasswordRedefine")
 );
 const PageRecoveryPassword = React.lazy(() =>
   import("./pages/Pages/AuthPages/PageRecoveryPassword")
@@ -354,6 +360,11 @@ const routes = [
     isWithoutLayout: true,
   },
   {
+    path: "/update-card",
+    component: PageUpdateCard,
+    isWithoutLayout: true,
+  },
+  {
     path: "/auth-signup-three",
     component: PageSignupThree,
     isWithoutLayout: true,
@@ -367,6 +378,11 @@ const routes = [
   {
     path: "/auth-cover-re-password",
     component: PageCoverRePassword,
+    isWithoutLayout: true,
+  },
+  {
+    path: "/forgot/:email",
+    component: PageCoverRePasswordRedefine,
     isWithoutLayout: true,
   },
   {
@@ -472,12 +488,12 @@ const routes = [
   { path: "/page-work-masonry", component: PageWorkMasonry, isTopbarDark: true },
 
   //Page Profile
-  { path: "/page-profile", component: PageProfile },
+  { path: "/page-profile", component: PageProfile, isTopbarDark: true },
   { path: "/page-members", component: PageMembers },
   { path: "/page-works", component: PageWorks },
   { path: "/page-messages", component: PageMessages },
   { path: "/page-profile-edit", component: PageProfileEdit },
-  { path: "/page-payments", component: PagePayments },
+  { path: "/page-payments", component: PagePayments, isTopbarDark: true },
   { path: "/page-invoice", component: PageInvoice, isTopbarDark: true },
 
   //Page Job

@@ -1,18 +1,17 @@
 // React Basic and Bootstrap
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Container,
   Row,
   Col,
   Label,
-  Input,
   Button,
   Card,
   CardBody,
 } from "reactstrap";
 import { AvForm, AvField } from "availity-reactstrap-validation";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 
 //Import Icons
 import FeatherIcon from "feather-icons-react";
@@ -20,20 +19,163 @@ import FeatherIcon from "feather-icons-react";
 // import images
 import user01 from "../../../assets/images/user/01.jpg";
 
+//New Imports
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
+import AuthService from "../../../services/auth.service";
+import authService from "../../../services/auth.service";
+import { isEmail } from "validator";
+
+
+const required = value => {
+  if (!value) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Esse campo é obrigatório!
+      </div>
+    );
+  }
+};
+
+const email = value => {
+  if (!isEmail(value)) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Este não é um email válido!
+      </div>
+    );
+  }
+};
+
+const vpassword = value => {
+  if (value.length < 6 || value.length > 40) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Sua senha precisa ter pelo menos 6 caracteres.
+      </div>
+    );
+  }
+};
+
+const vconfirmpassword = value => {
+  if (value != this.state.password.value) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Sua senhas não coincidem
+      </div>
+    );
+  }
+};
+
 class PageCoverLogin extends Component {
+
   constructor(props) {
     super(props);
-    this.state = {};
+    this.handleLogin = this.handleLogin.bind(this);
+    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
+
+    this.state = {
+      login: "",
+      password: "",
+      loading: false,
+      message: ""
+    };
+  }
+
+  onChangeUsername(e) {
+    this.setState({
+      login: e.target.value
+    });
+  }
+
+  onChangePassword(e) {
+    this.setState({
+      password: e.target.value
+    });
+  }
+
+  handleLogin(e) {
+    e.preventDefault();
+
+    this.setState({
+      message: "",
+      loading: true
+    });
+
+    this.form.validateAll();
+
+    if (this.checkBtn.context._errors.length === 0) {
+      AuthService.login(this.state.login, this.state.password).then(
+        (user) => {
+          // const hasProfile = user.data.has_profile
+          const hasCard = user.data.has_card
+          const hasSubs = user.data.has_subs
+          
+          if (hasCard && hasSubs) {
+            console.log("REDIRECT TO PROFILE (Login)")
+            this.props.history.push("/page-profile");
+            window.location.reload();
+          } else {
+            console.log("REDIRECT TO REGISTRO (Login)")
+            this.props.history.push("/registro");
+            window.location.reload();
+          }
+        },
+        error => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          // this.props.history.push("/registro");
+          this.setState({
+            loading: false,
+            message: resMessage
+          });
+        }
+      );
+    } else {
+      this.setState({
+        loading: false
+      });
+    }
+  }
+
+  componentDidMount() {
+    // authService.isLogged()
+    //   .then((logged) => {
+    //     console.log("LOGGED >>>>>>>>", logged)
+    //     if (logged) {
+    //       const { hasProfile } = authService.getCurrentUser().data.has_profile
+    //       console.log("has profile login", hasProfile)
+
+    //       if (hasProfile) {
+    //         this.props.history.push("/page-profile");
+    //         window.location.reload();
+    //       } else {
+    //         console.log("HAS NO PROFILE >>>>>>>>>>>> REDIRECT REGISTRO")
+    //         this.props.history.push("/registro");
+    //         window.location.reload();
+    //       }
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.error(err)
+    //   })
   }
 
   render() {
     return (
       <React.Fragment>
-         <Helmet>
-                <meta charSet="utf-8" />
-                <title>Login | Update Anestesiologia</title>
-                <link rel="canonical" href="https://www.grupoupdate.com.br/login" />
-            </Helmet>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Login | Update Anestesiologia</title>
+          <link rel="canonical" href="https://www.grupoupdate.com.br/login" />
+        </Helmet>
         <div className="back-to-home rounded d-none d-sm-block">
           <Link to="/" className="btn btn-icon btn-soft-primary">
             <i>
@@ -55,7 +197,15 @@ class PageCoverLogin extends Component {
                       >
                         <CardBody className="p-0">
                           <h4 className="card-title text-center">Login</h4>
-                          <AvForm className="llogin-form mt-4">
+
+
+                          <Form
+                            className="login-form mt-4"
+                            onSubmit={this.handleLogin}
+                            ref={c => {
+                              this.form = c;
+                            }}
+                          >
                             <Row>
                               <Col lg={12}>
                                 <div className="mb-3">
@@ -63,79 +213,36 @@ class PageCoverLogin extends Component {
                                     Email{" "}
                                     <span className="text-danger">*</span>
                                   </Label>
-                                  <div className="form-icon position-relative">
-                                    <i>
-                                      <FeatherIcon
-                                        icon="user"
-                                        className="fea icon-sm icons"
-                                      />
-                                    </i>
-                                  </div>
-                                  <AvField
+                                  <Input
                                     type="text"
-                                    className="form-control ps-5"
-                                    name="email"
+                                    className="form-control ps-3"
+                                    name="username"
                                     id="email"
                                     placeholder="Seu email"
-                                    required
-                                    errorMessage=""
-                                    validate={{
-                                      required: {
-                                        value: true,
-                                        errorMessage: "Por favor, digite seu e-mail",
-                                      },
-                                      pattern: {
-                                        value:
-                                          "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$",
-                                        errorMessage: "E-mail inválido",
-                                      },
-                                    }}
+                                    value={this.state.login}
+                                    onChange={this.onChangeUsername}
+                                    validations={[required, email]}
                                   />
                                 </div>
                               </Col>
-
                               <Col lg={12}>
                                 <div className="mb-3">
                                   <Label className="form-label" htmlFor="password">
                                     Senha
                                     <span className="text-danger">*</span>
                                   </Label>
-                                  <div className="form-icon position-relative">
-                                    <i>
-                                      <FeatherIcon
-                                        icon="lock"
-                                        className="fea icon-sm icons"
-                                      />
-                                    </i>
-                                  </div>
-                                  <AvField
-                                    type="text"
-                                    className="form-control ps-5"
+                                  <Input
+                                    type="password"
+                                    className="form-control ps-3"
                                     name="password"
                                     id="password"
                                     placeholder="Sua senha"
-                                    required
-                                    errorMessage=""
-                                    validate={{
-                                      required: {
-                                        value: true,
-                                        errorMessage: "Por favor, digite sua senha",
-                                      },
-                                      minLength: {
-                                        value: 6,
-                                        errorMessage:
-                                          "Sua senha deve ter no mínimo 6 caracteres",
-                                      },
-                                      maxLength: {
-                                        value: 16,
-                                        errorMessage:
-                                          "Your password must be between 6 and 8 characters",
-                                      },
-                                    }}
+                                    value={this.state.password}
+                                    onChange={this.onChangePassword}
+                                    validations={[required, vpassword]}
                                   />
                                 </div>
                               </Col>
-
                               <Col lg="12">
                                 <div className="d-flex justify-content-between">
                                   <div className="mb-3">
@@ -163,32 +270,32 @@ class PageCoverLogin extends Component {
                                   </p>
                                 </div>
                               </Col>
-
                               <Col lg={12} className="mb-0">
                                 <div className="d-grid">
-                                  <Button color="primary">
-                                    Entrar
-                                </Button>
+                                  <Button
+                                    color="primary"
+                                    disabled={this.state.loading}
+                                  >
+                                    {this.state.loading && (
+                                      <span className="spinner-border spinner-border-sm"></span>
+                                    )}
+                                    <span>Entrar</span>
+                                  </Button>
                                 </div>
                               </Col>
-
-                              {/* <Col lg={12} className="mt-4 text-center">
-                                <h6>Or Login With</h6>
-                                <Row>
-                                  <div className="col-6 mt-3">
-                                    <div className="d-grid">
-                                      <Link to="#" className="btn btn-light"><i className="mdi mdi-facebook text-primary"></i> Facebook</Link>
-                                    </div>
+                              {this.state.message && (
+                                <div className="form-group">
+                                  <div className="alert alert-danger" role="alert">
+                                    {this.state.message}
                                   </div>
-
-                                  <div className="col-6 mt-3">
-                                    <div className="d-grid">
-                                      <Link to="#" className="btn btn-light"><i className="mdi mdi-google text-danger"></i> Google</Link>
-                                    </div>
-                                  </div>
-                                </Row>
-                              </Col> */}
-
+                                </div>
+                              )}
+                              <CheckButton
+                                style={{ display: "none" }}
+                                ref={c => {
+                                  this.checkBtn = c;
+                                }}
+                              />
                               <Col className="text-center">
                                 <p className="mb-0 mt-3">
                                   <small className="text-dark me-2">
@@ -198,13 +305,13 @@ class PageCoverLogin extends Component {
                                     to="/registro"
                                     className="text-dark fw-bold"
                                   ><span className="text-primary">
-                                    Registrar
+                                      Registrar
                                     </span>
                                   </Link>
                                 </p>
                               </Col>
                             </Row>
-                          </AvForm>
+                          </Form>
                         </CardBody>
                       </Card>
                     </Col>

@@ -4,9 +4,10 @@ import {
   Container,
   Row,
   Col,
-  Progress,
   Card,
   CardBody,
+  Button,
+  Label,
 } from "reactstrap";
 
 //Import Icons
@@ -14,139 +15,297 @@ import FeatherIcon from "feather-icons-react";
 
 //Import Images
 import imgbg from "../../../assets/images/account/bg.png";
-import profile from "../../../assets/images/client/05.jpg";
-import blog1 from "../../../assets/images/blog/01.jpg";
-import blog2 from "../../../assets/images/blog/02.jpg";
-import exp1 from "../../../assets/images/job/Circleci.svg";
-import exp2 from "../../../assets/images/job/Codepen.svg";
-import exp3 from "../../../assets/images/job/Gitlab.svg";
+import profileImg from "../../../assets/images/client/05.jpg";
+
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
+import { isEmail } from "validator";
+//New
+import AuthService from "../../../services/auth.service";
+import authService from "../../../services/auth.service";
 
 
 class PageProfile extends Component {
-  state = {
-    blogs: [
-      {
-        id: 1,
-        title: "Design your apps in your own way",
-        image: blog1,
-        likes: "33",
-        blogComments: "08",
-        author: "Krishta Joseph",
-        date: "13th August, 2019",
-      },
-      {
-        id: 2,
-        title: "How apps is changing the IT world",
-        image: blog2,
-        likes: "33",
-        blogComments: "08",
-        author: "Krishta Joseph",
-        date: "13th August, 2019",
-      },
-    ],
-    experiences: [
-      {
-        id: 1,
-        image: exp1,
-        designation: "Senior Web Developer",
-        duration: "3 Years",
-        companyName: "CircleCi",
-        location: "London, UK",
-      },
-      {
-        id: 2,
-        image: exp2,
-        designation: "Web Designer",
-        duration: "2 Years",
-        companyName: "Codepen",
-        location: "Washington D.C, USA",
-      },
-      {
-        id: 3,
-        image: exp3,
-        designation: "UI Designer",
-        duration: "2 Years",
-        companyName: "Gitlab",
-        location: "Perth, Australia",
-      },
-    ],
-    widgets: [
-      {
-        id: 1,
-        icon: "uil uil-dashboard",
-        className: "navbar-item account-menu px-0 active",
-        title: "Profile",
-        link: "/page-profile",
-      },
-      {
-        id: 2,
-        icon: "uil uil-users-alt",
-        className: "navbar-item account-menu px-0 mt-2",
-        title: "Members",
-        link: "/page-members",
-      },
-      {
-        id: 3,
-        icon: "uil uil-file",
-        className: "navbar-item account-menu px-0 mt-2",
-        title: "Portfolio",
-        link: "/page-works",
-      },
-      {
-        id: 4,
-        icon: "uil uil-envelope-star",
-        className: "navbar-item account-menu px-0 mt-2",
-        title: "Messages",
-        link: "/page-messages",
-      },
-      {
-        id: 5,
-        icon: "uil uil-transaction",
-        className: "navbar-item account-menu px-0 mt-2",
-        title: "Payments",
-        link: "/page-payments",
-      },
-      {
-        id: 6,
-        icon: "uil uil-setting",
-        className: "navbar-item account-menu px-0 mt-2",
-        title: "Settings",
-        link: "/page-profile-edit",
-      },
-      {
-        id: 7,
-        icon: "uil uil-dashboard",
-        className: "navbar-item account-menu px-0 mt-2",
-        title: "Logout",
-        link: "/auth-login-three",
-      },
-    ],
-  };
+  constructor(props) {
+    super(props);
+    this.handleProfile = this.handleProfile.bind(this);
+
+    this.onChangeFullName = this.onChangeFullName.bind(this);
+    this.onChangeBirthday = this.onChangeBirthday.bind(this);
+    // this.onChangeCpf = this.onChangeCpf.bind(this);
+    this.onChangePhone = this.onChangePhone.bind(this);
+    this.onChangeCrm = this.onChangeCrm.bind(this);
+    //Endereço
+    this.onChangeCep = this.onChangeCep.bind(this);
+    this.onChangeStreet = this.onChangeStreet.bind(this);
+    this.onChangeNumber = this.onChangeNumber.bind(this);
+    this.onChangeNeighborhood = this.onChangeNeighborhood.bind(this);
+    this.onChangeState = this.onChangeState.bind(this);
+    this.onChangeCity = this.onChangeCity.bind(this);
+
+    this.state = {
+      profile: {},
+      plano: {},
+      sub: {},
+      conta: [
+        {
+          id: 1,
+          icon: "user",
+          className: "navbar-item account-menu px-0 active",
+          title: "Informações Pessoais",
+          link: "/page-profile",
+        },
+        {
+          id: 2,
+          icon: "shopping-cart",
+          className: "navbar-item account-menu px-0 mt-2",
+          title: "Assinatura",
+          link: "/page-payments",
+        },
+        // {
+        //   id: 3,
+        //   icon: "settings",
+        //   className: "navbar-item account-menu px-0 mt-2",
+        //   title: "Configuração",
+        //   link: "/page-works",
+        // },
+      ],
+      download: [
+        {
+          id: 1,
+          icon: "uil uil-apple",
+          className: "navbar-item account-menu px-0 mt-2",
+          title: "App Store",
+          link: "https://apps.apple.com/us/app/update-anestesiologia/id1583086674",
+        },
+        {
+          id: 2,
+          icon: "uil uil-google-play",
+          className: "navbar-item account-menu px-0 mt-2",
+          title: "Google Play",
+          link: "https://play.google.com/store/apps/details?id=com.grupoupdate.anestesiologia",
+        },
+      ],
+      suporte: [
+        {
+          id: 1,
+          icon: "help-circle",
+          className: "navbar-item account-menu px-0 mt-2",
+          title: "Ajuda",
+          link: "/ajuda",
+        },
+        {
+          id: 2,
+          icon: "mail",
+          className: "navbar-item account-menu px-0 mt-2",
+          title: "Contato",
+          link: "/auth-login-three",
+        },
+      ],
+      termos: [
+        {
+          id: 1,
+          icon: "help-circle",
+          className: "navbar-item account-menu px-0 mt-2",
+          title: "Sobre o Update",
+          link: "/sobre",
+        },
+        {
+          id: 2,
+          icon: "mail",
+          className: "navbar-item account-menu px-0 mt-2",
+          title: "Política de Privacidade",
+          link: "/politica-de-privacidade",
+        },
+        {
+          id: 3,
+          icon: "mail",
+          className: "navbar-item account-menu px-0 mt-2",
+          title: "Termos de Uso",
+          link: "/termos-de-uso",
+        }
+      ],
+      fullName: "",
+      birthday: "",
+      // cpf: "",
+      // email: "",
+      phone: "",
+      crm: "",
+      cep: "",
+      street: "",
+      number: "",
+      neighborhood: "",
+      state: "",
+      city: "",
+      message: "",
+    };
+  }
+
+  onChangeFullName(e) {
+    this.setState({
+      fullName: e.target.value
+    });
+  }
+
+  onChangeBirthday(e) {
+    this.setState({
+      birthday: e.target.value
+    });
+  }
+
+  // onChangeCpf(e) {
+  //   this.setState({
+  //     cpf: e.target.value
+  //   });
+  // }
+
+  onChangePhone(e) {
+    this.setState({
+      phone: e.target.value
+    });
+
+  }
+
+  onChangeCrm(e) {
+    this.setState({
+      crm: e.target.value
+    });
+  }
+
+  onChangeCep(e) {
+    this.setState({
+      cep: e.target.value
+    });
+
+  }
+
+  onChangeStreet(e) {
+    this.setState({
+      street: e.target.value
+    });
+  }
+
+  onChangeNumber(e) {
+    this.setState({
+      number: e.target.value
+    });
+  }
+
+  onChangeNeighborhood(e) {
+    this.setState({
+      neighborhood: e.target.value
+    });
+  }
+
+  onChangeState(e) {
+    this.setState({
+      state: e.target.value
+    });
+  }
+
+  onChangeCity(e) {
+    this.setState({
+      city: e.target.value
+    });
+  }
+
+  handleProfile(e) {
+    e.preventDefault();
+
+    this.setState({
+      message: "",
+    });
+
+    this.form.validateAll();
+
+    if (this.checkBtn.context._errors.length === 0) {
+      AuthService.updateProfile(
+        this.state.fullName,
+        this.state.birthday,
+        // this.state.cpf,
+        // this.state.phone,
+        this.state.crm,
+        //endereço
+        this.state.cep,
+        this.state.street,
+        this.state.number,
+        this.state.neighborhood,
+        this.state.state,
+        this.state.city,
+      ).then(
+        response => {
+          this.setState({
+            message: response.data.message,
+          });
+          window.location.reload();
+        },
+        error => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          this.setState({
+            message: resMessage,
+          });
+        }
+      );
+    }
+  }
+
+  handleDeleteUser() {
+    authService.deleteUser()
+    .then(() => {
+      authService.logout();
+      this.props.history.push("/");
+      window.location.reload()
+    })
+  }
 
   componentDidMount() {
+    authService.getSelf().then(data => {
+      data.data.birthday = new Date(data.data.birthday)
+      this.setState({
+        ...this.state, profile: data.data
+      })
+    })
+
+
+    authService.getSub().then(data => {
+      data.data.data.expiresAt = new Date(data.data.data.expiresAt)
+      this.setState({
+        ...this.state, sub: data.data.data
+      })
+      console.log(">>>>>>>>>>>>>>>> sub", this.state.sub)
+      authService.getPlan().then(dt => {
+        this.setState({
+          ...this.state, plano: dt.data.data.find(d => d.identifier == data.data.data.planIdentifier)
+        })
+      })
+    })
+
+    //Header
     document.body.classList = "";
-    document.getElementById("top-menu").classList.add("nav-light");
-    document.getElementById("buyButton").className = "btn btn-light";
-    window.addEventListener("scroll", this.scrollNavigation, true);
-  }
-  // Make sure to remove the DOM listener when the component is unmounted.
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.scrollNavigation, true);
+    document.getElementById("topnav").classList.add("nav-sticky");
   }
 
-  scrollNavigation = () => {
-    var doc = document.documentElement;
-    var top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
-    if (top > 80) {
-      document.getElementById("topnav").classList.add("nav-sticky");
-      document.getElementById("buyButton").className = "btn btn-primary";
-    } else {
-      document.getElementById("topnav").classList.remove("nav-sticky");
-      document.getElementById("buyButton").className = "btn btn-light";
-    }
-  };
+  lepMonth(month) {
+    return `${month < 10 ? '0' : ''}${month + 1}`
+  }
+
+  lepDay(day) {
+    return `${day < 10 ? `0${day}` : day + 1}`
+  }
 
   render() {
+
+    const { profile } = this.state
+    const { plano } = this.state
+    const { sub } = this.state
+
     return (
       <React.Fragment>
         <section
@@ -164,82 +323,28 @@ class PageProfile extends Component {
                     <Row className="align-items-center">
                       <Col lg="2" md="3" className="text-md-start text-center">
                         <img
-                          src={profile}
+                          src={profileImg}
                           className="avatar avatar-large rounded-circle shadow d-block mx-auto"
                           alt=""
                         />
                       </Col>
-
                       <Col lg="10" md="9">
                         <Row className="align-items-end">
                           <Col
                             md="7"
-                            className="text-md-start text-center mt-4 mt-sm-0"
+                            className="text-md-start text-center mt-4 mt-sm-0 d-flex flex-column"
                           >
-                            <h3 className="title mb-0">Krista Joseph</h3>
-                            <small className="text-muted h6 me-2">
-                              Web Developer
-                            </small>
-                            <ul className="list-inline mb-0 mt-3">
-                              <li className="list-inline-item me-2">
-                                <Link
-                                  to="#"
-                                  className="text-muted"
-                                  title="Linkedin"
-                                >
-                                  <i>
-                                    <FeatherIcon
-                                      icon="instagram"
-                                      className="fea icon-sm me-2"
-                                    />
-                                  </i>
-                                  krista_joseph
-                                </Link>
-                              </li>
-                              <li className="list-inline-item ms-1">
-                                <Link
-                                  to="#"
-                                  className="text-muted"
-                                  title="Skype"
-                                >
-                                  <i>
-                                    <FeatherIcon
-                                      icon="linkedin"
-                                      className="fea icon-sm me-2"
-                                    />
-                                  </i>
-                                  krista_joseph
-                                </Link>
-                              </li>
-                            </ul>
+                            <h3 className="title mb-2"> {profile.full_name} </h3>
+                            <p>{plano != null && plano.name ? `Plano ${plano.name.charAt(0).toUpperCase()}${plano.name.slice(1)}` : null}</p>
+                            {/* {plano != null ? console.log(plano) : null} */}
+                            {sub != null && sub.expiresAt ?
+                              <p>Assinatura válida até: <span className="text-primary">{`${this.lepDay(sub.expiresAt.getDate())}/${this.lepMonth(sub.expiresAt.getMonth())}/${sub.expiresAt.getFullYear()}`}</span></p>
+                              : null
+                            }
                           </Col>
-                          <Col md="5" className="text-md-end text-center">
-                            <ul className="list-unstyled social-icon social mb-0 mt-4">
-                              <li className="list-inline-item">
-                                <Link to="#" className="rounded">
-                                  <i className="uil uil-user-plus align-middle"></i>
-                                </Link>
-                              </li>
-                              <li className="list-inline-item">
-                                <Link to="#" className="rounded">
-                                  <i className="uil uil-comment align-middle"></i>
-                                </Link>
-                              </li>
-                              <li className="list-inline-item">
-                                <Link to="#" className="rounded">
-                                  <i className="uil uil-bell align-middle"></i>
-                                </Link>
-                              </li>
-                              <li className="list-inline-item">
-                                <Link
-                                  to="/page-profile-edit"
-                                  className="rounded"
-                                >
-                                  <i className="uil uil-cog align-middle"></i>
-                                </Link>
-                              </li>
-                            </ul>
-                          </Col>
+                          {/* <Col md="5" className="text-md-end text-center">
+
+                          </Col> */}
                         </Row>
                       </Col>
                     </Row>
@@ -255,365 +360,390 @@ class PageProfile extends Component {
             <Row>
               <Col lg="4" md="6" xs="12" className="d-lg-block d-none">
                 <div className="sidebar sticky-bar p-4 rounded shadow">
-                  <div className="widget">
-                    <h5 className="widget-title">Followers :</h5>
-                    <div className="row mt-4">
-                      <div className="col-6 text-center">
-                        <FeatherIcon
-                          icon="user-plus"
-                          className="fea icon-ex-md text-primary mb-1"
-                        />
-                        <h5 className="mb-0">2588</h5>
-                        <p className="text-muted mb-0">Followers</p>
-                      </div>
-
-                      <div className="col-6 text-center">
-                        <FeatherIcon icon="users"
-                          className="fea icon-ex-md text-primary mb-1" />
-                        <h5 className="mb-0">454</h5>
-                        <p className="text-muted mb-0">Following</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="widget mt-4 pt-2">
-                    <h5 className="widget-title">Projects :</h5>
-                    <div className="progress-box mt-4">
-                      <h6 className="title text-muted">Progress</h6>
-                      <Progress
-                        value={50}
-                        color="primary"
-                        barClassName="position-relative"
-                      >
-                        <div className="progress-value d-block text-muted h6">
-                          24 / 48
-                        </div>
-                      </Progress>
-                    </div>
-                  </div>
-
                   <div className="widget mt-4">
-                    <ul className="list-unstyled sidebar-nav mb-0" id="navmenu-nav">
-                      {this.state.widgets.map((widget, key) => (
+                    <h3 className="widget-title">Minha Conta</h3>
+                    <ul className="list-unstyled sidebar-nav mb-4" id="navmenu-nav">
+                      {this.state.conta.map((widget, key) => (
                         <li className={widget.className} key={key}>
-                          <Link to={widget.link} className="navbar-link d-flex rounded shadow align-items-center py-2 px-4">
+                          <Link to={widget.link} className="navbar-link d-flex shadow align-items-center py-2 px-4">
+                            <span className="h4 mb-0">
+                              <FeatherIcon
+                                icon={widget.icon}
+                                className="fea"
+                              />
+                            </span>
+                            <p className="mb-0 ms-2">{widget.title}</p>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                    <h3 className="widget-title">Download</h3>
+                    <ul className="list-unstyled sidebar-nav mb-4" id="navmenu-nav">
+                      {this.state.download.map((widget, key) => (
+                        <li className={widget.className} key={key}>
+                          <a href={widget.link} target="_blank" className="navbar-link d-flex shadow align-items-center py-2 px-4">
                             <span className="h4 mb-0">
                               <i className={widget.icon}></i>
                             </span>
-                            <h6 className="mb-0 ms-2">{widget.title}</h6>
+                            <p className="mb-0 ms-2">{widget.title}</p>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                    <h3 className="widget-title">Suporte</h3>
+                    <ul className="list-unstyled sidebar-nav mb-4" id="navmenu-nav">
+                      {this.state.suporte.map((widget, key) => (
+                        <li className={widget.className} key={key}>
+                          <Link to={widget.link} className="navbar-link d-flex shadow align-items-center py-2 px-4">
+                            <span className="h4 mb-0">
+                              <FeatherIcon
+                                icon={widget.icon}
+                                className="fea"
+                              />
+                            </span>
+                            <p className="mb-0 ms-2">{widget.title}</p>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                    <h3 className="widget-title">Termos e Condições</h3>
+                    <ul className="list-unstyled sidebar-nav mb-4" id="navmenu-nav">
+                      {this.state.termos.map((widget, key) => (
+                        <li className={widget.className} key={key}>
+                          <Link to={widget.link} className="navbar-link d-flex shadow align-items-center py-2 px-4">
+                            <span className="h4 mb-0">
+                              <FeatherIcon
+                                icon={widget.icon}
+                                className="fea"
+                              />
+                            </span>
+                            <p className="mb-0 ms-2">{widget.title}</p>
                           </Link>
                         </li>
                       ))}
                     </ul>
                   </div>
-
-                  <div className="widget mt-4 pt-2">
-                    <h5 className="widget-title">Follow me :</h5>
-                    <ul className="list-unstyled social-icon mb-0 mt-4">
-                      <li className="list-inline-item">
-                        <Link to="#" className="rounded">
-                          <i>
-                            <FeatherIcon
-                              icon="facebook"
-                              className="fea icon-sm fea-social"
-                            />
-                          </i>
-                        </Link>
-                      </li>{" "}
-                      <li className="list-inline-item">
-                        <Link to="#" className="rounded">
-                          <i>
-                            <FeatherIcon
-                              icon="instagram"
-                              className="fea icon-sm fea-social"
-                            />
-                          </i>
-                        </Link>
-                      </li>{" "}
-                      <li className="list-inline-item">
-                        <Link to="#" className="rounded">
-                          <i>
-                            <FeatherIcon
-                              icon="twitter"
-                              className="fea icon-sm fea-social"
-                            />
-                          </i>
-                        </Link>
-                      </li>{" "}
-                      <li className="list-inline-item">
-                        <Link to="#" className="rounded">
-                          <i>
-                            <FeatherIcon
-                              icon="linkedin"
-                              className="fea icon-sm fea-social"
-                            />
-                          </i>
-                        </Link>
-                      </li>{" "}
-                      <li className="list-inline-item">
-                        <Link to="#" className="rounded">
-                          <i>
-                            <FeatherIcon
-                              icon="github"
-                              className="fea icon-sm fea-social"
-                            />
-                          </i>
-                        </Link>
-                      </li>{" "}
-                      <li className="list-inline-item">
-                        <Link to="#" className="rounded">
-                          <i>
-                            <FeatherIcon
-                              icon="youtube"
-                              className="fea icon-sm fea-social"
-                            />
-                          </i>
-                        </Link>
-                      </li>{" "}
-                      <li className="list-inline-item">
-                        <Link to="#" className="rounded">
-                          <i>
-                            <FeatherIcon
-                              icon="gitlab"
-                              className="fea icon-sm fea-social"
-                            />
-                          </i>
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
                 </div>
               </Col>
-
-              <Col lg="8" md="7" xs="12">
-                <div className="border-bottom pb-4">
-                  <h5>Krista Joseph</h5>
-                  <p className="text-muted mb-0">
-                    I have started my career as a trainee and prove my self and
-                    achieve all the milestone with good guidance and reach up to
-                    the project manager. In this journey, I understand all the
-                    procedure which make me a good developer, team leader, and a
-                    project manager.
-                  </p>
-                </div>
-
-                <div className="border-bottom pb-4">
-                  <Row>
-                    <Col md="6" className="mt-4">
-                      <h5>Personal Details :</h5>
-                      <div className="mt-4">
-                        <div className="d-flex align-items-center">
-                          <i>
-                            <FeatherIcon
-                              icon="mail"
-                              className="fea icon-ex-md text-muted me-3"
-                            />
-                          </i>
-                          <div className="flex-1">
-                            <h6 className="text-primary mb-0">Email :</h6>
-                            <Link to="#" className="text-muted">
-                              kristajoseph0203@mail.com
-                            </Link>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center mt-3">
-                          <i>
-                            <FeatherIcon
-                              icon="bookmark"
-                              className="fea icon-ex-md text-muted me-3"
-                            />
-                          </i>
-                          <div className="flex-1">
-                            <h6 className="text-primary mb-0">Skills :</h6>
-                            <Link to="#" className="text-muted">
-                              html
-                            </Link>
-                            ,{" "}
-                            <Link to="#" className="text-muted">
-                              css
-                            </Link>
-                            ,{" "}
-                            <Link to="#" className="text-muted">
-                              js
-                            </Link>
-                            ,{" "}
-                            <Link to="#" className="text-muted">
-                              mysql
-                            </Link>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center mt-3">
-                          <i>
-                            <FeatherIcon
-                              icon="italic"
-                              className="fea icon-ex-md text-muted me-3"
-                            />
-                          </i>
-                          <div className="flex-1">
-                            <h6 className="text-primary mb-0">Language :</h6>
-                            <Link to="#" className="text-muted">
-                              English
-                            </Link>
-                            ,{" "}
-                            <Link to="#" className="text-muted">
-                              Japanese
-                            </Link>
-                            ,{" "}
-                            <Link to="#" className="text-muted">
-                              Chinese
-                            </Link>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center mt-3">
-                          <i>
-                            <FeatherIcon
-                              icon="globe"
-                              className="fea icon-ex-md text-muted me-3"
-                            />
-                          </i>
-                          <div className="flex-1">
-                            <h6 className="text-primary mb-0">Website :</h6>
-                            <Link to="#" className="text-muted">
-                              www.kristajoseph.com
-                            </Link>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center mt-3">
-                          <i>
-                            <FeatherIcon
-                              icon="gift"
-                              className="fea icon-ex-md text-muted me-3"
-                            />
-                          </i>
-                          <div className="flex-1">
-                            <h6 className="text-primary mb-0">Birthday :</h6>
-                            <p className="text-muted mb-0">2nd March, 1996</p>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center mt-3">
-                          <i>
-                            <FeatherIcon
-                              icon="map-pin"
-                              className="fea icon-ex-md text-muted me-3"
-                            />
-                          </i>
-                          <div className="flex-1">
-                            <h6 className="text-primary mb-0">Location :</h6>
-                            <Link to="#" className="text-muted">
-                              Beijing, China
-                            </Link>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center mt-3">
-                          <i>
-                            <FeatherIcon
-                              icon="phone"
-                              className="fea icon-ex-md text-muted me-3"
-                            />
-                          </i>
-                          <div className="flex-1">
-                            <h6 className="text-primary mb-0">Cell No :</h6>
-                            <Link to="#" className="text-muted">
-                              (+12) 1254-56-4896
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </Col>
-
-                    <Col lg="6" className="mt-4 pt-2 pt-sm-0">
-                      <h5>Experience :</h5>
-
-                      {this.state.experiences.map((experience, key) => (
-                        <div
-                          key={key}
-                          className="d-flex key-feature align-items-center p-3 rounded shadow mt-4"
+              <Col lg="8" xs="12">
+                <Card className="border-0 rounded shadow">
+                  <CardBody>
+                    {/* <h3 className="text-md-start text-center">
+                      Informações Pessoais
+                    </h3>
+                    <div className="mt-3 text-md-start text-center d-sm-flex">
+                      <img
+                        src={profileImg}
+                        className="avatar float-md-left avatar-medium rounded-circle shadow me-md-4"
+                        alt=""
+                      />
+                      <div className="mt-md-4 mt-3 mt-sm-0">
+                        <Link to="#" className="btn btn-primary mt-2">
+                          {" "}
+                          Alterar foto{" "}
+                        </Link>{" "}
+                        <Link
+                          to="#"
+                          className="mt-2 ms-5 text-danger"
                         >
-                          <img
-                            src={experience.image}
-                            className="avatar avatar-ex-sm"
-                            alt=""
-                          />
-                          <div className="flex-1 content ms-3">
-                            <h4 className="title mb-0">
-                              {experience.designation}
-                            </h4>
-                            <p className="text-muted mb-0">
-                              {experience.duration} Experience
-                              </p>
-                            <p className="text-muted mb-0">
-                              <Link to="#" className="text-primary">
-                                {experience.companyName}
-                              </Link>{" "}
-                                @{experience.location}
-                            </p>
+                          Remover
+                        </Link>
+                      </div>
+                    </div> */}
+                    {/* <Alert
+                      color="primary"
+                      isOpen={this.state.successMsg}
+                      toggle={() => {
+                        this.setState({ successMsg: !this.state.successMsg });
+                      }}
+                    >
+                      Data sended successfully.
+                    </Alert> */}
+                    <Form
+                      onSubmit={this.handleProfile}
+                      ref={c => {
+                        this.form = c
+                      }}
+                    >
+                      <Row className="mt-4">
+                        <Col md="6">
+                          <div className="mb-3">
+                            <Label className="form-label">Seu nome</Label>
+                            <Input
+                              name="name"
+                              id="first"
+                              type="text"
+                              className="form-control ps-2"
+                              placeholder={profile.full_name}
+                              value={this.state.fullName}
+                              onChange={this.onChangeFullName}
+                            />
+                          </div>
+                        </Col>
+                        <Col md="6">
+                          <div className="mb-3">
+                            <Label className="form-label">Data de Nascimento</Label>
+                            <Input
+                              name="birthday"
+                              id="birthday"
+                              type="text"
+                              className="form-control ps-2"
+                              // placeholder={profile.birthday}
+                              placeholder={profile != null && profile.birthday ? (`${this.lepDay(profile.birthday.getDate())}/${this.lepMonth(profile.birthday.getMonth())}/${profile.birthday.getFullYear()}`) : null}
+                              value={this.state.birthday}
+                              onChange={this.onChangeBirthday}
+                            />
+                          </div>
+                        </Col>
+                        {/* <Col md="6">
+                          <div className="mb-3">
+                            <Label className="form-label">CPF</Label>
+                            <Input
+                              name="cpf"
+                              id="cpf"
+                              type="text"
+                              className="form-control ps-2"
+                              placeholder={profile.cpf}
+                              value={this.state.cpf}
+                              onChange={this.onChangeCpf}
+                            />
+                          </div>
+                        </Col>
+                        <Col md="6">
+                          <div className="mb-3">
+                            <Label className="form-label">Email</Label>
+                            <Input
+                              name="email"
+                              id="email"
+                              type="email"
+                              className="form-control ps-2"
+                              placeholder="Email"
+                            />
+                          </div>
+                        </Col> */}
+                        <Col md="6">
+                          <div className="mb-3">
+                            <Label className="form-label">Telefone</Label>
+                            <Input
+                              name="phone"
+                              id="phone"
+                              type="phone"
+                              className="form-control ps-2"
+                              placeholder={profile.phone}
+                              value={this.state.phone}
+                              onChange={this.onChangePhone}
+                            />
+                          </div>
+                        </Col>
+                        <Col md="6">
+                          <div className="mb-3">
+                            <Label className="form-label">CRM</Label>
+                            <Input
+                              name="crm"
+                              id="crm"
+                              type="text"
+                              className="form-control ps-2"
+                              placeholder={profile.crm}
+                              value={this.state.crm}
+                              onChange={this.onChangeCrm}
+                            />
+                          </div>
+                        </Col>
+                        {/* Here*/}
+                        <h3 className="text-md-start text-center mt-5">
+                          Endereço de cobrança
+                        </h3>
+                        <Col md="6">
+                          <div className="mb-3">
+                            <Label className="form-label">CEP</Label>
+                            <Input
+                              name="cep"
+                              id="cep"
+                              type="text"
+                              className="form-control ps-2"
+                              placeholder={profile.cep}
+                              value={this.state.cep}
+                              onChange={this.onChangeCep}
+                            />
+                          </div>
+                        </Col>
+                        <Col md="6">
+                          <div className="mb-3">
+                            <Label className="form-label">Endereço</Label>
+                            <Input
+                              name="street"
+                              id="street"
+                              type="text"
+                              className="form-control ps-2"
+                              placeholder={profile.street}
+                              value={this.state.street}
+                              onChange={this.onChangeStreet}
+                            />
+                          </div>
+                        </Col>
+                        <Col md="4">
+                          <div className="mb-3">
+                            <Label className="form-label">Número</Label>
+                            <Input
+                              name="number"
+                              id="number"
+                              type="text"
+                              className="form-control ps-2"
+                              placeholder={profile.number}
+                              value={this.state.number}
+                              onChange={this.onChangeNumber}
+                            />
+                          </div>
+                        </Col>
+                        <Col md="8">
+                          <div className="mb-3">
+                            <Label className="form-label">Bairro</Label>
+                            <Input
+                              name="neighborhood"
+                              id="neighborhood"
+                              type="text"
+                              className="form-control ps-2"
+                              placeholder={profile.neighborhood}
+                              value={this.state.neighborhood}
+                              onChange={this.onChangeNeighborhood}
+                            />
+                          </div>
+                        </Col>
+                        <Col md="4">
+                          <div className="mb-3">
+                            <Label className="form-label">Estado</Label>
+                            <Input
+                              name="state"
+                              id="state"
+                              type="text"
+                              className="form-control ps-2"
+                              placeholder={profile.state}
+                              value={this.state.state}
+                              onChange={this.onChangeState}
+                            />
+                          </div>
+                        </Col>
+                        <Col md="8">
+                          <div className="mb-3">
+                            <Label className="form-label">Cidade</Label>
+                            <Input
+                              name="city"
+                              id="city"
+                              type="text"
+                              className="form-control ps-2"
+                              placeholder={profile.city}
+                              value={this.state.city}
+                              onChange={this.onChangeCity}
+                            />
+                          </div>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm="12">
+                          <Button color="primary">
+                            Salvar alterações
+                          </Button>
+                        </Col>
+                      </Row>
+                      {this.state.message && (
+                        <div className="form-group">
+                          <div
+                            className={
+                              this.state.successful
+                                ? "alert alert-success"
+                                : "alert alert-danger"
+                            }
+                            role="alert"
+                          >
+                            {this.state.message}
                           </div>
                         </div>
-                      ))}
-                    </Col>
-                  </Row>
-                </div>
+                      )}
+                      <CheckButton
+                        style={{ display: "none" }}
+                        ref={c => {
+                          this.checkBtn = c;
+                        }}
+                      />
+                    </Form>
 
-                <h5 className="mt-4 mb-0">Posts & News :</h5>
-                <Row>
-                  {this.state.blogs.map((blog, key) => (
-                    <Col lg="6" key={key} className="mt-4 pt-2">
-                      <Card className="blog rounded border-0 shadow">
-                        <div className="position-relative">
-                          <img
-                            src={blog.image}
-                            className="card-img-top rounded-top"
-                            alt=""
-                          />
-                          <div className="overlay rounded-top bg-dark"></div>
-                        </div>
-                        <CardBody className="content">
-                          <h5>
-                            <Link to="#" className="card-title title text-dark">
-                              {blog.title}
-                            </Link>
-                          </h5>
-                          <div className="post-meta d-flex justify-content-between mt-3">
-                            <ul className="list-unstyled mb-0">
-                              <li className="list-inline-item me-2 mb-0">
-                                <Link to="#" className="text-muted like">
-                                  <i className="uil uil-heart me-1"></i>
-                                  {blog.likes}
-                                </Link>
-                              </li>{" "}
-                              <li className="list-inline-item">
-                                <Link to="#" className="text-muted comments">
-                                  <i className="uil uil-comment me-1"></i>
-                                  {blog.blogComments}
-                                </Link>
-                              </li>
-                            </ul>
-                            <Link
-                              to="#"
-                              className="text-muted readmore"
-                            >
-                              Read More{" "}
-                              <i className="uil uil-angle-right-b align-middle"></i>
-                            </Link>
-                          </div>
-                        </CardBody>
-                        <div className="author">
-                          <small className="text-light user d-block">
-                            <i className="uil uil-user"></i> {blog.author}
-                          </small>
-                          <small className="text-light date">
-                            <i className="uil uil-calendar-alt"></i>{" "}
-                            {blog.date}
-                          </small>
-                        </div>
-                      </Card>
-                    </Col>
-                  ))}
-                  <Col xs="12" className="mt-4 pt-2">
-                    <Link to="/page-blog" className="btn btn-primary">
-                      See More <i className="uil uil-angle-right-b align-middle"></i>
-                    </Link>
-                  </Col>
-                </Row>
+                    <Row>
+                      <Col md="6" className="mt-5 pt-2">
+                        <h3>Alterar Senha</h3>
+                        {/* <Alert
+                          color="primary"
+                          isOpen={this.state.successMsg3}
+                          toggle={() => {
+                            this.setState({
+                              successMsg3: !this.state.successMsg3,
+                            });
+                          }}
+                        >
+                          Data sended successfully.
+                        </Alert> */}
+                        <Form onSubmit={this.handleSubmit3}>
+                          <Row className="mt-4">
+                            <Col lg="12">
+                              <div className="mb-3">
+                                <Label className="form-label">Senha Atual</Label>
+
+                                <Input
+                                  type="password"
+                                  className="form-control ps-2"
+                                  placeholder="Senha atual"
+                                  required
+                                />
+                              </div>
+                            </Col>
+
+                            <Col lg="12">
+                              <div className="mb-3">
+                                <Label className="form-label">Nova Senha</Label>
+                                <Input
+                                  type="password"
+                                  className="form-control ps-2"
+                                  placeholder="Nova senha"
+                                  required
+                                />
+                              </div>
+                            </Col>
+
+                            <Col lg="12">
+                              <div className="mb-3">
+                                <Label className="form-label">Confirme a senha nova</Label>
+
+                                <Input
+                                  type="password"
+                                  className="form-control ps-2"
+                                  placeholder="Confirme a senha nova"
+                                  required
+                                />
+                              </div>
+                            </Col>
+
+                            <Col lg="12" className="mt-2 mb-0">
+                              <Button color="primary disabled">Salvar Senha</Button>
+                            </Col>
+                          </Row>
+                        </Form>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+
+                <div className="rounded shadow mt-4">
+                  <div className="p-4">
+                    <h3 className="mb-0 text-danger">Excluir Conta</h3>
+                  </div>
+                  <div className="p-4 pt-0">
+                    <p className="mb-0">
+                      Você deseja excluir essa conta? Atenção: Essa opção é irreversível
+                    </p>
+                    <div className="mt-4">
+                      <button className="btn btn-danger" onClick={this.handleDeleteUser}>Excluir Conta</button>
+                    </div>
+                  </div>
+                </div>
               </Col>
             </Row>
           </Container>

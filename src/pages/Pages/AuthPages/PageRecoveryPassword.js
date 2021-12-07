@@ -10,7 +10,9 @@ import {
   Card,
   CardBody,
 } from "reactstrap";
-import { AvForm, AvField } from "availity-reactstrap-validation";
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
 
 //Import Icons
 import FeatherIcon from "feather-icons-react";
@@ -18,7 +20,61 @@ import FeatherIcon from "feather-icons-react";
 // import images
 import recoveryimg from "../../../assets/images/user/recovery.svg";
 
+import authService from "../../../services/auth.service";
+
 class PageRecoveryPassword extends Component {
+
+  constructor(props){
+    super(props);
+
+    this.handleForgotPassword = this.handleForgotPassword.bind(this)
+    this.onChangeEmail = this.onChangeEmail.bind(this)
+
+    this.state = {
+      email: "",
+      message:""
+    }
+  }
+
+  onChangeEmail(e) {
+    this.setState({
+      email: e.target.value
+    });
+  }
+
+  handleForgotPassword(e) {
+    e.preventDefault();
+
+    this.setState({
+      message: "",
+    });
+
+    this.form.validateAll();
+
+    authService.forgotPassword(
+      this.state.email,
+    ).then(
+      response => {
+        this.setState({
+          message: response.data.message,
+        });
+      },
+      error => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        this.setState({
+          message: resMessage,
+        });
+      }
+    );
+
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -44,13 +100,18 @@ class PageRecoveryPassword extends Component {
               <Col lg="5" md="6">
                 <Card className="shadow rounded border-0">
                   <CardBody>
-                    <h4 className="card-title text-center">Recover Account</h4>
-                    <AvForm className="login-form mt-4">
+                    <h4 className="card-title text-center">RECUPERAÇÃO DE SENHA</h4>
+                    <Form 
+                    className="login-form mt-4"
+                    onSubmit={this.handleForgotPassword}
+                    ref={c => {
+                      this.form = c
+                    }}
+                    >
                       <Row>
                         <Col lg="12">
                           <p className="text-muted">
-                            Please enter your email address. You will receive a
-                            link to create a new password via email.
+                            Por favor insira seu email em que sua conta Update foi criada. Você receberá um link para criar uma nova senha.
                           </p>
                           <div className="mb-3">
                             <Label className="form-label" for="email">
@@ -65,25 +126,14 @@ class PageRecoveryPassword extends Component {
                                 />
                               </i>
                             </div>
-                            <AvField
+                            <Input
                               type="text"
                               className="form-control ps-5"
                               name="email"
                               id="email"
-                              placeholder="Enter Your Email Address"
-                              required
-                              errorMessage=""
-                              validate={{
-                                required: {
-                                  value: true,
-                                  errorMessage: "Please enter your email",
-                                },
-                                pattern: {
-                                  value:
-                                    "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$",
-                                  errorMessage: "E-Mail is not valid!",
-                                },
-                              }}
+                              placeholder="Email"
+                              value={this.state.email}
+                              onChange={this.onChangeEmail}
                             />
                           </div>
                         </Col>
@@ -91,7 +141,7 @@ class PageRecoveryPassword extends Component {
                           <div className="d-grid">
                             <Button color="primary">
                               Send
-                          </Button>
+                            </Button>
                           </div>
                         </Col>
                         <div className="mx-auto">
@@ -108,7 +158,27 @@ class PageRecoveryPassword extends Component {
                           </p>
                         </div>
                       </Row>
-                    </AvForm>
+                      {this.state.message && (
+                         <div className="form-group">
+                         <div
+                           className={
+                             this.state.successful
+                               ? "alert alert-success"
+                               : "alert alert-danger"
+                           }
+                           role="alert"
+                         >
+                           {this.state.message}
+                         </div>
+                       </div>
+                      )}
+                      <CheckButton
+                              style={{ display: "none" }}
+                              ref={c => {
+                                this.checkBtn = c;
+                              }}
+                            />
+                    </Form>
                   </CardBody>
                 </Card>
               </Col>

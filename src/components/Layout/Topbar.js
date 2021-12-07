@@ -1,60 +1,31 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
-import {
-  Container,
-  Form,
-  Modal,
-  ModalBody,
-  Dropdown,
-  DropdownMenu,
-  DropdownToggle,
-  UncontrolledDropdown
-} from "reactstrap";
-
+import { Container, Button } from "reactstrap";
 //Import images
-import logodark from "../../assets/images/logo-dark.png";
-import logolight from "../../assets/images/logo-light.png";
-// import logoUpdate from "../../assets/images/logo-update.svg";
 import logoUpdate from "../../assets/images/LogoUpdate.svg";
-import shop1 from "../../assets/images/shop/product/s-1.jpg";
-import shop2 from "../../assets/images/shop/product/s-2.jpg";
-import shop3 from "../../assets/images/shop/product/s-3.jpg";
-import NavbarButtons from "../Shared/NavbarButtons";
+//Auth
+import authService from "../../services/auth.service";
+import FeatherIcon from "feather-icons-react";
 
 class Topbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isOpen: false,
+      isLogged: false,
+      profile: {},
       dropdownOpenShop: false,
       navLinks: [
         //Note : each child and nested child must have unique id
         { id: 1, title: "Login", link: "/login", class: "login-header" },
         { id: 2, title: "Registrar", link: "/registro", class: "registro-header" },
-      ],
-      wishlistModal: false,
-      dropdownIsOpen: false,
+      ]
     };
     this.toggleLine = this.toggleLine.bind(this);
-    this.openBlock.bind(this);
-    this.openNestedBlock.bind(this);
-    this.toggleDropdownShop.bind(this);
-    this.toggleWishlistModal.bind(this);
     this.toggleDropdownIsOpen.bind(this);
   }
 
-  toggleWishlistModal = () => {
-    this.setState((prevState) => ({
-      wishlistModal: !prevState.wishlistModal,
-    }));
-  };
-
-  toggleDropdownShop = () => {
-    this.setState({
-      dropdownOpenShop: !this.state.dropdownOpenShop,
-    });
-  };
   toggleDropdownIsOpen = () => {
     this.setState({
       dropdownIsOpen: !this.state.dropdownIsOpen,
@@ -78,254 +49,164 @@ class Topbar extends Component {
     if (matchingMenuItem) {
       this.activateParentDropdown(matchingMenuItem);
     }
+
+    // const logout = document.getElementById("ghostbusters");
+    // if (logout) {
+    //   logout.addEventListener('click', function (e) {
+    //     authService.logout()
+    //   })
+    // }
+
+    const user = JSON.parse(localStorage.getItem('user'))
+
+    
+
+    if (user) {
+      authService.getSelf().then(data => {
+        this.setState({
+          ...this.state, profile: data.data
+        })
+      })
+      this.setState({
+        isLogged: true
+      })
+    } else {
+      this.setState({
+        isLogged: false
+      })
+    }
   }
 
-  activateParentDropdown = (item) => {
-    const parent = item.parentElement;
-    if (parent) {
-      parent.classList.add("active"); // li
-      const parent1 = parent.parentElement;
-      parent1.classList.add("active"); // li
-      if (parent1) {
-        const parent2 = parent1.parentElement;
-        parent2.classList.add("active"); // li
-        if (parent2) {
-          const parent3 = parent2.parentElement;
-          parent3.classList.add("active"); // li
-          if (parent3) {
-            const parent4 = parent3.parentElement;
-            parent4.classList.add("active"); // li
-          }
-        }
-      }
-    }
-  };
-
-  openBlock = (level2_id) => {
-    var tmpLinks = this.state.navLinks;
-    tmpLinks.map((tmpLink) =>
-      //Match level 2 id
-      tmpLink.id === level2_id
-        ? (tmpLink.isOpenSubMenu = !tmpLink.isOpenSubMenu)
-        : false
-    );
-    this.setState({ navLinks: tmpLinks });
-  };
-
-  openNestedBlock = (level2_id, level3_id) => {
-    var tmpLinks = this.state.navLinks;
-    tmpLinks.map((tmpLink) =>
-      //Match level 2 id
-      tmpLink.id === level2_id
-        ? tmpLink.child.map((tmpchild) =>
-          //if level1 id is matched then match level 3 id
-          tmpchild.id === level3_id
-            ? //if id is matched then update status(level 3 sub menu will be open)
-            (tmpchild.isOpenNestedSubMenu = !tmpchild.isOpenNestedSubMenu)
-            : (tmpchild.isOpenNestedSubMenu = false)
-        )
-        : false
-    );
-    this.setState({ navLinks: tmpLinks });
-  };
-
   render() {
+
+    const { profile } = this.state
+
     return (
       <React.Fragment>
         {this.props.tagline ? this.props.tagline : null}
 
         <header id="topnav" className="defaultscroll sticky">
-          <Container>
-            <div>
-
-              {this.props.hasDarkTopBar ? (
-                <a className="logo" href="/">
-                  <img src={logoUpdate} height="24" className="logo-light-mode" alt="" />
-                  <img src={logoUpdate} height="24" className="logo-dark-mode" alt="" />
-                </a>
-              ) :
-              <span></span>
-              }
-            </div>
-            {(() => {
-
-
-              return (
-                <div className="buy-button">
-                  {this.props.hasDarkTopBar ? (
-                    <Link
-                      to="/registro"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      id="buyButton"
-                      className="btn btn-primary header-btn"
-                    >
-                      Registrar
-                    </Link>
-                  ) :
-                    <span></span>
-                  }
-                </div>
-              );
-            })()}
-
-            <div className="menu-extras">
-              <div className="menu-item">
-                <Link
-                  to="#"
-                  onClick={this.toggleLine}
-                  className={
-                    this.state.isOpen ? "navbar-toggle open" : "navbar-toggle"
-                  }
-                >
-                  <div className="lines">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </div>
-                </Link>
+          {this.state.isLogged ? (
+            <Container className="d-flex justify-content-between" style={{ width: "100%" }}>
+              <div>
+                {this.props.hasDarkTopBar ? (
+                  <a className="logo" href="/">
+                    <img src={logoUpdate} height="24" className="logo-light-mode" alt="" />
+                    <img src={logoUpdate} height="24" className="logo-dark-mode" alt="" />
+                  </a>
+                ) :
+                  <span></span>
+                }
               </div>
-            </div>
-
-            <div
-              id="navigation"
-              style={{ display: this.state.isOpen ? "block" : "none" }}
-            >
-              <ul className="navigation-menu" id="top-menu">
-                {this.state.navLinks.map((navLink, key) =>
-                  navLink.child ? (
-                    <li className="has-submenu" key={key}>
-                      {/* child item(menu Item) - Level 1 */}
-                      <Link
-                        to={navLink.link}
-                        onClick={(event) => {
-                          event.preventDefault();
-                          this.openBlock(navLink.id);
-                        }}
-                      >
-                        {navLink.title}
-                      </Link>
-                      {/* <i className="mdi mdi-chevron-right me-1"></i> */}
-                      <span className="menu-arrow"></span>
-                      {navLink.isMegaMenu ? (
-                        // if menu is mega menu(2 columns grid)
-                        <ul
-                          className={
-                            navLink.isOpenSubMenu
-                              ? "submenu megamenu open"
-                              : "submenu megamenu"
-                          }
-                        >
-                          <li>
-                            <ul>
-                              {navLink.child.map((item, childKey) =>
-                                item.id < 12 ? (
-                                  <li key={childKey}>
-                                    <Link to={item.link}>
-                                      {item.title}
-                                    </Link>
-                                  </li>
-                                ) : null
-                              )}
-                            </ul>
-                          </li>
-                        </ul>
-                      ) : (
-                        // if menu is not mega menu(1grid)
-                        <ul
-                          className={
-                            navLink.isOpenSubMenu ? "submenu open" : "submenu"
-                          }
-                        >
-                          {navLink.child.map((childArray, childKey) =>
-                            childArray.nestedChild ? (
-                              // sub menu item - Level 2
-                              <li className="has-submenu" key={childKey}>
-                                <Link
-                                  to={childArray.link}
-                                  onClick={(event) => {
-                                    event.preventDefault();
-                                    this.openNestedBlock(
-                                      navLink.id,
-                                      childArray.id
-                                    );
-                                  }}
-                                >
-                                  {childArray.title}{" "}
-                                  {childArray.isNew ? (
-                                    <span className="badge badge-pill badge-success">
-                                      Added
-                                    </span>
-                                  ) : null}
-                                </Link>
-                                <span className="submenu-arrow"></span>
-                                <ul
-                                  className={
-                                    childArray.isOpenNestedSubMenu
-                                      ? "submenu open"
-                                      : "submenu"
-                                  }
-                                >
-                                  {childArray.nestedChild.map(
-                                    (nestedChildArray, nestedKey) => (
-                                      // nested sub menu item - Level 3
-                                      <li key={nestedKey}>
-                                        <Link to={nestedChildArray.link}>
-                                          {nestedChildArray.title}{" "}
-                                          {nestedChildArray.isNewPage ? (
-                                            <span className="badge badge-danger rounded">
-                                              NEW
-                                            </span>
-                                          ) : null}
-                                          {nestedChildArray.isupdatePage ? (
-                                            <span className="badge badge-pill badge-info">
-                                              Updated
-                                            </span>
-                                          ) : null}
-                                        </Link>
-                                      </li>
-                                    )
-                                  )}
-                                </ul>
-                              </li>
-                            ) : (
-                              <li key={childKey}>
-                                <Link to={childArray.link}>
-                                  {childArray.title}
-                                </Link>
-                              </li>
-                            )
-                          )}
-                        </ul>
-                      )}
-                    </li>
-                  ) : (
-                    <li key={key}>
-                      {this.props.hasDarkTopBar ? (
-                        <Link className={navLink.class} to={navLink.link}>{navLink.title}</Link>
-                      ) : (
-                        <span></span>
-                      )
-                      }
-                    </li>
-                  )
-                )}
-              </ul>
-              {/* <div className="buy-menu-btn d-none">
+              <div className="d-flex justify-content-end align-items-center header-profile">
                 <Link
-                  to="https://1.envato.market/landrickreactjs"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-primary"
+                  to="/page-profile"
+                  className="d-flex flex-row justify-content-center align-items-center"
+                  style={{ color: "white" }}
                 >
-                  Buy Now
+                  <FeatherIcon
+                    icon="user"
+                    className="fea icon-sm me-1"
+                  />
+                  <p className="mb-0">{profile.full_name}</p>
                 </Link>
-              </div> */}
-            </div>
-          </Container>
+                <Button
+                  className="logout-btn"
+                  onClick={() => {
+                    authService.logout()
+                    if (window.location.pathname === "/") {
+                      window.location.reload()
+                    } else {
+                      this.props.history.push("/");
+                    }
+                  }}>
+                  <FeatherIcon
+                    icon="log-out"
+                    className="fea icon-sm ms-4"
+                    style={{ color: "red" }}
+                  />
+                </Button>
+              </div>
+            </Container>
+          ) : (
+            <Container>
+              <div>
+                {this.props.hasDarkTopBar ? (
+                  <a className="logo" href="/">
+                    <img src={logoUpdate} height="24" className="logo-light-mode" alt="" />
+                    <img src={logoUpdate} height="24" className="logo-dark-mode" alt="" />
+                  </a>
+                ) :
+                  <span></span>
+                }
+              </div>
+              {(() => {
+                return (
+                  <div className="buy-button">
+                    {this.props.hasDarkTopBar ? (
+                      <>
+                        <Link
+                          to="/registro"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn btn-primary header-btn"
+                        >
+                          Registrar
+                        </Link>
+
+                      </>
+                    ) : <span></span>
+                    }
+                  </div>
+                );
+              })()}
+
+              {/* MOBILE HAMBURGER */}
+              <div className="menu-extras">
+                <div className="menu-item">
+                  <Link
+                    to="#"
+                    onClick={this.toggleLine}
+                    className={
+                      this.state.isOpen ? "navbar-toggle open" : "navbar-toggle"
+                    }
+                  >
+                    <div className="lines">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+
+              <div
+                id="navigation"
+                style={{ display: this.state.isOpen ? "block" : "none" }}
+              >
+                <ul className="navigation-menu" id="top-menu">
+                  {this.state.navLinks.map((navLink, key) =>
+                    navLink.child ? (
+                      null
+                    ) : (
+                      <li key={key}>
+                        {this.props.hasDarkTopBar ? (
+                          <Link className={navLink.class} to={navLink.link}>{navLink.title}</Link>
+                        ) : (
+                          <span></span>
+                        )
+                        }
+                      </li>
+                    )
+                  )}
+                </ul>
+              </div>
+            </Container>
+          )}
+
         </header>
 
-        <Modal
+        {/* <Modal
           isOpen={this.state.wishlistModal}
           tabIndex="-1"
           centered
@@ -355,7 +236,7 @@ class Topbar extends Component {
               </div>
             </div>
           </ModalBody>
-        </Modal>
+        </Modal> */}
       </React.Fragment>
     );
   }

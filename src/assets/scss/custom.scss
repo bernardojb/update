@@ -254,7 +254,7 @@ a {
 }
 //  ** Falcão Desktop
 
-.header-btn{
+.header-btn {
   display: none;
 }
 
@@ -297,11 +297,11 @@ a {
     }
   }
 
-  .header-btn{
+  .header-btn {
     display: inline;
   }
 
-  .registro-header{
+  .registro-header {
     display: none !important;
   }
 }
@@ -409,67 +409,297 @@ a {
   li {
     .social-media-icons {
       border: none !important;
-      &:hover{
-        background-color:unset !important;
+      &:hover {
+        background-color: unset !important;
 
-        .fea{
-          fill: #1AC45E !important;
+        .fea {
+          fill: #1ac45e !important;
         }
-
       }
     }
   }
 }
 
-.classic-saas-image{
+.classic-saas-image {
   z-index: 1 !important;
 }
 
-
-.bg-app-shape{
-  &::after{
+.bg-app-shape {
+  &::after {
     transform: rotate(40deg) !important;
     left: -42rem !important;
     background: transparent linear-gradient(90deg, #000000 0%, #052311 100%);
     box-shadow: none !important;
     border: none;
-
   }
 }
-.bg-saas-shape{
-  &::after{
+.bg-saas-shape {
+  &::after {
     background: transparent linear-gradient(90deg, #000000 0%, #052311 100%);
     box-shadow: none !important;
     border: none;
   }
 }
 
-.landing-title{
+.landing-title {
   font-size: 49px !important;
 }
 
-.section-img{
+.section-img {
   display: flex;
   width: 100%;
 }
 
-@media (min-width: 576px){
-  .bg-app-shape{
-    &::after{
-      left: -25rem !important;  
+@media (min-width: 576px) {
+  .bg-app-shape {
+    &::after {
+      left: -25rem !important;
     }
   }
-  
 }
 
-.showcase{
+.showcase {
   z-index: 0 !important;
 }
 
-.logo-dark-mode{
+.logo-dark-mode {
   min-height: 50px !important;
 }
 
-.validator-msg{
+.validator-msg {
   font-size: 14px;
+}
+
+.etapas-registro {
+  .etapa {
+    font-size: 14px;
+    color: #94979a;
+    margin-bottom: 0px !important;
+  }
+
+  .etapa-title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
+
+.etapa-plano-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: #101010;
+  border: none;
+  border-radius: 9px;
+  min-height: 85px;
+  color: #1ac45e;
+  box-sizing: border-box;
+
+  .plano-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-left: 15px;
+
+    .plano-radio-button {
+      height: 19px !important;
+      width: 19px !important;
+      border: 1px solid #1ac45e;
+      border-radius: 50%;
+    }
+
+    .plano-button-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      margin-left: 15px;
+
+      .plano-title {
+        font-size: 14px;
+        color: white;
+      }
+
+      .plano-description {
+        font-size: 12px;
+      }
+
+      p {
+        margin: 0;
+      }
+    }
+  }
+
+  .plano-button-price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100% !important;
+    margin-right: 15px;
+
+    p {
+      margin: 0;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+    }
+  }
+
+  &:hover,
+  &:focus {
+    border: 1px solid #1ac45e;
+    color: #1ac45e !important;
+
+    .plano-button-container {
+      .plano-radio-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &::before {
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;
+          border: none;
+          content: " ";
+          background-color: #1ac45e;
+        }
+      }
+    }
+  }
+
+  &.active {
+    border: 1px solid #1ac45e;
+    color: #1ac45e !important;
+
+    .plano-button-container {
+      .plano-radio-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &::before {
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;
+          border: none;
+          content: " ";
+          background-color: #1ac45e;
+        }
+      }
+    }
+  }
+}
+
+.selected-plano {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #101010;
+  min-height: 85px;
+  border-radius: 9px;
+
+  .selected-plano-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+
+    .selected-plano-title {
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .selected-plano-price {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 0;
+    }
+  }
+  .selected-plano-price {
+    margin-right: 15px;
+    a {
+      p {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.plano-privacy {
+  p {
+    font-size: 12px;
+    color: #94979a;
+    font: normal normal 600 14px/19px;
+  }
+}
+
+.overflow-teste {
+  max-height: 750px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.etapa-1-row {
+  width: 100%;
+}
+
+.register-etapas {
+  background-color: black !important;
+  z-index: 1;
+  padding: 15px 0;
+}
+
+.header-profile {
+  .logout-btn {
+    background-color: transparent !important;
+    border: transparent !important;
+    box-shadow: none !important;
+
+    &:hover {
+      background-color: transparent !important;
+    }
+  }
+}
+
+.passo-5 {
+  overflow-y: scroll;
+  max-height: 600px;
+  padding: 2px;
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #1ac45e;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #059740;
+}
+
+.detalhes-cobranca{
+  position: relative;
+
+  &::after{
+    content: '';
+    height: 1px !important;
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    top: 30px;
+    left: 0;
+  }
 }

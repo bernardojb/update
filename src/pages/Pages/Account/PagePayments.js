@@ -24,85 +24,138 @@ import visaa from "../../../assets/images/payments/payment/visaa.png";
 import rupay from "../../../assets/images/payments/payment/rupay.png";
 import paypals from "../../../assets/images/payments/payment/paypals.png";
 
+//Auth
+import authService from "../../../services/auth.service";
+
+//Image
+import profileImg from "../../../assets/images/client/05.jpg";
+
 class PagePayments extends Component {
-  state = {
-    widgets: [
-      {
-        id: 1,
-        icon: "uil uil-dashboard",
-        className: "navbar-item account-menu px-0",
-        title: "Profile",
-        link: "/page-profile",
-      },
-      {
-        id: 2,
-        icon: "uil uil-users-alt",
-        className: "navbar-item account-menu px-0 mt-2",
-        title: "Members",
-        link: "/page-members",
-      },
-      {
-        id: 3,
-        icon: "uil uil-file",
-        className: "navbar-item account-menu px-0 mt-2",
-        title: "Portfolio",
-        link: "/page-works",
-      },
-      {
-        id: 4,
-        icon: "uil uil-envelope-star",
-        className: "navbar-item account-menu px-0 mt-2",
-        title: "Messages",
-        link: "/page-messages",
-      },
-      {
-        id: 5,
-        icon: "uil uil-transaction",
-        className: "navbar-item account-menu px-0 mt-2 active",
-        title: "Payments",
-        link: "/page-payments",
-      },
-      {
-        id: 6,
-        icon: "uil uil-setting",
-        className: "navbar-item account-menu px-0 mt-2",
-        title: "Settings",
-        link: "/page-profile-edit",
-      },
-      {
-        id: 7,
-        icon: "uil uil-dashboard",
-        className: "navbar-item account-menu px-0 mt-2",
-        title: "Logout",
-        link: "/auth-login-three",
-      },
-    ],
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      profile: {},
+      plano: {},
+      sub: {},
+      conta: [
+        {
+          id: 1,
+          icon: "user",
+          className: "navbar-item account-menu px-0",
+          title: "Informações Pessoais",
+          link: "/page-profile",
+        },
+        {
+          id: 2,
+          icon: "shopping-cart",
+          className: "navbar-item account-menu px-0 mt-2 active",
+          title: "Assinatura",
+          link: "/page-payments",
+        },
+      ],
+      download: [
+        {
+          id: 1,
+          icon: "uil uil-apple",
+          className: "navbar-item account-menu px-0 mt-2",
+          title: "App Store",
+          link: "https://apps.apple.com/us/app/update-anestesiologia/id1583086674",
+        },
+        {
+          id: 2,
+          icon: "uil uil-google-play",
+          className: "navbar-item account-menu px-0 mt-2",
+          title: "Google Play",
+          link: "https://play.google.com/store/apps/details?id=com.grupoupdate.anestesiologia",
+        },
+      ],
+      suporte: [
+        {
+          id: 1,
+          icon: "help-circle",
+          className: "navbar-item account-menu px-0 mt-2",
+          title: "Ajuda",
+          link: "/ajuda",
+        },
+        {
+          id: 2,
+          icon: "mail",
+          className: "navbar-item account-menu px-0 mt-2",
+          title: "Contato",
+          link: "/auth-login-three",
+        },
+      ],
+      termos: [
+        {
+          id: 1,
+          icon: "help-circle",
+          className: "navbar-item account-menu px-0 mt-2",
+          title: "Sobre o Update",
+          link: "/sobre",
+        },
+        {
+          id: 2,
+          icon: "mail",
+          className: "navbar-item account-menu px-0 mt-2",
+          title: "Política de Privacidade",
+          link: "/politica-de-privacidade",
+        },
+        {
+          id: 3,
+          icon: "mail",
+          className: "navbar-item account-menu px-0 mt-2",
+          title: "Termos de Uso",
+          link: "/termos-de-uso",
+        }
+      ],
+    };
+  }
+
+  handleCancelSub() {
+    authService.cancelSub()
+  }
 
   componentDidMount() {
+    authService.getSelf().then(data => {
+      data.data.birthday = new Date(data.data.birthday)
+      this.setState({
+        ...this.state, profile: data.data
+      })
+    })
+
+
+    authService.getSub().then(data => {
+      data.data.data.expiresAt = new Date(data.data.data.expiresAt)
+      this.setState({
+        ...this.state, sub: data.data.data
+      })
+
+      authService.getPlan().then(dt => {
+        this.setState({
+          ...this.state, plano: dt.data.data.find(d => d.identifier == data.data.data.planIdentifier)
+        })
+      })
+    })
+
     document.body.classList = "";
-    document.getElementById("top-menu").classList.add("nav-light");
-    document.getElementById("buyButton").className = "btn btn-light";
-    window.addEventListener("scroll", this.scrollNavigation, true);
-  }
-  // Make sure to remove the DOM listener when the component is unmounted.
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.scrollNavigation, true);
+    document.getElementById("topnav").classList.add("nav-sticky");
   }
 
-  scrollNavigation = () => {
-    var doc = document.documentElement;
-    var top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
-    if (top > 80) {
-      document.getElementById("topnav").classList.add("nav-sticky");
-      document.getElementById("buyButton").className = "btn btn-primary";
-    } else {
-      document.getElementById("topnav").classList.remove("nav-sticky");
-      document.getElementById("buyButton").className = "btn btn-light";
-    }
-  };
+  lepMonth(month) {
+    return `${month < 10 ? '0' : ''}${month + 1}`
+  }
+
+  lepDay(day) {
+    return `${day < 10 ? `0${day}` : day + 1}`
+  }
 
   render() {
+
+    const { profile } = this.state
+    const { plano } = this.state
+    const { sub } = this.state
+
     return (
       <React.Fragment>
         <section
@@ -120,101 +173,26 @@ class PagePayments extends Component {
                     <Row className="align-items-center">
                       <Col lg="2" md="3" className="text-md-start text-center">
                         <img
-                          src={profile}
+                          src={profileImg}
                           className="avatar avatar-large rounded-circle shadow d-block mx-auto"
                           alt=""
                         />
                       </Col>
-
                       <Col lg="10" md="9">
                         <Row className="align-items-end">
                           <Col
                             md="7"
-                            className="text-md-start text-center mt-4 mt-sm-0"
+                            className="text-md-start text-center mt-4 mt-sm-0 d-flex flex-column"
                           >
-                            <h3 className="title mb-0">Krista Joseph</h3>
-                            <small className="text-muted h6 me-2">
-                              Web Developer
-                            </small>
-                            <ul className="list-inline mb-0 mt-3">
-                              <li className="list-inline-item me-2">
-                                <Link
-                                  to="#"
-                                  className="text-muted"
-                                  title="Linkedin"
-                                >
-                                  <i>
-                                    <FeatherIcon
-                                      icon="instagram"
-                                      className="fea icon-sm me-2"
-                                    />
-                                  </i>
-                                  krista_joseph
-                                </Link>
-                              </li>
-                              <li className="list-inline-item ms-1">
-                                <Link
-                                  to="#"
-                                  className="text-muted"
-                                  title="Skype"
-                                >
-                                  <i>
-                                    <FeatherIcon
-                                      icon="linkedin"
-                                      className="fea icon-sm me-2"
-                                    />
-                                  </i>
-                                  krista_joseph
-                                </Link>
-                              </li>
-                            </ul>
+                            <h3 className="title mb-2"> {profile.full_name} </h3>
+                            <p>{plano != null && plano.name ? `Plano ${plano.name.charAt(0).toUpperCase()}${plano.name.slice(1)}` : null}</p>
+                            {/* {plano != null ? console.log(plano) : null} */}
+                            {sub != null && sub.expiresAt ?
+                              <p>Assinatura válida até: <span className="text-primary">{`${this.lepDay(sub.expiresAt.getDate())}/${this.lepMonth(sub.expiresAt.getMonth())}/${sub.expiresAt.getFullYear()}`}</span></p>
+                              : null
+                            }
                           </Col>
                           <Col md="5" className="text-md-end text-center">
-                            <ul className="list-unstyled social-icon social mb-0 mt-4">
-                              <li className="list-inline-item me-1">
-                                <Link to="#" className="rounded">
-                                  <i>
-                                    <FeatherIcon
-                                      icon="user-plus"
-                                      className="fea icon-sm fea-social"
-                                    />
-                                  </i>
-                                </Link>
-                              </li>
-                              <li className="list-inline-item me-1">
-                                <Link to="#" className="rounded">
-                                  <i>
-                                    <FeatherIcon
-                                      icon="message-circle"
-                                      className="fea icon-sm fea-social"
-                                    />
-                                  </i>
-                                </Link>
-                              </li>
-                              <li className="list-inline-item me-1">
-                                <Link to="#" className="rounded">
-                                  <i>
-                                    <FeatherIcon
-                                      icon="bell"
-                                      className="fea icon-sm fea-social"
-                                    />
-                                  </i>
-                                </Link>
-                              </li>
-                              <li className="list-inline-item me-1">
-                                <Link
-                                  to="/page-profile-edit"
-                                  className="rounded"
-                                >
-                                  <i>
-                                    <FeatherIcon
-                                      icon="settings"
-                                      className="fea icon-sm fea-social"
-                                    />
-                                  </i>
-                                </Link>
-                              </li>
-                            </ul>
                           </Col>
                         </Row>
                       </Col>
@@ -231,153 +209,107 @@ class PagePayments extends Component {
             <Row>
               <Col lg="4" md="6" xs="12" className="d-lg-block d-none">
                 <div className="sidebar sticky-bar p-4 rounded shadow">
-                  <div className="widget">
-                    <h5 className="widget-title">Followers :</h5>
-                    <div className="row mt-4">
-                      <div className="col-6 text-center">
-                        <FeatherIcon
-                          icon="user-plus"
-                          className="fea icon-ex-md text-primary mb-1"
-                        />
-                        <h5 className="mb-0">2588</h5>
-                        <p className="text-muted mb-0">Followers</p>
-                      </div>
-
-                      <div className="col-6 text-center">
-                        <FeatherIcon
-                          icon="users"
-                          className="fea icon-ex-md text-primary mb-1"
-                        />
-                        <h5 className="mb-0">454</h5>
-                        <p className="text-muted mb-0">Following</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="widget mt-4 pt-2">
-                    <h5 className="widget-title">Projects :</h5>
-                    <div className="progress-box mt-4">
-                      <h6 className="title text-muted">Progress</h6>
-                      <Progress
-                        value={50}
-                        color="primary"
-                        barClassName="position-relative"
-                      >
-                        <div className="progress-value d-block text-muted h6">
-                          24 / 48
-                        </div>
-                      </Progress>
-                    </div>
-                  </div>
-
                   <div className="widget mt-4">
-                    <ul className="list-unstyled sidebar-nav mb-0" id="navmenu-nav">
-                      {this.state.widgets.map((widget, key) => (
+                    <h3 className="widget-title">Minha Conta</h3>
+                    <ul className="list-unstyled sidebar-nav mb-4" id="navmenu-nav">
+                      {this.state.conta.map((widget, key) => (
                         <li className={widget.className} key={key}>
-                          <Link to={widget.link} className="navbar-link d-flex rounded shadow align-items-center py-2 px-4">
+                          <Link to={widget.link} className="navbar-link d-flex shadow align-items-center py-2 px-4">
+                            <span className="h4 mb-0">
+                              <FeatherIcon
+                                icon={widget.icon}
+                                className="fea"
+                              />
+                            </span>
+                            <p className="mb-0 ms-2">{widget.title}</p>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                    <h3 className="widget-title">Download</h3>
+                    <ul className="list-unstyled sidebar-nav mb-4" id="navmenu-nav">
+                      {this.state.download.map((widget, key) => (
+                        <li className={widget.className} key={key}>
+                          <a href={widget.link} target="_blank" className="navbar-link d-flex shadow align-items-center py-2 px-4">
                             <span className="h4 mb-0">
                               <i className={widget.icon}></i>
                             </span>
-                            <h6 className="mb-0 ms-2">{widget.title}</h6>
+                            <p className="mb-0 ms-2">{widget.title}</p>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                    <h3 className="widget-title">Suporte</h3>
+                    <ul className="list-unstyled sidebar-nav mb-4" id="navmenu-nav">
+                      {this.state.suporte.map((widget, key) => (
+                        <li className={widget.className} key={key}>
+                          <Link to={widget.link} className="navbar-link d-flex shadow align-items-center py-2 px-4">
+                            <span className="h4 mb-0">
+                              <FeatherIcon
+                                icon={widget.icon}
+                                className="fea"
+                              />
+                            </span>
+                            <p className="mb-0 ms-2">{widget.title}</p>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                    <h3 className="widget-title">Termos e Condições</h3>
+                    <ul className="list-unstyled sidebar-nav mb-4" id="navmenu-nav">
+                      {this.state.termos.map((widget, key) => (
+                        <li className={widget.className} key={key}>
+                          <Link to={widget.link} className="navbar-link d-flex shadow align-items-center py-2 px-4">
+                            <span className="h4 mb-0">
+                              <FeatherIcon
+                                icon={widget.icon}
+                                className="fea"
+                              />
+                            </span>
+                            <p className="mb-0 ms-2">{widget.title}</p>
                           </Link>
                         </li>
                       ))}
                     </ul>
                   </div>
-
-                  <div className="widget mt-4 pt-2">
-                    <h5 className="widget-title">Follow me :</h5>
-                    <ul className="list-unstyled social-icon mb-0 mt-4">
-                      <li className="list-inline-item me-1">
-                        <Link to="#" className="rounded">
-                          <i>
-                            <FeatherIcon
-                              icon="facebook"
-                              className="fea icon-sm fea-social"
-                            />
-                          </i>
-                        </Link>
-                      </li>
-                      <li className="list-inline-item me-1">
-                        <Link to="#" className="rounded">
-                          <i>
-                            <FeatherIcon
-                              icon="instagram"
-                              className="fea icon-sm fea-social"
-                            />
-                          </i>
-                        </Link>
-                      </li>
-                      <li className="list-inline-item me-1">
-                        <Link to="#" className="rounded">
-                          <i>
-                            <FeatherIcon
-                              icon="twitter"
-                              className="fea icon-sm fea-social"
-                            />
-                          </i>
-                        </Link>
-                      </li>
-                      <li className="list-inline-item me-1">
-                        <Link to="#" className="rounded">
-                          <i>
-                            <FeatherIcon
-                              icon="linkedin"
-                              className="fea icon-sm fea-social"
-                            />
-                          </i>
-                        </Link>
-                      </li>
-                      <li className="list-inline-item me-1">
-                        <Link to="#" className="rounded">
-                          <i>
-                            <FeatherIcon
-                              icon="github"
-                              className="fea icon-sm fea-social"
-                            />
-                          </i>
-                        </Link>
-                      </li>
-                      <li className="list-inline-item me-1">
-                        <Link to="#" className="rounded">
-                          <i>
-                            <FeatherIcon
-                              icon="youtube"
-                              className="fea icon-sm fea-social"
-                            />
-                          </i>
-                        </Link>
-                      </li>
-                      <li className="list-inline-item me-1">
-                        <Link to="#" className="rounded">
-                          <i>
-                            <FeatherIcon
-                              icon="gitlab"
-                              className="fea icon-sm fea-social"
-                            />
-                          </i>
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
                 </div>
               </Col>
+
               <Col lg="8" xs={12}>
+                <div className="rounded shadow p-4 mb-5">
+                  <h3>Assinatura</h3>
+                  <div className="d-flex justify-content-between flex-row">
+                    <Col lg={4}>
+                      <p style={{ fontSize: "21px", fontWeight: "600" }}>{plano != null && plano.name ? `Plano ${plano.name.charAt(0).toUpperCase()}${plano.name.slice(1)}` : null}</p>
+                      <p className="text-muted">{`R$${parseInt(plano.value_cents) / 100},00`}</p>
+                      <button className="btn btn-primary disabled">Alterar Plano</button>
+                    </Col>
+                    <Col lg={4}>
+                      <p style={{ fontSize: "21px", fontWeight: "600" }}>Assinatura válida até</p>
+                      {sub != null && sub.expiresAt ?
+                        <p>{`${this.lepDay(sub.expiresAt.getDate())}/${this.lepMonth(sub.expiresAt.getMonth())}/${sub.expiresAt.getFullYear()}`}</p>
+                        : null
+                      }
+                      <button className="btn btn-danger" onClick={this.handleCancelSub}>Cancelar Assinatura</button>
+                    </Col>
+                  </div>
+                </div>
                 <div className="rounded shadow p-4">
                   <div className="d-flex align-items-center justify-content-between">
-                    <h5 className="mb-0">Payment Methods:</h5>
+                    <h3 className="mb-0">Cartão registrado</h3>
                     <Link
                       to="#"
                       data-toggle="modal"
                       data-target="#addnewcard"
                       className="btn btn-primary"
                     >
-                      <FeatherIcon icon="plus" className="fea icon-sm" />
-                      Add
+                      {/* <FeatherIcon icon="plus" className="fea icon-sm" /> */}
+                      Editar
                     </Link>
                   </div>
 
                   <Row>
-                    <Col md={6} className="mt-4 pt-2">
+                    <Col md={6} className="mt-4 pt-2 mb-5">
                       <Link to="#">
                         <Card className="rounded shadow bg-light border-0">
                           <CardBody>
@@ -388,13 +320,13 @@ class PagePayments extends Component {
                               alt=""
                             />
                             <div className="mt-4">
-                              <h5 className="text-dark">•••• •••• •••• 4559</h5>
+                              <h5 className="text-dark">•••• •••• •••• 5150</h5>
                               <div className="d-flex justify-content-between">
                                 <p className="h6 text-muted mb-0">
-                                  Cristino Murfy
+                                  Bernardo Junqueira Braga
                                 </p>
                                 <h6 className="mb-0 text-dark">
-                                  Exp: <span className="text-muted">10/22</span>
+                                  Exp: <span className="text-muted">06/2027</span>
                                 </h6>
                               </div>
                             </div>
@@ -403,7 +335,7 @@ class PagePayments extends Component {
                       </Link>
                     </Col>
 
-                    <Col md={6} className="mt-4 pt-2">
+                    {/* <Col md={6} className="mt-4 pt-2">
                       <Link to="#">
                         <Card className="rounded shadow bg-dark border-0">
                           <CardBody>
@@ -429,9 +361,9 @@ class PagePayments extends Component {
                           </CardBody>
                         </Card>
                       </Link>
-                    </Col>
+                    </Col> */}
 
-                    <Col md={6} className="mt-4 pt-2">
+                    {/* <Col md={6} className="mt-4 pt-2">
                       <Link to="#">
                         <Card className="rounded shadow bg-info border-0">
                           <CardBody>
@@ -457,9 +389,9 @@ class PagePayments extends Component {
                           </CardBody>
                         </Card>
                       </Link>
-                    </Col>
+                    </Col> */}
 
-                    <Col md={6} className="mt-4 pt-2">
+                    {/* <Col md={6} className="mt-4 pt-2">
                       <Card className="rounded shadow bg-light border-0">
                         <CardBody>
                           <img
@@ -495,7 +427,25 @@ class PagePayments extends Component {
                           </div>
                         </CardBody>
                       </Card>
-                    </Col>
+                    </Col> */}
+                  </Row>
+                  <Col>
+                    <div className="rounded shadow p-4 mb-5">
+                      <h3>
+                        Detalhes da cobrança
+                      </h3>
+                      <div>
+                        <div className="d-flex flex-row justify-content-between detalhes-cobranca">
+                          <p>Data</p>
+                          <p>Período</p>
+                          <p>Forma de Pagamento</p>
+                          <p>Total</p>
+                        </div>
+                      </div>
+                    </div>
+                  </Col>
+                  <Row>
+
                   </Row>
                 </div>
               </Col>
