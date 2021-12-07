@@ -20,7 +20,7 @@ import user02 from "../../../assets/images/user/Registro5.png";
 import payment from "../../../assets/images/app/payment.png";
 
 //Mask
-import { mask } from 'remask'
+import { mask, unMask } from 'remask'
 
 //new imports
 import Form from "react-validation/build/form";
@@ -195,7 +195,7 @@ export default class PageCoverSignup extends Component {
 
   onChangePhone(e) {
     this.setState({
-      phone: mask(`${e.target.value}`, ['(99)99999-9999'])
+      phone: mask(unMask(`${e.target.value}`), ['(99)9999-9999','(99)99999-9999'])
     });
   }
 
@@ -600,7 +600,7 @@ export default class PageCoverSignup extends Component {
                                     placeholder="Senha"
                                     value={this.state.password}
                                     onChange={this.onChangePassword}
-                                    validations={[required, isEqual]}
+                                    validations={[required, isEqual, vpassword]}
                                   />
                                 </div>
                               </Col>
@@ -618,7 +618,7 @@ export default class PageCoverSignup extends Component {
                                     placeholder="Confirmação de senha"
                                     value={this.state.confirmPassword}
                                     onChange={this.onChangeConfirmPassword}
-                                    validations={[required, isEqual]}
+                                    validations={[required, isEqual, vpassword]}
                                   />
                                 </div>
                               </Col>
@@ -696,6 +696,7 @@ export default class PageCoverSignup extends Component {
                                         value={this.state.fullName}
                                         onChange={this.onChangeFullName}
                                         validations={[required]}
+                                        maxlength="30"
                                       />
                                     </div>
                                   </Col>
@@ -714,6 +715,7 @@ export default class PageCoverSignup extends Component {
                                         value={this.state.birthday}
                                         onChange={this.onChangeBirthday}
                                         validations={[required]}
+                                        maxlength="11"
                                       />
                                     </div>
                                   </Col>
@@ -732,6 +734,7 @@ export default class PageCoverSignup extends Component {
                                         value={this.state.cpf}
                                         onChange={this.onChangeCpf}
                                         validations={[required]}
+                                        maxlength="14"
                                       />
                                     </div>
                                   </Col>
@@ -749,6 +752,7 @@ export default class PageCoverSignup extends Component {
                                         placeholder="Telefone"
                                         value={this.state.phone}
                                         onChange={this.onChangePhone}
+                                        maxlength="14"
                                       // validations={[required]}
                                       />
                                     </div>
@@ -812,6 +816,7 @@ export default class PageCoverSignup extends Component {
                                         value={this.state.cep}
                                         onChange={this.onChangeCep}
                                         validations={[required]}
+                                        maxlength="9"
                                       />
                                     </div>
                                   </Col>
@@ -848,6 +853,7 @@ export default class PageCoverSignup extends Component {
                                         value={this.state.number}
                                         onChange={this.onChangeNumber}
                                         validations={[required]}
+                                        maxlength="5"
                                       />
                                     </div>
                                   </Col>
@@ -866,6 +872,7 @@ export default class PageCoverSignup extends Component {
                                         value={this.state.neighborhood}
                                         onChange={this.onChangeNeighborhood}
                                         validations={[required]}
+                                        maxlength="25"
                                       />
                                     </div>
                                   </Col>
@@ -884,6 +891,7 @@ export default class PageCoverSignup extends Component {
                                         value={this.state.state}
                                         onChange={this.onChangeState}
                                         validations={[required]}
+                                        maxlength="20"
                                       />
                                     </div>
                                   </Col>
@@ -902,6 +910,7 @@ export default class PageCoverSignup extends Component {
                                         value={this.state.city}
                                         onChange={this.onChangeCity}
                                         validations={[required]}
+                                        maxlength="20"
                                       />
                                     </div>
                                   </Col>

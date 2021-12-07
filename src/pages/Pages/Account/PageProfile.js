@@ -24,7 +24,7 @@ import { isEmail } from "validator";
 //New
 import AuthService from "../../../services/auth.service";
 import authService from "../../../services/auth.service";
-import { mask } from 'remask'
+import { mask, unMask } from 'remask'
 
 class PageProfile extends Component {
   constructor(props) {
@@ -174,7 +174,7 @@ class PageProfile extends Component {
 
   onChangePhone(e) {
     this.setState({
-      phone: mask(`${e.target.value}`, ['(99)99999-9999'])
+      phone: mask(unMask(`${e.target.value}`), ['(99)9999-9999','(99)99999-9999'])
     });
 
   }
@@ -546,6 +546,7 @@ class PageProfile extends Component {
                               placeholder={profile.full_name}
                               value={this.state.fullName}
                               onChange={this.onChangeFullName}
+                              maxlength="30"
                             />
                           </div>
                         </Col>
@@ -561,6 +562,7 @@ class PageProfile extends Component {
                               placeholder={profile != null && profile.birthday ? (`${this.lepDay(profile.birthday.getDate())}/${this.lepMonth(profile.birthday.getMonth())}/${profile.birthday.getFullYear()}`) : null}
                               value={this.state.birthday}
                               onChange={this.onChangeBirthday}
+                              maxlength="10"
                             />
                           </div>
                         </Col>
@@ -601,6 +603,7 @@ class PageProfile extends Component {
                               placeholder={profile.phone}
                               value={this.state.phone}
                               onChange={this.onChangePhone}
+                              maxlength="14"
                             />
                           </div>
                         </Col>
@@ -633,6 +636,7 @@ class PageProfile extends Component {
                               placeholder={profile.cep}
                               value={this.state.cep}
                               onChange={this.onChangeCep}
+                              maxlength="9"
                             />
                           </div>
                         </Col>
@@ -661,6 +665,7 @@ class PageProfile extends Component {
                               placeholder={profile.number}
                               value={this.state.number}
                               onChange={this.onChangeNumber}
+                              maxlength="5"
                             />
                           </div>
                         </Col>
@@ -675,6 +680,7 @@ class PageProfile extends Component {
                               placeholder={profile.neighborhood}
                               value={this.state.neighborhood}
                               onChange={this.onChangeNeighborhood}
+                              maxlength="25"
                             />
                           </div>
                         </Col>
@@ -689,6 +695,7 @@ class PageProfile extends Component {
                               placeholder={profile.state}
                               value={this.state.state}
                               onChange={this.onChangeState}
+                              maxlength="20"
                             />
                           </div>
                         </Col>
@@ -703,6 +710,7 @@ class PageProfile extends Component {
                               placeholder={profile.city}
                               value={this.state.city}
                               onChange={this.onChangeCity}
+                              maxlength="20"
                             />
                           </div>
                         </Col>
