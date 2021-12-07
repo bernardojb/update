@@ -236,6 +236,21 @@ class AuthService {
     })
   }
 
+  getCard(){
+    return new Promise((res, rej) => {
+        axios.get(`${API_URL}card`, { headers: authHeader() })
+          .then((data) => {
+            res(data)
+            return data
+          })
+          .catch((err) => {
+            console.log(">>> ERROR ", err);
+            rej(err)
+            return err
+          })
+    })
+  }
+
   checkCoupon(code) {
     return axios.post(API_URL + "coupon/check", {
       code

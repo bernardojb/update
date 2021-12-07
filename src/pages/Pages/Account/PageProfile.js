@@ -24,7 +24,7 @@ import { isEmail } from "validator";
 //New
 import AuthService from "../../../services/auth.service";
 import authService from "../../../services/auth.service";
-
+import { mask } from 'remask'
 
 class PageProfile extends Component {
   constructor(props) {
@@ -112,21 +112,21 @@ class PageProfile extends Component {
       termos: [
         {
           id: 1,
-          icon: "help-circle",
+          icon: "info",
           className: "navbar-item account-menu px-0 mt-2",
           title: "Sobre o Update",
           link: "/sobre",
         },
         {
           id: 2,
-          icon: "mail",
+          icon: "shield",
           className: "navbar-item account-menu px-0 mt-2",
           title: "Política de Privacidade",
           link: "/politica-de-privacidade",
         },
         {
           id: 3,
-          icon: "mail",
+          icon: "book",
           className: "navbar-item account-menu px-0 mt-2",
           title: "Termos de Uso",
           link: "/termos-de-uso",
@@ -156,11 +156,13 @@ class PageProfile extends Component {
     this.setState({
       fullName: e.target.value
     });
+
+    // console.log(`${this.fullName}`,mask('00000000000', ['999.999.999-99']))
   }
 
   onChangeBirthday(e) {
     this.setState({
-      birthday: e.target.value
+      birthday: mask(`${e.target.value}`, ['99/99/9999'])
     });
   }
 
@@ -172,7 +174,7 @@ class PageProfile extends Component {
 
   onChangePhone(e) {
     this.setState({
-      phone: e.target.value
+      phone: mask(`${e.target.value}`, ['(99)99999-9999'])
     });
 
   }
@@ -185,7 +187,7 @@ class PageProfile extends Component {
 
   onChangeCep(e) {
     this.setState({
-      cep: e.target.value
+      cep: mask(`${e.target.value}`, ['99999-999'])
     });
 
   }
@@ -253,7 +255,7 @@ class PageProfile extends Component {
         this.state.fullName,
         this.state.birthday,
         // this.state.cpf,
-        // this.state.phone,
+        this.state.phone,
         this.state.crm,
         //endereço
         this.state.cep,

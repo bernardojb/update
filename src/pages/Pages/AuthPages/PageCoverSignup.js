@@ -10,8 +10,6 @@ import {
   Card,
   CardBody,
 } from "reactstrap";
-// import { Formik, Form, Field } from 'formik';
-
 import { Helmet } from "react-helmet";
 
 //Import Icons
@@ -21,13 +19,13 @@ import FeatherIcon from "feather-icons-react";
 import user02 from "../../../assets/images/user/Registro5.png";
 import payment from "../../../assets/images/app/payment.png";
 
+//Mask
+import { mask } from 'remask'
+
 //new imports
-import AuthService from "../../../services/auth.service";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import control from "react-validation"
-
 import { isEmail } from "validator";
 import authService from "../../../services/auth.service";
 
@@ -185,19 +183,19 @@ export default class PageCoverSignup extends Component {
 
   onChangeBirthday(e) {
     this.setState({
-      birthday: e.target.value
+      birthday: mask(`${e.target.value}`, ['99/99/9999'])
     });
   }
 
   onChangeCpf(e) {
     this.setState({
-      cpf: e.target.value
+      cpf: mask(`${e.target.value}`, ['999.999.999-99'])
     });
   }
 
   onChangePhone(e) {
     this.setState({
-      phone: e.target.value
+      phone: mask(`${e.target.value}`, ['(99)99999-9999'])
     });
   }
 
@@ -209,7 +207,7 @@ export default class PageCoverSignup extends Component {
 
   onChangeCep(e) {
     this.setState({
-      cep: e.target.value
+      cep: mask(`${e.target.value}`, ['99999-999'])
     });
 
   }
@@ -246,7 +244,7 @@ export default class PageCoverSignup extends Component {
 
   onChangeCardNumber(e) {
     this.setState({
-      card_number: e.target.value
+      card_number: mask(`${e.target.value}`, ['9999-9999-9999-9999'])
     });
   }
 
@@ -330,7 +328,7 @@ export default class PageCoverSignup extends Component {
     this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
-      AuthService.register(
+      authService.register(
         this.state.email,
         this.state.password,
         this.state.confirmPassword,
@@ -383,7 +381,7 @@ export default class PageCoverSignup extends Component {
     this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
-      AuthService.registerProfile(
+      authService.registerProfile(
         this.state.fullName,
         this.state.birthday,
         this.state.cpf,
@@ -434,7 +432,7 @@ export default class PageCoverSignup extends Component {
     this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
-      AuthService.registerCard(
+      authService.registerCard(
         this.state.card_number,
         this.state.verification_value,
         this.state.month,
@@ -478,7 +476,7 @@ export default class PageCoverSignup extends Component {
 
     this.form.validateAll();
 
-    AuthService.checkCoupon(
+    authService.checkCoupon(
       this.state.code,
     ).then(
       response => {
@@ -636,7 +634,7 @@ export default class PageCoverSignup extends Component {
                                       Já tem uma conta?
                                     </small>{" "}
                                     <Link
-                                      to="/auth-cover-login"
+                                      to="/login"
                                       className="text-primary fw-bold"
                                     >
                                       Login

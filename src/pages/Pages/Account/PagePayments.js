@@ -18,7 +18,8 @@ import FeatherIcon from "feather-icons-react";
 
 //Import Images
 import imgbg from "../../../assets/images/account/bg.png";
-import profile from "../../../assets/images/client/05.jpg";
+
+//Cartões
 import master from "../../../assets/images/payments/payment/master.png";
 import visaa from "../../../assets/images/payments/payment/visaa.png";
 import rupay from "../../../assets/images/payments/payment/rupay.png";
@@ -38,6 +39,7 @@ class PagePayments extends Component {
       profile: {},
       plano: {},
       sub: {},
+      card: {},
       conta: [
         {
           id: 1,
@@ -119,6 +121,8 @@ class PagePayments extends Component {
 
 
   componentDidMount() {
+    // window.location.reload()
+
     authService.getSelf().then(data => {
       data.data.birthday = new Date(data.data.birthday)
       this.setState({
@@ -140,6 +144,14 @@ class PagePayments extends Component {
       })
     })
 
+    authService.getCard().then(data => {
+      this.setState({
+        ...this.state, card: data.data.data
+      })
+
+      console.log("CAAAAAAAAAAARD>>>>", this.state.card);
+    })
+
     document.body.classList = "";
     document.getElementById("topnav").classList.add("nav-sticky");
   }
@@ -157,6 +169,7 @@ class PagePayments extends Component {
     const { profile } = this.state
     const { plano } = this.state
     const { sub } = this.state
+    const { card } = this.state
 
     return (
       <React.Fragment>
@@ -319,13 +332,13 @@ class PagePayments extends Component {
                               alt=""
                             />
                             <div className="mt-4">
-                              <h5 className="text-dark">•••• •••• •••• 5150</h5>
+                              <h5 className="text-dark">{card.number}</h5>
                               <div className="d-flex justify-content-between">
                                 <p className="h6 text-muted mb-0">
-                                  Bernardo Junqueira Braga
+                                  {card.name}
                                 </p>
                                 <h6 className="mb-0 text-dark">
-                                  Exp: <span className="text-muted">06/2027</span>
+                                  Exp: <span className="text-muted">{card.month}/{card.year}</span>
                                 </h6>
                               </div>
                             </div>
