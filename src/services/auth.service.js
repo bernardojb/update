@@ -335,6 +335,14 @@ class AuthService {
     })
   }
 
+  changeProfilePassword(currentPassword, newPassword, confirmNewPassword) {
+    return axios.post(API_URL + "user/password", {
+      currentPassword,
+      newPassword,
+      confirmNewPassword,
+    });
+  }
+
   // isLogged() {
   //   const user = localStorage.getItem('user')
 

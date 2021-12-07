@@ -28,7 +28,7 @@ import paypals from "../../../assets/images/payments/payment/paypals.png";
 import authService from "../../../services/auth.service";
 
 //Image
-import profileImg from "../../../assets/images/client/05.jpg";
+import profileImg from "../../../assets/images/client/profile.png";
 
 class PagePayments extends Component {
   constructor(props) {
@@ -115,6 +115,8 @@ class PagePayments extends Component {
   handleCancelSub() {
     authService.cancelSub()
   }
+
+
 
   componentDidMount() {
     authService.getSelf().then(data => {
@@ -298,19 +300,16 @@ class PagePayments extends Component {
                   <div className="d-flex align-items-center justify-content-between">
                     <h3 className="mb-0">Cartão registrado</h3>
                     <Link
-                      to="#"
-                      data-toggle="modal"
-                      data-target="#addnewcard"
+                      to="/update-card"
                       className="btn btn-primary"
                     >
-                      {/* <FeatherIcon icon="plus" className="fea icon-sm" /> */}
                       Editar
                     </Link>
                   </div>
 
                   <Row>
                     <Col md={6} className="mt-4 pt-2 mb-5">
-                      <Link to="#">
+                      <Link to="/update-card">
                         <Card className="rounded shadow bg-light border-0">
                           <CardBody>
                             <img

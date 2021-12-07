@@ -453,7 +453,7 @@ export default class PageCoverSignup extends Component {
           )
 
           this.props.history.push("/page-profile");
-          // window.location.reload();
+          window.location.reload();
         },
         error => {
           const resMessage =

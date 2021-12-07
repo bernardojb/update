@@ -15,7 +15,7 @@ import FeatherIcon from "feather-icons-react";
 
 //Import Images
 import imgbg from "../../../assets/images/account/bg.png";
-import profileImg from "../../../assets/images/client/05.jpg";
+import profileImg from "../../../assets/images/client/profile.png";
 
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
@@ -43,6 +43,11 @@ class PageProfile extends Component {
     this.onChangeNeighborhood = this.onChangeNeighborhood.bind(this);
     this.onChangeState = this.onChangeState.bind(this);
     this.onChangeCity = this.onChangeCity.bind(this);
+    //Senha
+    this.onChangeCurrentPassword = this.onChangeCurrentPassword.bind(this);
+    this.onChangeNewPassword = this.onChangeNewPassword.bind(this);
+    this.onChangeConfirmNewPassword = this.onChangeConfirmNewPassword.bind(this);
+
 
     this.state = {
       profile: {},
@@ -139,6 +144,10 @@ class PageProfile extends Component {
       state: "",
       city: "",
       message: "",
+      //senha
+      currentPassword:"",
+      newPassword:"",
+      confirmNewPassword:"",
     };
   }
 
@@ -210,6 +219,25 @@ class PageProfile extends Component {
     });
   }
 
+  //senha
+  onChangeCurrentPassword(e){
+    this.setState({
+      currentPassword: e.target.value
+    });
+  }
+
+  onChangeNewPassword(e){
+    this.setState({
+      newPassword: e.target.value
+    });
+  }
+
+  onChangeConfirmNewPassword(e){
+    this.setState({
+      confirmNewPassword: e.target.value
+    });
+  }
+
   handleProfile(e) {
     e.preventDefault();
 
@@ -258,11 +286,49 @@ class PageProfile extends Component {
 
   handleDeleteUser() {
     authService.deleteUser()
-    .then(() => {
-      authService.logout();
-      this.props.history.push("/");
-      window.location.reload()
-    })
+      .then(() => {
+        authService.logout();
+        this.props.history.push("/");
+        window.location.reload()
+      })
+  }
+
+  changePassword(e) {
+    e.preventDefault();
+
+    this.setState({
+      message: "",
+    });
+
+    this.form.validateAll();
+
+    if (this.checkBtn.context._errors.length === 0) {
+      AuthService.changeProfilePassword(
+        this.state.currentPassword,
+        this.state.newPassword,
+        this.state.confirmNewPassword,
+
+      ).then(
+        response => {
+          this.setState({
+            message: response.data.message,
+          });
+          window.location.reload();
+        },
+        error => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          this.setState({
+            message: resMessage,
+          });
+        }
+      );
+    }
   }
 
   componentDidMount() {
@@ -670,28 +736,21 @@ class PageProfile extends Component {
                     <Row>
                       <Col md="6" className="mt-5 pt-2">
                         <h3>Alterar Senha</h3>
-                        {/* <Alert
-                          color="primary"
-                          isOpen={this.state.successMsg3}
-                          toggle={() => {
-                            this.setState({
-                              successMsg3: !this.state.successMsg3,
-                            });
-                          }}
+                        <Form
+                          onSubmit={this.changePassword}
+                          ref={c => { this.form = c }}
                         >
-                          Data sended successfully.
-                        </Alert> */}
-                        <Form onSubmit={this.handleSubmit3}>
                           <Row className="mt-4">
                             <Col lg="12">
                               <div className="mb-3">
                                 <Label className="form-label">Senha Atual</Label>
-
                                 <Input
                                   type="password"
+                                  name="currentPassword"
                                   className="form-control ps-2"
                                   placeholder="Senha atual"
-                                  required
+                                  value={this.state.currentPassword}
+                                  onChange={this.onChangeCurrentPassword}
                                 />
                               </div>
                             </Col>
@@ -702,8 +761,10 @@ class PageProfile extends Component {
                                 <Input
                                   type="password"
                                   className="form-control ps-2"
+                                  name="newPassword"
                                   placeholder="Nova senha"
-                                  required
+                                  value={this.state.newPassword}
+                                  onChange={this.onChangeNewPassword}
                                 />
                               </div>
                             </Col>
@@ -711,20 +772,40 @@ class PageProfile extends Component {
                             <Col lg="12">
                               <div className="mb-3">
                                 <Label className="form-label">Confirme a senha nova</Label>
-
                                 <Input
                                   type="password"
                                   className="form-control ps-2"
                                   placeholder="Confirme a senha nova"
-                                  required
+                                  name="confirmNewPassword"
+                                  value={this.state.confirmNewPassword}
+                                  onChange={this.onChangeConfirmNewPassword}
                                 />
                               </div>
                             </Col>
-
                             <Col lg="12" className="mt-2 mb-0">
-                              <Button color="primary disabled">Salvar Senha</Button>
+                              <Button color="primary">Salvar Senha</Button>
                             </Col>
                           </Row>
+                          {this.state.message && (
+                            <div className="form-group">
+                              <div
+                                className={
+                                  this.state.successful
+                                    ? "alert alert-success"
+                                    : "alert alert-danger"
+                                }
+                                role="alert"
+                              >
+                                {this.state.message}
+                              </div>
+                            </div>
+                          )}
+                          <CheckButton
+                            style={{ display: "none" }}
+                            ref={c => {
+                              this.checkBtn = c;
+                            }}
+                          />
                         </Form>
                       </Col>
                     </Row>

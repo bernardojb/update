@@ -95,6 +95,7 @@ export default class PageCoverSignup extends Component {
       year: "",
       first_name: "",
       last_name: "",
+      identifier:"mensal",
         
       message: "",
     };
@@ -160,17 +161,19 @@ export default class PageCoverSignup extends Component {
         this.state.first_name,
         this.state.last_name,
 
+        this.state.identifier
+
       ).then(
         response => {
           this.setState({
             message: response.data.message,
           })
 
-          // authService.registerPlano(
-          //   this.state.identifier
-          // )
+          authService.registerPlano(
+            this.state.identifier
+          )
 
-          // this.props.history.push("/page-profile");
+          this.props.history.push("/page-payments");
           // window.location.reload();
         },
         error => {
