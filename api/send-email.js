@@ -6,10 +6,10 @@ sgMail.setApiKey(process.env.SG_API);
 class LepyValidator {
     constructor() {
         this.rules = {
-            name: new SimpleValidator(5),
+            name: new SimpleValidator(1),
             email: new EmailValidator(),
-            subject: new SimpleValidator(5),
-            message: new SimpleValidator(10)
+            subject: new SimpleValidator(1),
+            message: new SimpleValidator(1)
         }
     }
 
@@ -153,7 +153,7 @@ class EmailContent {
 module.exports = (req, res) => {
     let validator = new LepyValidator()
     let msg = new EmailContent({
-        to: 'jobs@steven.etc.br',
+        to: 'bernardo@hokup.com.br',
         from: 'administrativo@grupoupdate.com.br',
         subject: 'UPDATE - Administrativo',
         text: 'Grupo UPDATE',

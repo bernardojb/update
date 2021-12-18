@@ -1,7 +1,8 @@
 import axios from "axios";
 import authHeader from './auth-header';
 
-const API_URL = "https://hokup.ragna4th.com/api/v1/";
+// const API_URL = "https://hokup.ragna4th.com/api/v1/";
+const API_URL = "https://api.grupoupdate.com.br/api/v1/";
 
 class AuthService {
   login(login, password) {
@@ -177,8 +178,6 @@ class AuthService {
     return new Promise((res, rej) => {
       const user = localStorage.getItem('user')
 
-      console.log("USEEEEER GETT SELF", user)
-
       if (user) {
         axios.get(`${API_URL}profile`, { headers: authHeader() })
           .then((data) => {
@@ -315,15 +314,29 @@ class AuthService {
       console.log("PROFILEEEEEEEEEEE error", err);
       return err
     })
-
     const userId = JSON.parse(localStorage.getItem('userId'))
-
-    console.log(">>>>>>>>>>>>>>>>> profileeee", userId, userId.id)
-
     return axios.delete(API_URL + `user/${userId.id}`, 
     {
       headers: authHeader()
     });
+  }
+
+  deleteCard(cardIndex){
+    return axios.delete(API_URL + `card/${cardIndex.paymentMethodId}`, 
+    {
+      headers: authHeader()
+    });
+  }
+
+  setDefaultCard(cardIndex){
+    return axios.put(API_URL + `card/${cardIndex.paymentMethodId}`, {
+      //Profile
+      cardIndex,
+    },
+      {
+        headers: authHeader()
+      });
+
   }
 
   isLogged() {
@@ -362,23 +375,13 @@ class AuthService {
     );
   }
 
-  // isLogged() {
-  //   const user = localStorage.getItem('user')
-
-  //   return new Promise((res) => {
-  //     if (user) {
-  //       console.log("USER ? >>>>>>>>>>>>>>>>>>>>", user)
-  //       axios.get(`${API_URL}profile`, { headers: authHeader() })
-  //         .then(() => {
-  //           res(true)
-  //         })
-  //         .catch((err) => {
-  //           console.error("NO USER >>>>>>>>>>>>>>>>>>", err)
-  //           res(false)
-  //         })
-  //     } else { res(false) }
-  //   })
-  // }
+  getFaturas(){
+      return axios.post(API_URL + "user/invoices",  
+      {},
+      {
+        headers: authHeader()
+      });
+    }
 }
 
 export default new AuthService();

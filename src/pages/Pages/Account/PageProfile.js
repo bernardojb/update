@@ -22,9 +22,104 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 //New
-import AuthService from "../../../services/auth.service";
 import authService from "../../../services/auth.service";
 import { mask, unMask } from 'remask'
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const required = value => {
+  if (!value) {
+    return (
+      <div className="alert alert-danger mt-2" role="alert">
+        Esse campo é obrigatório!
+      </div>
+    );
+  }
+};
+
+const vpassword = value => {
+  if (value.length < 6 || value.length > 40) {
+    return (
+      <div className="alert alert-danger mt-2" role="alert">
+        Sua senha precisa ter pelo menos 6 caracteres.
+      </div>
+    );
+  }
+};
+
+const vyear = value => {
+  if (value.length < 4 || value.length > 4) {
+    return (
+      <div className="alert alert-danger mt-2" role="alert">
+        Digite o ano completo!
+      </div>
+    );
+  }
+};
+
+const vminyear = value => {
+  if (value < 2021 || value.length > 3000) {
+    return (
+      <div className="alert alert-danger mt-2" role="alert">
+        Digite um ano válido!
+      </div>
+    );
+  }
+};
+
+const vmonth = value => {
+  if (value < 1 || value > 12) {
+    return (
+      <div className="alert alert-danger mt-2" role="alert">
+        Digite um mês válido!
+      </div>
+    );
+  }
+};
+
+const vcpf = value => {
+  if (value.length < 14) {
+    return (
+      <div className="alert alert-danger mt-2" role="alert">
+        Digite um CPF válido!
+      </div>
+    );
+  }
+};
+
+const vbirthday= value => {
+  if (value.length < 10) {
+    return (
+      <div className="alert alert-danger mt-2" role="alert">
+        Digite sua data de nascimento completa!
+      </div>
+    );
+  }
+};
+
+const vcep= value => {
+  if (value.length < 9) {
+    return (
+      <div className="alert alert-danger mt-2" role="alert">
+        Digite um CEP válido!
+      </div>
+    );
+  }
+};
+
+const isEqual = (value, props, components) => {
+  const bothUsed = components.newPassword[0].isUsed && components.confirmNewPassword[0].isUsed;
+  const bothChanged = components.newPassword[0].isChanged && components.confirmNewPassword[0].isChanged;
+
+  if (bothChanged && bothUsed && components.newPassword[0].value !== components.confirmNewPassword[0].value) {
+    return (
+      <div className="alert alert-danger mt-2" role="alert">
+        As senhas não coincidem
+      </div>
+    )
+  }
+};
 
 class PageProfile extends Component {
   constructor(props) {
@@ -146,9 +241,9 @@ class PageProfile extends Component {
       city: "",
       message: "",
       //senha
-      currentPassword:"",
-      newPassword:"",
-      confirmNewPassword:"",
+      currentPassword: "",
+      newPassword: "",
+      confirmNewPassword: "",
     };
   }
 
@@ -156,8 +251,6 @@ class PageProfile extends Component {
     this.setState({
       fullName: e.target.value
     });
-
-    // console.log(`${this.fullName}`,mask('00000000000', ['999.999.999-99']))
   }
 
   onChangeBirthday(e) {
@@ -166,15 +259,9 @@ class PageProfile extends Component {
     });
   }
 
-  // onChangeCpf(e) {
-  //   this.setState({
-  //     cpf: e.target.value
-  //   });
-  // }
-
   onChangePhone(e) {
     this.setState({
-      phone: mask(unMask(`${e.target.value}`), ['(99)9999-9999','(99)99999-9999'])
+      phone: mask(unMask(`${e.target.value}`), ['(99)9999-9999', '(99)99999-9999'])
     });
 
   }
@@ -223,19 +310,19 @@ class PageProfile extends Component {
   }
 
   //senha
-  onChangeCurrentPassword(e){
+  onChangeCurrentPassword(e) {
     this.setState({
       currentPassword: e.target.value
     });
   }
 
-  onChangeNewPassword(e){
+  onChangeNewPassword(e) {
     this.setState({
       newPassword: e.target.value
     });
   }
 
-  onChangeConfirmNewPassword(e){
+  onChangeConfirmNewPassword(e) {
     this.setState({
       confirmNewPassword: e.target.value
     });
@@ -251,7 +338,7 @@ class PageProfile extends Component {
     this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
-      AuthService.updateProfile(
+      authService.updateProfile(
         this.state.fullName,
         this.state.birthday,
         // this.state.cpf,
@@ -269,7 +356,12 @@ class PageProfile extends Component {
           this.setState({
             message: response.data.message,
           });
-          window.location.reload();
+          toast.success("Perfil alterado com sucesso!", {
+            autoClose: 2000,
+          })
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         },
         error => {
           const resMessage =
@@ -282,6 +374,12 @@ class PageProfile extends Component {
           this.setState({
             message: resMessage,
           });
+          toast.error("Tente novamente mais tarde!", {
+            autoClose: 2000,
+          })
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         }
       );
     }
@@ -306,7 +404,7 @@ class PageProfile extends Component {
     this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
-      AuthService.changeProfilePassword(
+      authService.changeProfilePassword(
         this.state.currentPassword,
         this.state.newPassword,
         this.state.confirmNewPassword,
@@ -316,7 +414,12 @@ class PageProfile extends Component {
           this.setState({
             message: response.data.message,
           });
-          window.location.reload();
+          toast.success("Senha alterada com sucesso!", {
+            autoClose: 2000,
+          })
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         },
         error => {
           const resMessage =
@@ -325,6 +428,13 @@ class PageProfile extends Component {
               error.response.data.message) ||
             error.message ||
             error.toString();
+
+            toast.error("Tente novamente mais tarde!", {
+              autoClose: 2000,
+            })
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
 
           this.setState({
             message: resMessage,
@@ -348,14 +458,14 @@ class PageProfile extends Component {
       this.setState({
         ...this.state, sub: data.data.data
       })
-      console.log(">>>>>>>>>>>>>>>> sub", this.state.sub)
+
       authService.getPlan().then(dt => {
         this.setState({
           ...this.state, plano: dt.data.data.find(d => d.identifier == data.data.data.planIdentifier)
         })
       })
     })
-
+    
     //Header
     document.body.classList = "";
     document.getElementById("topnav").classList.add("nav-sticky");
@@ -370,13 +480,23 @@ class PageProfile extends Component {
   }
 
   render() {
-
     const { profile } = this.state
     const { plano } = this.state
     const { sub } = this.state
 
     return (
       <React.Fragment>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <section
           className="bg-profile d-table w-100 bg-primary"
           style={{ background: `url(${imgbg}) center center` }}
@@ -405,7 +525,6 @@ class PageProfile extends Component {
                           >
                             <h3 className="title mb-2"> {profile.full_name} </h3>
                             <p>{plano != null && plano.name ? `Plano ${plano.name.charAt(0).toUpperCase()}${plano.name.slice(1)}` : null}</p>
-                            {/* {plano != null ? console.log(plano) : null} */}
                             {sub != null && sub.expiresAt ?
                               <p>Assinatura válida até: <span className="text-primary">{`${this.lepDay(sub.expiresAt.getDate())}/${this.lepMonth(sub.expiresAt.getMonth())}/${sub.expiresAt.getFullYear()}`}</span></p>
                               : null
@@ -423,7 +542,6 @@ class PageProfile extends Component {
             </Row>
           </Container>
         </section>
-
         <section className="section mt-60">
           <Container className="mt-lg-3">
             <Row>
@@ -497,37 +615,6 @@ class PageProfile extends Component {
               <Col lg="8" xs="12">
                 <Card className="border-0 rounded shadow">
                   <CardBody>
-                    {/* <h3 className="text-md-start text-center">
-                      Informações Pessoais
-                    </h3>
-                    <div className="mt-3 text-md-start text-center d-sm-flex">
-                      <img
-                        src={profileImg}
-                        className="avatar float-md-left avatar-medium rounded-circle shadow me-md-4"
-                        alt=""
-                      />
-                      <div className="mt-md-4 mt-3 mt-sm-0">
-                        <Link to="#" className="btn btn-primary mt-2">
-                          {" "}
-                          Alterar foto{" "}
-                        </Link>{" "}
-                        <Link
-                          to="#"
-                          className="mt-2 ms-5 text-danger"
-                        >
-                          Remover
-                        </Link>
-                      </div>
-                    </div> */}
-                    {/* <Alert
-                      color="primary"
-                      isOpen={this.state.successMsg}
-                      toggle={() => {
-                        this.setState({ successMsg: !this.state.successMsg });
-                      }}
-                    >
-                      Data sended successfully.
-                    </Alert> */}
                     <Form
                       onSubmit={this.handleProfile}
                       ref={c => {
@@ -546,7 +633,7 @@ class PageProfile extends Component {
                               placeholder={profile.full_name}
                               value={this.state.fullName}
                               onChange={this.onChangeFullName}
-                              maxlength="30"
+                              maxLength="30"
                             />
                           </div>
                         </Col>
@@ -562,36 +649,11 @@ class PageProfile extends Component {
                               placeholder={profile != null && profile.birthday ? (`${this.lepDay(profile.birthday.getDate())}/${this.lepMonth(profile.birthday.getMonth())}/${profile.birthday.getFullYear()}`) : null}
                               value={this.state.birthday}
                               onChange={this.onChangeBirthday}
-                              maxlength="10"
+                              maxLength="10"
+                              validations={[vbirthday]}
                             />
                           </div>
                         </Col>
-                        {/* <Col md="6">
-                          <div className="mb-3">
-                            <Label className="form-label">CPF</Label>
-                            <Input
-                              name="cpf"
-                              id="cpf"
-                              type="text"
-                              className="form-control ps-2"
-                              placeholder={profile.cpf}
-                              value={this.state.cpf}
-                              onChange={this.onChangeCpf}
-                            />
-                          </div>
-                        </Col>
-                        <Col md="6">
-                          <div className="mb-3">
-                            <Label className="form-label">Email</Label>
-                            <Input
-                              name="email"
-                              id="email"
-                              type="email"
-                              className="form-control ps-2"
-                              placeholder="Email"
-                            />
-                          </div>
-                        </Col> */}
                         <Col md="6">
                           <div className="mb-3">
                             <Label className="form-label">Telefone</Label>
@@ -603,7 +665,7 @@ class PageProfile extends Component {
                               placeholder={profile.phone}
                               value={this.state.phone}
                               onChange={this.onChangePhone}
-                              maxlength="14"
+                              maxLength="14"
                             />
                           </div>
                         </Col>
@@ -636,7 +698,8 @@ class PageProfile extends Component {
                               placeholder={profile.cep}
                               value={this.state.cep}
                               onChange={this.onChangeCep}
-                              maxlength="9"
+                              maxLength="9"
+                              validations={[vcep]}
                             />
                           </div>
                         </Col>
@@ -665,7 +728,7 @@ class PageProfile extends Component {
                               placeholder={profile.number}
                               value={this.state.number}
                               onChange={this.onChangeNumber}
-                              maxlength="5"
+                              maxLength="5"
                             />
                           </div>
                         </Col>
@@ -680,7 +743,7 @@ class PageProfile extends Component {
                               placeholder={profile.neighborhood}
                               value={this.state.neighborhood}
                               onChange={this.onChangeNeighborhood}
-                              maxlength="25"
+                              maxLength="25"
                             />
                           </div>
                         </Col>
@@ -695,7 +758,7 @@ class PageProfile extends Component {
                               placeholder={profile.state}
                               value={this.state.state}
                               onChange={this.onChangeState}
-                              maxlength="20"
+                              maxLength="20"
                             />
                           </div>
                         </Col>
@@ -710,7 +773,7 @@ class PageProfile extends Component {
                               placeholder={profile.city}
                               value={this.state.city}
                               onChange={this.onChangeCity}
-                              maxlength="20"
+                              maxLength="20"
                             />
                           </div>
                         </Col>
@@ -722,20 +785,6 @@ class PageProfile extends Component {
                           </Button>
                         </Col>
                       </Row>
-                      {this.state.message && (
-                        <div className="form-group">
-                          <div
-                            className={
-                              this.state.successful
-                                ? "alert alert-success"
-                                : "alert alert-danger"
-                            }
-                            role="alert"
-                          >
-                            {this.state.message}
-                          </div>
-                        </div>
-                      )}
                       <CheckButton
                         style={{ display: "none" }}
                         ref={c => {
@@ -776,6 +825,7 @@ class PageProfile extends Component {
                                   placeholder="Nova senha"
                                   value={this.state.newPassword}
                                   onChange={this.onChangeNewPassword}
+                                  validations={[vpassword, isEqual]}
                                 />
                               </div>
                             </Col>
@@ -790,6 +840,7 @@ class PageProfile extends Component {
                                   name="confirmNewPassword"
                                   value={this.state.confirmNewPassword}
                                   onChange={this.onChangeConfirmNewPassword}
+                                  validations={[vpassword, isEqual]}
                                 />
                               </div>
                             </Col>
@@ -797,20 +848,6 @@ class PageProfile extends Component {
                               <Button color="primary">Salvar Senha</Button>
                             </Col>
                           </Row>
-                          {this.state.message && (
-                            <div className="form-group">
-                              <div
-                                className={
-                                  this.state.successful
-                                    ? "alert alert-success"
-                                    : "alert alert-danger"
-                                }
-                                role="alert"
-                              >
-                                {this.state.message}
-                              </div>
-                            </div>
-                          )}
                           <CheckButton
                             style={{ display: "none" }}
                             ref={c => {

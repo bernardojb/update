@@ -29,6 +29,9 @@ import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 import authService from "../../../services/auth.service";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const required = value => {
   if (!value) {
     return (
@@ -42,7 +45,7 @@ const required = value => {
 const email = value => {
   if (!isEmail(value)) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <div className="alert alert-danger mt-2" role="alert">
         Este não é um email válido!
       </div>
     );
@@ -52,8 +55,88 @@ const email = value => {
 const vpassword = value => {
   if (value.length < 6 || value.length > 40) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <div className="alert alert-danger mt-2" role="alert">
         Sua senha precisa ter pelo menos 6 caracteres.
+      </div>
+    );
+  }
+};
+
+const vyear = value => {
+  if (value.length < 4 || value.length > 4) {
+    return (
+      <div className="alert alert-danger mt-2" role="alert">
+        Digite o ano completo!
+      </div>
+    );
+  }
+};
+
+const vminyear = value => {
+  if (value < 2021 || value.length > 3000) {
+    return (
+      <div className="alert alert-danger mt-2" role="alert">
+        Digite um ano válido!
+      </div>
+    );
+  }
+};
+
+const vmonth = value => {
+  if (value < 1 || value > 12) {
+    return (
+      <div className="alert alert-danger mt-2" role="alert">
+        Digite um mês válido!
+      </div>
+    );
+  }
+};
+
+const vcpf = value => {
+  if (value.length < 14) {
+    return (
+      <div className="alert alert-danger mt-2" role="alert">
+        Digite um CPF válido!
+      </div>
+    );
+  }
+};
+
+const vbirthday = value => {
+  if (value.length < 10) {
+    return (
+      <div className="alert alert-danger mt-2" role="alert">
+        Digite sua data de nascimento completa!
+      </div>
+    );
+  }
+};
+
+const vcep = value => {
+  if (value.length < 9) {
+    return (
+      <div className="alert alert-danger mt-2" role="alert">
+        Digite um CEP válido!
+      </div>
+    );
+  }
+};
+
+const vcard = value => {
+  if (value.length < 19) {
+    return (
+      <div className="alert alert-danger mt-2" role="alert">
+        Digite um número de cartão válido!
+      </div>
+    );
+  }
+};
+
+const vcvv = value => {
+  if (value.length < 3) {
+    return (
+      <div className="alert alert-danger mt-2" role="alert">
+        Digite um CVV válido!
       </div>
     );
   }
@@ -65,7 +148,7 @@ const isEqual = (value, props, components) => {
 
   if (bothChanged && bothUsed && components.password[0].value !== components.confirmPassword[0].value) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <div className="alert alert-danger mt-2" role="alert">
         As senhas não coincidem
       </div>
     )
@@ -195,7 +278,7 @@ export default class PageCoverSignup extends Component {
 
   onChangePhone(e) {
     this.setState({
-      phone: mask(unMask(`${e.target.value}`), ['(99)9999-9999','(99)99999-9999'])
+      phone: mask(unMask(`${e.target.value}`), ['(99)9999-9999', '(99)99999-9999'])
     });
   }
 
@@ -340,16 +423,19 @@ export default class PageCoverSignup extends Component {
             register: false,
             register_profile: true,
           });
-          if(response.data.token) {
-            console.log(response, '#############################')
-            localStorage.setItem("user", JSON.stringify({ data: {
-              access_token: response.data.token,
-              refresh_token: response.data.token,
-              "has_profile": false,
-              "has_card": false,
-              "has_subs": false
-            } }));
-          }
+          window.location.reload()
+          // if (response.data.token) {
+          //   console.log(response, '#############################')
+          //   localStorage.setItem("user", JSON.stringify({
+          //     data: {
+          //       access_token: response.data.token,
+          //       refresh_token: response.data.token,
+          //       "has_profile": false,
+          //       "has_card": false,
+          //       "has_subs": false
+          //     }
+          //   }));
+          // }
           // window.location.reload();
         },
         error => {
@@ -360,10 +446,11 @@ export default class PageCoverSignup extends Component {
             error.message ||
             error.toString();
 
-          this.setState({
-            register: true,
-            message: resMessage,
-          });
+          // this.setState({
+          //   register: true,
+          //   message: resMessage,
+          // });
+          window.location.reload()
         }
       );
     }
@@ -401,7 +488,6 @@ export default class PageCoverSignup extends Component {
             register_profile: false,
             register_plano: true
           });
-          // window.location.reload();
         },
         error => {
           const resMessage =
@@ -417,6 +503,8 @@ export default class PageCoverSignup extends Component {
             register_profile: true,
             register_plano: false
           });
+
+          window.location.reload();
         }
       );
     }
@@ -446,12 +534,18 @@ export default class PageCoverSignup extends Component {
             message: response.data.message,
           })
 
-          authService.registerPlano(
-            this.state.identifier
-          )
-
-          this.props.history.push("/page-profile");
-          window.location.reload();
+          if (this.state.code != "") {
+            authService.registerPlanoCoupon(
+              this.state.identifier,
+              this.state.code
+            )
+          } else {
+            authService.registerPlano(
+              this.state.identifier
+            )
+          }
+          this.props.history.push("/page-profile")
+          window.location.reload()
         },
         error => {
           const resMessage =
@@ -476,30 +570,51 @@ export default class PageCoverSignup extends Component {
 
     this.form.validateAll();
 
-    authService.checkCoupon(
-      this.state.code,
-    ).then(
-      response => {
-        this.setState({
-          message: response.data.message,
-        })
-
-
-      },
-      error => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-
-        this.setState({
-          message: resMessage,
-        });
-      }
-    );
-
+    if(this.state.code != ""){
+      authService.checkCoupon(
+        this.state.code,
+      ).then(
+        response => {
+          toast.success("Cupom válido!", {
+            autoClose: 2000,
+          })
+          setTimeout(() => {
+            this.setState({
+              message: response.data.message,
+              passo4: false,
+              passo5: true
+            })
+            // window.location.reload();
+          }, 2000);
+        },
+        error => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+  
+          // this.setState({
+          //   message: resMessage,
+          // });
+          toast.error("Cupom inválido!", {
+            autoClose: 2000,
+          })
+          setTimeout(() => {
+            // this.setState({
+            //     message: resMessage,
+            // })
+            window.location.reload();
+          }, 2000);
+        }
+      );
+    } else {
+      this.setState({
+        passo4: false,
+        passo5: true
+      })
+    }
   }
 
   componentDidMount() {
@@ -509,6 +624,7 @@ export default class PageCoverSignup extends Component {
       if (user.data.has_card && user.data.has_subs) {
         console.log(">>>>> HAS CARD + HAS SUBS")
       } else if (user.data.has_profile) {
+        console.log(">>>>> HAS ONLY PROFILE")
         this.setState({
           register: false,
           register_profile: false,
@@ -540,6 +656,17 @@ export default class PageCoverSignup extends Component {
           <title>Registro | Update Anestesiologia</title>
           <link rel="canonical" href="https://www.grupoupdate.com.br/registro" />
         </Helmet>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <div className="back-to-home rounded d-sm-block">
           <Link to="/" className="btn btn-icon btn-primary">
             <i>
@@ -648,8 +775,8 @@ export default class PageCoverSignup extends Component {
                                 <div
                                   className={
                                     this.state.successful
-                                      ? "alert alert-success"
-                                      : "alert alert-danger"
+                                      ? "alert alert-success mt-2"
+                                      : "alert alert-danger mt-2"
                                   }
                                   role="alert"
                                 >
@@ -696,7 +823,7 @@ export default class PageCoverSignup extends Component {
                                         value={this.state.fullName}
                                         onChange={this.onChangeFullName}
                                         validations={[required]}
-                                        maxlength="30"
+                                        maxLength="30"
                                       />
                                     </div>
                                   </Col>
@@ -714,8 +841,8 @@ export default class PageCoverSignup extends Component {
                                         placeholder="dd/mm/aaaa"
                                         value={this.state.birthday}
                                         onChange={this.onChangeBirthday}
-                                        validations={[required]}
-                                        maxlength="11"
+                                        validations={[required, vbirthday]}
+                                        maxLength="10"
                                       />
                                     </div>
                                   </Col>
@@ -733,8 +860,8 @@ export default class PageCoverSignup extends Component {
                                         placeholder="CPF"
                                         value={this.state.cpf}
                                         onChange={this.onChangeCpf}
-                                        validations={[required]}
-                                        maxlength="14"
+                                        validations={[required, vcpf]}
+                                        maxLength="14"
                                       />
                                     </div>
                                   </Col>
@@ -752,7 +879,7 @@ export default class PageCoverSignup extends Component {
                                         placeholder="Telefone"
                                         value={this.state.phone}
                                         onChange={this.onChangePhone}
-                                        maxlength="14"
+                                        maxLength="14"
                                       // validations={[required]}
                                       />
                                     </div>
@@ -815,8 +942,8 @@ export default class PageCoverSignup extends Component {
                                         placeholder="CEP"
                                         value={this.state.cep}
                                         onChange={this.onChangeCep}
-                                        validations={[required]}
-                                        maxlength="9"
+                                        validations={[required, vcep]}
+                                        maxLength="9"
                                       />
                                     </div>
                                   </Col>
@@ -853,7 +980,7 @@ export default class PageCoverSignup extends Component {
                                         value={this.state.number}
                                         onChange={this.onChangeNumber}
                                         validations={[required]}
-                                        maxlength="5"
+                                        maxLength="5"
                                       />
                                     </div>
                                   </Col>
@@ -872,7 +999,7 @@ export default class PageCoverSignup extends Component {
                                         value={this.state.neighborhood}
                                         onChange={this.onChangeNeighborhood}
                                         validations={[required]}
-                                        maxlength="25"
+                                        maxLength="25"
                                       />
                                     </div>
                                   </Col>
@@ -891,7 +1018,7 @@ export default class PageCoverSignup extends Component {
                                         value={this.state.state}
                                         onChange={this.onChangeState}
                                         validations={[required]}
-                                        maxlength="20"
+                                        maxLength="20"
                                       />
                                     </div>
                                   </Col>
@@ -910,7 +1037,7 @@ export default class PageCoverSignup extends Component {
                                         value={this.state.city}
                                         onChange={this.onChangeCity}
                                         validations={[required]}
-                                        maxlength="20"
+                                        maxLength="20"
                                       />
                                     </div>
                                   </Col>
@@ -926,8 +1053,8 @@ export default class PageCoverSignup extends Component {
                               <div className="form-group">
                                 <div className={
                                   this.state.successful
-                                    ? "alert alert-success"
-                                    : "alert alert-danger"
+                                    ? "alert alert-success mt-2"
+                                    : "alert alert-danger mt-2"
                                 }
                                   role="alert"
                                 >
@@ -966,7 +1093,7 @@ export default class PageCoverSignup extends Component {
                                       value={this.state.identifier}
                                       onClick={() => {
                                         this.setState({
-                                          identifier: "mensal",
+                                          identifier: "anual",
                                           plano_year: "active",
                                           plano_half: "",
                                           plano_month: "",
@@ -994,7 +1121,7 @@ export default class PageCoverSignup extends Component {
                                       value={this.state.identifier}
                                       onClick={() => {
                                         this.setState({
-                                          identifier: "mensal",
+                                          identifier: "semestral",
                                           plano_year: "",
                                           plano_half: "active",
                                           plano_month: "",
@@ -1044,7 +1171,7 @@ export default class PageCoverSignup extends Component {
                                       </div>
                                     </a>
                                   </Col>
-                                  {/* <Col md="12">
+                                  <Col md="12">
                                     <div className="mb-4">
                                       <Label className="form-label" for="cupom">
                                         Cupom de desconto
@@ -1058,20 +1185,14 @@ export default class PageCoverSignup extends Component {
                                         value={this.state.code}
                                         onChange={this.onChangeCoupon}
                                       />
-                                      <a onClick={this.handleCouponCheck} style={{ backgroundColor: "white", color: "black" }}>
+                                      {/* <a onClick={this.handleCouponCheck} style={{ backgroundColor: "white", color: "black" }}>
                                         check
-                                      </a>
+                                      </a> */}
                                     </div>
-                                  </Col> */}
-                                  <a
-                                    className="btn-primary d-flex justify-content-center align-items-center"
+                                  </Col>
+                                  <a className="btn-primary d-flex justify-content-center align-items-center"
                                     style={{ height: "42px" }}
-                                    onClick={() => {
-                                      this.setState({
-                                        passo4: false,
-                                        passo5: true
-                                      })
-                                    }}>
+                                    onClick={this.handleCouponCheck}>
                                     Próximo
                                   </a>
                                 </>) : (null)}
@@ -1098,7 +1219,8 @@ export default class PageCoverSignup extends Component {
                                         placeholder="0000-0000-0000-0000"
                                         value={this.state.card_number}
                                         onChange={this.onChangeCardNumber}
-                                        validations={[required]}
+                                        validations={[required, vcard]}
+                                        maxLength="19"
                                       />
                                     </div>
                                   </Col>
@@ -1154,8 +1276,8 @@ export default class PageCoverSignup extends Component {
                                         placeholder="Mês"
                                         value={this.state.month}
                                         onChange={this.onChangeMonth}
-                                        validations={[required]}
-
+                                        validations={[required, vmonth]}
+                                        maxLength="2"
                                       />
                                     </div>
                                   </Col>
@@ -1169,7 +1291,8 @@ export default class PageCoverSignup extends Component {
                                         placeholder="Ano"
                                         value={this.state.year}
                                         onChange={this.onChangeYear}
-                                        validations={[required]}
+                                        validations={[required, vyear, vminyear]}
+                                        maxLength="4"
                                       />
                                     </div>
                                   </Col>
@@ -1187,7 +1310,8 @@ export default class PageCoverSignup extends Component {
                                         placeholder="CVV"
                                         value={this.state.verification_value}
                                         onChange={this.onChangeVerificationValue}
-                                        validations={[required]}
+                                        validations={[required, vcvv]}
+                                        maxLength="3"
                                       />
                                     </div>
                                   </Col>
@@ -1229,8 +1353,8 @@ export default class PageCoverSignup extends Component {
                                 <div
                                   className={
                                     this.state.successful
-                                      ? "alert alert-success"
-                                      : "alert alert-danger"
+                                      ? "alert alert-success mt-2"
+                                      : "alert alert-danger mt-2"
                                   }
                                   role="alert"
                                 >

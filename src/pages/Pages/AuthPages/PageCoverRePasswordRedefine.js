@@ -187,8 +187,8 @@ class PageCoverRePassword extends Component {
                                 <div
                                   className={
                                     this.state.successful
-                                      ? "alert alert-success"
-                                      : "alert alert-danger"
+                                      ? "alert alert-success mt-2"
+                                      : "alert alert-danger mt-2"
                                   }
                                   role="alert"
                                 >

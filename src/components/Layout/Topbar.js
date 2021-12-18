@@ -7,6 +7,7 @@ import logoUpdate from "../../assets/images/LogoUpdate.svg";
 //Auth
 import authService from "../../services/auth.service";
 import FeatherIcon from "feather-icons-react";
+import axios from "axios";
 
 class Topbar extends Component {
   constructor(props) {
@@ -50,23 +51,15 @@ class Topbar extends Component {
       this.activateParentDropdown(matchingMenuItem);
     }
 
-    // const logout = document.getElementById("ghostbusters");
-    // if (logout) {
-    //   logout.addEventListener('click', function (e) {
-    //     authService.logout()
-    //   })
-    // }
+    authService.getSelf().then(data => {
+      this.setState({
+        ...this.state, profile: data.data
+      })
+    })
 
     const user = JSON.parse(localStorage.getItem('user'))
 
-    
-
     if (user) {
-      authService.getSelf().then(data => {
-        this.setState({
-          ...this.state, profile: data.data
-        })
-      })
       this.setState({
         isLogged: true
       })

@@ -14,9 +14,6 @@ import {Helmet} from "react-helmet";
 
 import Contact from './PageContactTwo2'
 
-//Import Icons
-import FeatherIcon from "feather-icons-react";
-
 //Import components
 import PageBreadcrumb from "../../components/Shared/PageBreadcrumb";
 
@@ -171,7 +168,7 @@ class PageTerms extends Component {
                           <Collapse isOpen={this.state.col1}>
                             <CardBody>
                               <p className="mb-0 faq-ans">
-                              Nosso app ainda está em desenvolvimento! Acompanhe nossas redes sociais para ficar por dentro das novidades. <a className="text-primary" target="_blank" href="https://www.instagram.com/update.anestesiologia/">@update.anestesiologia</a>
+                              Nosso app ainda está em desenvolvimento! Acompanhe nossas redes sociais para ficar por dentro das novidades. <a className="text-primary" target="_blank" rel="noreferrer" href="https://www.instagram.com/update.anestesiologia/">@update.anestesiologia</a>
                               </p>
                               <br/>
                               <div className="d-flex flex-column">

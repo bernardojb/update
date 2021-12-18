@@ -23,11 +23,9 @@ const useForm = validate => {
             ...values,
             [name]: value
         });
-        console.log(e.target.value);
     };
 
     const handlePress = e => {
-        console.log(isSubmitting)
         e.preventDefault();
 
         setErrors(validate(values));
@@ -45,7 +43,7 @@ const useForm = validate => {
             }
         )
             .then(function (res) {
-
+                console.log(res, "responseeeeeeee")
                 if (res.status == 202) {
                     setModalSuccess(true);
                     setContactVisible(true)

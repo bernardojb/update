@@ -22,7 +22,6 @@ import user02 from "../../../assets/images/user/Registro5.png";
 import payment from "../../../assets/images/app/payment.png";
 
 //new imports
-import AuthService from "../../../services/auth.service";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
@@ -30,6 +29,10 @@ import control from "react-validation"
 
 import { isEmail } from "validator";
 import authService from "../../../services/auth.service";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { mask, unMask } from 'remask'
 
 const required = value => {
   if (!value) {
@@ -41,38 +44,46 @@ const required = value => {
   }
 };
 
-const email = value => {
-  if (!isEmail(value)) {
+const vyear = value => {
+  if (value.length < 4 || value.length > 4) {
     return (
-      <div className="alert alert-danger" role="alert">
-        Este não é um email válido!
+      <div className="alert alert-danger mt-2" role="alert">
+        Digite o ano completo!
       </div>
     );
   }
 };
 
-const vpassword = value => {
-  if (value.length < 6 || value.length > 40) {
+const vminyear = value => {
+  if (value < 2021 || value.length > 3000) {
     return (
-      <div className="alert alert-danger" role="alert">
-        Sua senha precisa ter pelo menos 6 caracteres.
+      <div className="alert alert-danger mt-2" role="alert">
+        Digite um ano válido!
       </div>
     );
   }
 };
 
-const isEqual = (value, props, components) => {
-  const bothUsed = components.password[0].isUsed && components.confirmPassword[0].isUsed;
-  const bothChanged = components.password[0].isChanged && components.confirmPassword[0].isChanged;
-
-  if (bothChanged && bothUsed && components.password[0].value !== components.confirmPassword[0].value) {
+const vmonth = value => {
+  if (value < 1 || value > 12) {
     return (
-      <div className="alert alert-danger" role="alert">
-        As senhas não coincidem
+      <div className="alert alert-danger mt-2" role="alert">
+        Digite um mês válido!
       </div>
-    )
+    );
   }
 };
+
+const vcvv = value => {
+  if (value.length < 3) {
+    return (
+      <div className="alert alert-danger mt-2" role="alert">
+        Digite um CVV válido!
+      </div>
+    );
+  }
+};
+
 
 export default class PageCoverSignup extends Component {
   constructor(props) {
@@ -85,7 +96,7 @@ export default class PageCoverSignup extends Component {
     this.onChangeYear = this.onChangeYear.bind(this);
     this.onChangeFirstName = this.onChangeFirstName.bind(this);
     this.onChangeLastName = this.onChangeLastName.bind(this);
-  
+
 
     this.state = {
       //Pagamento
@@ -96,14 +107,14 @@ export default class PageCoverSignup extends Component {
       first_name: "",
       last_name: "",
       // identifier:"mensal",
-        
+
       message: "",
     };
   }
 
   onChangeCardNumber(e) {
     this.setState({
-      card_number: e.target.value
+      card_number: mask(`${e.target.value}`, ['9999-9999-9999-9999'])
     });
   }
 
@@ -153,7 +164,7 @@ export default class PageCoverSignup extends Component {
     this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
-      AuthService.registerCard(
+      authService.registerCard(
         this.state.card_number,
         this.state.verification_value,
         this.state.month,
@@ -168,13 +179,12 @@ export default class PageCoverSignup extends Component {
           this.setState({
             message: response.data.message,
           })
-
-          // authService.registerPlano(
-          //   this.state.identifier
-          // )
-
-          this.props.history.push("/page-payments");
-          // window.location.reload();
+          toast.success("Cartão alterado com sucesso!", {
+            autoClose: 2000,
+          })
+          setTimeout(() => {
+            this.props.history.push("/page-payments");
+          }, 2000);
         },
         error => {
           const resMessage =
@@ -183,6 +193,13 @@ export default class PageCoverSignup extends Component {
               error.response.data.message) ||
             error.message ||
             error.toString();
+
+          toast.error("Tente novamente mais tarde!", {
+            autoClose: 2000,
+          })
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
 
           this.setState({
             message: resMessage,
@@ -200,7 +217,7 @@ export default class PageCoverSignup extends Component {
     // if (user) {
 
     //  } else {
-      
+
     // }
   }
 
@@ -212,6 +229,17 @@ export default class PageCoverSignup extends Component {
           <title>Registro | Update Anestesiologia</title>
           <link rel="canonical" href="https://www.grupoupdate.com.br/registro" />
         </Helmet>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <div className="back-to-home rounded d-sm-block">
           <Link to="/" className="btn btn-icon btn-primary">
             <i>
@@ -230,7 +258,7 @@ export default class PageCoverSignup extends Component {
                       style={{ zIndex: 1 }}
                     >
                       <CardBody className="p-0">
-                        <h1 className="card-title text-center">EDITAR CARTÃO</h1>
+                        <h1 className="card-title text-center">ADICIONAR CARTÃO</h1>
                         <Form
                           className="login-form mt-4"
                           onSubmit={this.handlePayment}
@@ -242,7 +270,6 @@ export default class PageCoverSignup extends Component {
 
                             <div className="passo-5">
                               <div className="etapas-registro mb-3">
-                                <p className="etapa">Passo 5 de 5</p>
                                 <p className="etapa-title mb-0" >Informe os dados do seu cartão de crédito</p>
                                 <img src={payment} />
                               </div>
@@ -262,6 +289,7 @@ export default class PageCoverSignup extends Component {
                                     value={this.state.card_number}
                                     onChange={this.onChangeCardNumber}
                                     validations={[required]}
+                                    maxLength="19"
                                   />
                                 </div>
                               </Col>
@@ -317,8 +345,8 @@ export default class PageCoverSignup extends Component {
                                     placeholder="Mês"
                                     value={this.state.month}
                                     onChange={this.onChangeMonth}
-                                    validations={[required]}
-
+                                    validations={[required, vmonth]}
+                                    maxLength="2"
                                   />
                                 </div>
                               </Col>
@@ -332,7 +360,8 @@ export default class PageCoverSignup extends Component {
                                     placeholder="Ano"
                                     value={this.state.year}
                                     onChange={this.onChangeYear}
-                                    validations={[required]}
+                                    validations={[required, vyear, vminyear]}
+                                    maxLength="4"
                                   />
                                 </div>
                               </Col>
@@ -350,7 +379,8 @@ export default class PageCoverSignup extends Component {
                                     placeholder="CVV"
                                     value={this.state.verification_value}
                                     onChange={this.onChangeVerificationValue}
-                                    validations={[required]}
+                                    validations={[required, vcvv]}
+                                    maxLength="3"
                                   />
                                 </div>
                               </Col>
@@ -381,7 +411,7 @@ export default class PageCoverSignup extends Component {
                               </Col> */}
                               <div className="d-grid">
                                 <Button color="primary">
-                                  Editar cartão
+                                  Salvar cartão
                                 </Button>
                               </div>
                             </div>
@@ -391,8 +421,8 @@ export default class PageCoverSignup extends Component {
                               <div
                                 className={
                                   this.state.successful
-                                    ? "alert alert-success"
-                                    : "alert alert-danger"
+                                    ? "alert alert-success mt-2"
+                                    : "alert alert-danger mt-2"
                                 }
                                 role="alert"
                               >

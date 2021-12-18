@@ -28,8 +28,16 @@ import paypals from "../../../assets/images/payments/payment/paypals.png";
 //Auth
 import authService from "../../../services/auth.service";
 
+//Tosty
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 //Image
 import profileImg from "../../../assets/images/client/profile.png";
+import { mask, unMask } from 'remask'
+
+let creditCardArr
+let faturaArr
 
 class PagePayments extends Component {
   constructor(props) {
@@ -39,7 +47,10 @@ class PagePayments extends Component {
       profile: {},
       plano: {},
       sub: {},
-      card: {},
+      cards: [],
+      fatura: [],
+      cardIndex: null,
+      message: "",
       conta: [
         {
           id: 1,
@@ -115,14 +126,33 @@ class PagePayments extends Component {
   }
 
   handleCancelSub() {
-    authService.cancelSub()
+    authService.cancelSub().then(
+      response => {
+        toast.success("Assinatura cancelada!", {
+          autoClose: 2000,
+        })
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }, error => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        toast.error("Tente novamente mais tarde!", {
+          autoClose: 2000,
+        })
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
+    )
   }
 
-
-
   componentDidMount() {
-    // window.location.reload()
-
     authService.getSelf().then(data => {
       data.data.birthday = new Date(data.data.birthday)
       this.setState({
@@ -144,12 +174,113 @@ class PagePayments extends Component {
       })
     })
 
+    /**
+     * Map Cards
+     */
     authService.getCard().then(data => {
       this.setState({
-        ...this.state, card: data.data.data
+        ...this.state, cards: data.data.cards
       })
 
-      console.log("CAAAAAAAAAAARD>>>>", this.state.card);
+      const cards = this.state.cards
+      if (cards.length > 0)
+        creditCardArr = cards.map((card, index) => (
+          <Col md={6} className={`mt-4 pt-2 mb-5 p-relative`} key={index} >
+            <a className={`social-media-icons selected-default-icon ${card.paymentMethodId === data.data.deafultPayment ? ("selected-default-card") : ("")}`} style={{ zIndex: "2" }}
+              onClick={() => {
+                // console.log("paymentMethodId", card.paymentMethodId);
+                authService.setDefaultCard(card).then(
+                  response => {
+                    toast.success("Cartão principal alterado com sucesso!", {
+                      autoClose: 2000,
+                    })
+                    setTimeout(() => {
+                      window.location.reload();
+                    }, 2000);
+                  }, error => {
+                    toast.error("Tente novamente mais tarde!", {
+                      autoClose: 2000,
+                    })
+                    setTimeout(() => {
+                      window.location.reload();
+                    }, 2000);
+                  }
+                )
+              }}>
+              <FeatherIcon
+                icon="check-square"
+                className="fea icon-sm" />
+            </a>
+            <a className="social-media-icons delete-card" style={{ zIndex: "2" }}
+              onClick={() => {
+                authService.deleteCard(card).then(
+                  response => {
+                    toast.success("Cartão deletado com sucesso!", {
+                      autoClose: 2000,
+                    })
+                    setTimeout(() => {
+                      window.location.reload();
+                    }, 2000);
+                  }, error => {
+                    toast.error("Tente novamente mais tarde!", {
+                      autoClose: 2000,
+                    })
+                    setTimeout(() => {
+                      window.location.reload();
+                    }, 2000);
+                  }
+                )
+              }}>
+              <FeatherIcon
+                icon="trash-2"
+                className="fea icon-sm" />
+            </a>
+            {/* <Link to="/update-card"> */}
+            <Card className={`rounded shadow border-0 card-container ${card.paymentMethodId === data.data.deafultPayment ? ("default-card") : ("")}`}>
+              <CardBody>
+                <img
+                  src={master}
+                  height="60"
+                  className="text-end"
+                  alt=""
+                />
+                <div className="mt-4">
+                  <p className="text-dark">{mask(`${card.number}`, ['AAAA AAAA AAAA 9999'])}</p>
+                  <div className="d-flex justify-content-between">
+                    <p className="mb-0">{card.name}</p>
+                    <p className="mb-0 text-dark">Exp: <span className="">{card.month}/{card.year}</span></p>
+                  </div>
+                </div>
+              </CardBody>
+            </Card>
+            {/* </Link> */}
+          </Col>
+        ))
+    })
+
+    /**
+     * Map Faturas
+     */
+
+    authService.getFaturas().then(data => {
+      data.data.inv.items[0].
+      this.setState({
+        ...this.state, faturas: data.data.inv.items
+      })
+      const faturas = this.state.faturas
+
+      console.log("getFatura", this.state.faturas);
+
+      if (faturas != null) {
+        faturaArr = faturas.map((fatura, index) => (
+          <div className="d-flex flex-row justify-content-between detalhes-cobranca" key={index}>
+            <li style={{ color: "white", marginBottom: "16px", listStyle: "none" }}>{fatura.created_at_iso}</li>
+            <li style={{ color: "white", marginBottom: "16px", listStyle: "none" }}>em aguardo</li>
+            <li style={{ color: "white", marginBottom: "16px", listStyle: "none" }}>{fatura.variables.find((ele) => ele.variable === "payment_data.display_number").value}</li>
+            <li style={{ color: "white", marginBottom: "16px", listStyle: "none" }}>{fatura.total_paid}</li>
+          </div>
+        ))
+      }
     })
 
     document.body.classList = "";
@@ -169,10 +300,20 @@ class PagePayments extends Component {
     const { profile } = this.state
     const { plano } = this.state
     const { sub } = this.state
-    const { card } = this.state
 
     return (
       <React.Fragment>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <section
           className="bg-profile d-table w-100 bg-primary"
           style={{ background: `url(${imgbg}) center center` }}
@@ -201,14 +342,13 @@ class PagePayments extends Component {
                           >
                             <h3 className="title mb-2"> {profile.full_name} </h3>
                             <p>{plano != null && plano.name ? `Plano ${plano.name.charAt(0).toUpperCase()}${plano.name.slice(1)}` : null}</p>
-                            {/* {plano != null ? console.log(plano) : null} */}
                             {sub != null && sub.expiresAt ?
-                              <p>Assinatura válida até: <span className="text-primary">{`${this.lepDay(sub.expiresAt.getDate())}/${this.lepMonth(sub.expiresAt.getMonth())}/${sub.expiresAt.getFullYear()}`}</span></p>
+                              <p>Próximo pagamento: <span className="text-primary">{`${this.lepDay(sub.expiresAt.getDate())}/${this.lepMonth(sub.expiresAt.getMonth())}/${sub.expiresAt.getFullYear()}`}</span></p>
                               : null
                             }
                           </Col>
-                          <Col md="5" className="text-md-end text-center">
-                          </Col>
+                          {/* <Col md="5" className="text-md-end text-center">
+                          </Col> */}
                         </Row>
                       </Col>
                     </Row>
@@ -296,8 +436,8 @@ class PagePayments extends Component {
                   <div className="d-flex justify-content-between flex-row">
                     <Col lg={4}>
                       <p style={{ fontSize: "21px", fontWeight: "600" }}>{plano != null && plano.name ? `Plano ${plano.name.charAt(0).toUpperCase()}${plano.name.slice(1)}` : null}</p>
-                      <p className="text-muted">{`R$${parseInt(plano.value_cents) / 100},00`}</p>
-                      <button className="btn btn-primary disabled">Alterar Plano</button>
+                      <p className="text-muted">{`R$${parseInt(plano.value_cents) / 100}0`}</p>
+                      <Link to="/registro" className="btn btn-primary">Alterar Plano</Link>
                     </Col>
                     <Col lg={4}>
                       <p style={{ fontSize: "21px", fontWeight: "600" }}>Assinatura válida até</p>
@@ -311,135 +451,17 @@ class PagePayments extends Component {
                 </div>
                 <div className="rounded shadow p-4">
                   <div className="d-flex align-items-center justify-content-between">
-                    <h3 className="mb-0">Cartão registrado</h3>
+                    <h3 className="mb-0">MEUS CARTÕES</h3>
                     <Link
                       to="/update-card"
                       className="btn btn-primary"
                     >
-                      Editar
+                      Adicionar cartão
                     </Link>
                   </div>
 
                   <Row>
-                    <Col md={6} className="mt-4 pt-2 mb-5">
-                      <Link to="/update-card">
-                        <Card className="rounded shadow bg-light border-0">
-                          <CardBody>
-                            <img
-                              src={master}
-                              height="60"
-                              className="text-end"
-                              alt=""
-                            />
-                            <div className="mt-4">
-                              <h5 className="text-dark">{card.number}</h5>
-                              <div className="d-flex justify-content-between">
-                                <p className="h6 text-muted mb-0">
-                                  {card.name}
-                                </p>
-                                <h6 className="mb-0 text-dark">
-                                  Exp: <span className="text-muted">{card.month}/{card.year}</span>
-                                </h6>
-                              </div>
-                            </div>
-                          </CardBody>
-                        </Card>
-                      </Link>
-                    </Col>
-
-                    {/* <Col md={6} className="mt-4 pt-2">
-                      <Link to="#">
-                        <Card className="rounded shadow bg-dark border-0">
-                          <CardBody>
-                            <img
-                              src={visaa}
-                              height="60"
-                              className="text-end"
-                              alt=""
-                            />
-                            <div className="mt-4">
-                              <h5 className="text-light">
-                                •••• •••• •••• 9856
-                              </h5>
-                              <div className="d-flex justify-content-between">
-                                <p className="h6 text-muted mb-0">
-                                  Calvin Carlo
-                                </p>
-                                <h6 className="mb-0 text-muted">
-                                  Exp: <span className="text-muted">01/24</span>
-                                </h6>
-                              </div>
-                            </div>
-                          </CardBody>
-                        </Card>
-                      </Link>
-                    </Col> */}
-
-                    {/* <Col md={6} className="mt-4 pt-2">
-                      <Link to="#">
-                        <Card className="rounded shadow bg-info border-0">
-                          <CardBody>
-                            <img
-                              src={rupay}
-                              height="60"
-                              className="text-end"
-                              alt=""
-                            />
-                            <div className="mt-4">
-                              <h5 className="text-white">
-                                •••• •••• •••• 5465
-                              </h5>
-                              <div className="d-flex justify-content-between">
-                                <p className="h6 text-light mb-0">
-                                  Miriam Jockky
-                                </p>
-                                <h6 className="mb-0 text-light">
-                                  Exp: <span className="text-light">03/23</span>
-                                </h6>
-                              </div>
-                            </div>
-                          </CardBody>
-                        </Card>
-                      </Link>
-                    </Col> */}
-
-                    {/* <Col md={6} className="mt-4 pt-2">
-                      <Card className="rounded shadow bg-light border-0">
-                        <CardBody>
-                          <img
-                            src={paypals}
-                            height="60"
-                            className="text-end"
-                            alt=""
-                          />
-                          <div className="mt-4">
-                            <Form>
-                              <FormGroup className="mt-4 pt-3 mb-0">
-                                <InputGroup>
-                                  <Input
-                                    name="email"
-                                    id="email"
-                                    type="email"
-                                    className="form-control"
-                                    placeholder="Paypal Email :"
-                                    required=""
-                                  />
-                                  <div className="input-group-append">
-                                    <button
-                                      className="btn btn-primary submitBnt"
-                                      type="submit"
-                                      id="paypalmail"
-                                    >
-                                      Send
-                                    </button>
-                                  </div>
-                                </InputGroup>
-                              </FormGroup>
-                            </Form>
-                          </div>
-                        </CardBody>
-                      </Card>
-                    </Col> */}
+                    {creditCardArr}
                   </Row>
                   <Col>
                     <div className="rounded shadow p-4 mb-5">
@@ -453,12 +475,10 @@ class PagePayments extends Component {
                           <p>Forma de Pagamento</p>
                           <p>Total</p>
                         </div>
+                        {faturaArr}
                       </div>
                     </div>
                   </Col>
-                  <Row>
-
-                  </Row>
                 </div>
               </Col>
             </Row>
@@ -468,5 +488,4 @@ class PagePayments extends Component {
     );
   }
 }
-
 export default PagePayments;

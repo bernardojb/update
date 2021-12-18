@@ -31,7 +31,7 @@ import { isEmail } from "validator";
 const required = value => {
   if (!value) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <div className="alert alert-danger mt-2" role="alert">
         Esse campo é obrigatório!
       </div>
     );
@@ -41,7 +41,7 @@ const required = value => {
 const email = value => {
   if (!isEmail(value)) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <div className="alert alert-danger mt-2" role="alert">
         Este não é um email válido!
       </div>
     );
@@ -51,7 +51,7 @@ const email = value => {
 const vpassword = value => {
   if (value.length < 6 || value.length > 40) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <div className="alert alert-danger mt-2" role="alert">
         Sua senha precisa ter pelo menos 6 caracteres.
       </div>
     );
@@ -61,7 +61,7 @@ const vpassword = value => {
 const vconfirmpassword = value => {
   if (value != this.state.password.value) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <div className="alert alert-danger mt-2" role="alert">
         Sua senhas não coincidem
       </div>
     );

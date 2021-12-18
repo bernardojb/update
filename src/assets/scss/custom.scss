@@ -703,3 +703,59 @@ a {
     left: 0;
   }
 }
+
+.card-container{
+  background-color: #3C4858 !important;
+
+  p{
+    text-decoration: none;
+    color: white;
+  }
+}
+
+.delete-card{
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  color: white;
+  background-color: transparent;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 7px;
+
+  &:hover{
+    background-color: #2A333E;
+    color: #e91e35;
+  }
+}
+
+.selected-default-icon{
+  position: absolute;
+  right: 55px;
+  top: 15px;
+  color: white;
+  background-color: transparent;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 7px;
+
+  &:hover{
+    background-color: #2A333E;
+    color: #1ac45e;
+  }
+}
+
+.selected-default-card{
+  color: #1ac45e !important;
+  background-color: #2A333E;
+}
+
+.default-card{
+  border: 2px solid #1ac45e !important;
+}

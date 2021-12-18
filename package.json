@@ -36,6 +36,7 @@
     "react-slick": "^0.28.1",
     "react-star-ratings": "^2.3.0",
     "react-text-rotator": "^1.1.0",
+    "react-toastify": "^8.1.0",
     "react-typist": "^2.0.5",
     "react-validation": "^3.0.7",
     "reactstrap": "^8.9.0",

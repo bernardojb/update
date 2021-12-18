@@ -1,27 +1,15 @@
 // React Basic and Bootstrap
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import {
   Container,
-  TabContent,
-  TabPane,
-  Nav,
-  NavItem,
-  NavLink,
   Row,
   Col,
 } from "reactstrap";
-import classnames from "classnames";
 
 //Import Components
-import SectionTitle from "../../components/Shared/SectionTitle";
 import SectionTitleLeft from "../../components/Shared/SectionTitleLeft";
 
 //import images
-import app1 from "../../assets/images/app/1.png";
-import app2 from "../../assets/images/app/2.png";
-import app3 from "../../assets/images/app/3.png";
-import app4 from "../../assets/images/app/4.png";
 import phone2Image from "../../assets/images/app/phone-02-web.png";
 
 
@@ -79,11 +67,11 @@ class ShowCase extends Component {
                     </h1>
                   </SectionTitleLeft>
                   <p className="mt-5 mb-0">Baixe Agora:</p>
-                  <a href="https://apps.apple.com/us/app/update-anestesiologia/id1583086674" target="_blank" className="btn btn-primary mt-2 me-2">
+                  <a href="https://apps.apple.com/us/app/update-anestesiologia/id1583086674" target="_blank" rel="noreferrer" className="btn btn-primary mt-2 me-2">
                     <i className="uil uil-apple"></i>
                     App Store
                   </a>
-                  <a href="https://play.google.com/store/apps/details?id=com.grupoupdate.anestesiologia" target="_blank" className="btn btn-primary mt-2 me-2">
+                  <a href="https://play.google.com/store/apps/details?id=com.grupoupdate.anestesiologia" target="_blank" rel="noreferrer" className="btn btn-primary mt-2 me-2">
                     <i className="uil uil-google-play"></i> Play Store
                   </a>
                 </div>

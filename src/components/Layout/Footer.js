@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Form, Input, Label } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
 //Import Icons
 import FeatherIcon from "feather-icons-react";
@@ -9,10 +9,8 @@ import FeatherIcon from "feather-icons-react";
 import payment from "../../assets/images/app/payment.png";
 import logoUpdate from "../../assets/images/LogoUpdate.svg";
 
-
-//Import Images
-import logolight from "../../assets/images/logo-light.png";
-import logodark from "../../assets/images/logo-dark.png";
+// auth
+import authService from "../../services/auth.service";
 
 class Footer extends Component {
   constructor(props) {
@@ -34,6 +32,13 @@ class Footer extends Component {
         { title: "Política de Privacidade", link: "/politica-de-privacidade" },
         { title: "Ajuda", link: "/ajuda" },
       ],
+      grid4: [
+        { title: "Como funciona", link: "/sobre" },
+        { title: "Planos", link: "/home" },
+        { title: "Perfil", link: "/page-profile" },
+        { title: "Assinatura", link: "/page-payments" },
+      ],
+      isLogged: false
     };
   }
 
@@ -42,6 +47,26 @@ class Footer extends Component {
   }
   openYt() {
     window.location.href = "https://www.youtube.com/channel/UCYj9LGmNHSefNYHrgXQKARw/featured";
+  }
+
+  componentDidMount() {
+    authService.getSelf().then(data => {
+      this.setState({
+        ...this.state, profile: data.data
+      })
+    })
+
+    const user = JSON.parse(localStorage.getItem('user'))
+
+    if (user) {
+      this.setState({
+        isLogged: true
+      })
+    } else {
+      this.setState({
+        isLogged: false
+      })
+    }
   }
 
   render() {
@@ -68,7 +93,7 @@ class Footer extends Component {
                 </p>
                 <ul className={this.props.isLight ? "list-unstyled social-icon social mb-0 m t-4" : "list-unstyled social-icon foot-social-icon mb-0 mt-4"}>
                   <li className="list-inline-item me-1">
-                    <a href="https://www.instagram.com/update.anestesiologia/" className="social-media-icons" target="_blank">
+                    <a href="https://www.instagram.com/update.anestesiologia/" className="social-media-icons" target="_blank" rel="noreferrer">
                       <FeatherIcon
                         icon="instagram"
                         className="fea icon-sm"
@@ -84,7 +109,7 @@ class Footer extends Component {
                     </Link>
                   </li> */}
                   <li className="list-inline-item me-1">
-                    <Link to="" className="social-media-icons" onClick={this.openFace} target="_blank">
+                    <Link to="" className="social-media-icons" onClick={this.openFace} target="_blank" rel="noreferrer">
                       <FeatherIcon
                         icon="facebook"
                         className="fea icon-sm"
@@ -92,7 +117,7 @@ class Footer extends Component {
                     </Link>
                   </li>
                   <li className="list-inline-item me-1">
-                    <Link to="" className="social-media-icons" onClick={this.openYt} target="_blank">
+                    <Link to="" className="social-media-icons" onClick={this.openYt} target="_blank" rel="noreferrer">
                       <FeatherIcon
                         icon="youtube"
                         className="fea icon-sm"
@@ -119,19 +144,40 @@ class Footer extends Component {
                   Informações
                 </h5>
                 <ul className="list-unstyled footer-list mt-4">
-                  {this.state.grid1.map((grid, key) => (
-                    <li key={key}>
-                      <Link
-                        to={grid.link}
-                        className={
-                          this.props.isLight ? "text-muted" : "text-foot"
-                        }
-                      >
-                        <i className="mdi mdi-chevron-right me-1"></i>{" "}
-                        {grid.title}
-                      </Link>
-                    </li>
-                  ))}
+                  {this.state.isLogged ? (
+                    <>
+                    {this.state.grid4.map((grid, key) => (
+                      <li key={key}>
+                        <Link
+                          to={grid.link}
+                          className={
+                            this.props.isLight ? "text-muted" : "text-foot"
+                          }
+                        >
+                          <i className="mdi mdi-chevron-right me-1"></i>{" "}
+                          {grid.title}
+                        </Link>
+                      </li>
+                    ))}
+                    </>
+                  ) : (
+                    <>
+                    {this.state.grid1.map((grid, key) => (
+                      <li key={key}>
+                        <Link
+                          to={grid.link}
+                          className={
+                            this.props.isLight ? "text-muted" : "text-foot"
+                          }
+                        >
+                          <i className="mdi mdi-chevron-right me-1"></i>{" "}
+                          {grid.title}
+                        </Link>
+                      </li>
+                    ))}
+                    </>
+                  )}
+                  
                 </ul>
               </Col>
 
