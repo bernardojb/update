@@ -183,7 +183,7 @@ export default class PageCoverSignup extends Component {
             autoClose: 2000,
           })
           setTimeout(() => {
-            this.props.history.push("/page-payments");
+            this.props.history.push("/assinatura");
           }, 2000);
         },
         error => {

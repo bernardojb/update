@@ -104,7 +104,7 @@ class PageMessages extends Component {
           icon: "uil uil-dashboard",
           className: "navbar-item account-menu px-0",
           title: "Profile",
-          link: "/page-profile",
+          link: "/perfil",
         },
         {
           id: 2,
@@ -132,7 +132,7 @@ class PageMessages extends Component {
           icon: "uil uil-transaction",
           className: "navbar-item account-menu px-0 mt-2",
           title: "Payments",
-          link: "/page-payments",
+          link: "/assinatura",
         },
         {
           id: 6,

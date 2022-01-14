@@ -1174,7 +1174,7 @@ class Demo extends Component {
                   <div className="col-md-6 col-12">
                     <div className="text-center">
                       <div className="demos-box rounded shadow text-center border-0">
-                        <Link to="/page-profile" target="_blank">
+                        <Link to="/perfil" target="_blank">
                           <img src={profile} className="img-fluid rounded" alt="demo-img" />
                         </Link>
                       </div>
@@ -1218,7 +1218,7 @@ class Demo extends Component {
                   <div className="col-md-6 col-12 mt-5">
                     <div className="text-center">
                       <div className="demos-box new-demo rounded shadow text-center border-0">
-                        <Link to="/page-payments" target="_blank">
+                        <Link to="/assinatura" target="_blank">
                           <img src={payment} className="img-fluid rounded" alt="demo-img" />
                         </Link>
                       </div>
@@ -1841,7 +1841,7 @@ class Demo extends Component {
                   <Col md={6} xs={12} className="mt-5 mt-sm-0">
                     <div className="text-center">
                       <div className="demos-box rounded shadow text-center border-0">
-                        <Link to="page-contact-two" target="_blank">
+                        <Link to="/contato" target="_blank">
                           <img
                             src={contactTwo}
                             className="img-fluid rounded"

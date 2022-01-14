@@ -8,6 +8,7 @@ import {
   CardBody,
   Button,
   Label,
+  Modal
 } from "reactstrap";
 
 //Import Icons
@@ -27,6 +28,8 @@ import { mask, unMask } from 'remask'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { HashLink } from 'react-router-hash-link';
+
 
 const required = value => {
   if (!value) {
@@ -78,17 +81,7 @@ const vmonth = value => {
   }
 };
 
-const vcpf = value => {
-  if (value.length < 14) {
-    return (
-      <div className="alert alert-danger mt-2" role="alert">
-        Digite um CPF válido!
-      </div>
-    );
-  }
-};
-
-const vbirthday= value => {
+const vbirthday = value => {
   if (value.length < 10) {
     return (
       <div className="alert alert-danger mt-2" role="alert">
@@ -98,7 +91,7 @@ const vbirthday= value => {
   }
 };
 
-const vcep= value => {
+const vcep = value => {
   if (value.length < 9) {
     return (
       <div className="alert alert-danger mt-2" role="alert">
@@ -124,11 +117,14 @@ const isEqual = (value, props, components) => {
 class PageProfile extends Component {
   constructor(props) {
     super(props);
+    //Handles
     this.handleProfile = this.handleProfile.bind(this);
+    this.handleDeleteUser = this.handleDeleteUser.bind(this)
+    this.handleChangePassword = this.handleChangePassword.bind(this)
 
+    //Informações pessoais
     this.onChangeFullName = this.onChangeFullName.bind(this);
     this.onChangeBirthday = this.onChangeBirthday.bind(this);
-    // this.onChangeCpf = this.onChangeCpf.bind(this);
     this.onChangePhone = this.onChangePhone.bind(this);
     this.onChangeCrm = this.onChangeCrm.bind(this);
     //Endereço
@@ -144,7 +140,6 @@ class PageProfile extends Component {
     this.onChangeConfirmNewPassword = this.onChangeConfirmNewPassword.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this)
 
-
     this.state = {
       profile: {},
       plano: {},
@@ -155,22 +150,15 @@ class PageProfile extends Component {
           icon: "user",
           className: "navbar-item account-menu px-0 active",
           title: "Informações Pessoais",
-          link: "/page-profile",
+          link: "/perfil",
         },
         {
           id: 2,
           icon: "shopping-cart",
           className: "navbar-item account-menu px-0 mt-2",
           title: "Assinatura",
-          link: "/page-payments",
+          link: "/assinatura",
         },
-        // {
-        //   id: 3,
-        //   icon: "settings",
-        //   className: "navbar-item account-menu px-0 mt-2",
-        //   title: "Configuração",
-        //   link: "/page-works",
-        // },
       ],
       download: [
         {
@@ -201,7 +189,7 @@ class PageProfile extends Component {
           icon: "mail",
           className: "navbar-item account-menu px-0 mt-2",
           title: "Contato",
-          link: "/auth-login-three",
+          link: "/ajuda#contato",
         },
       ],
       termos: [
@@ -263,7 +251,6 @@ class PageProfile extends Component {
     this.setState({
       phone: mask(unMask(`${e.target.value}`), ['(99)9999-9999', '(99)99999-9999'])
     });
-
   }
 
   onChangeCrm(e) {
@@ -276,7 +263,6 @@ class PageProfile extends Component {
     this.setState({
       cep: mask(`${e.target.value}`, ['99999-999'])
     });
-
   }
 
   onChangeStreet(e) {
@@ -335,9 +321,10 @@ class PageProfile extends Component {
       message: "",
     });
 
-    this.form.validateAll();
+    // this.form.validateAll();
 
-    if (this.checkBtn.context._errors.length === 0) {
+    // if (this.checkBtn.context._errors.length === 0) {
+
       authService.updateProfile(
         this.state.fullName,
         this.state.birthday,
@@ -382,10 +369,11 @@ class PageProfile extends Component {
           }, 2000);
         }
       );
-    }
+    // }
   }
 
-  handleDeleteUser() {
+  handleDeleteUser(e) {
+    e.preventDefault();
     authService.deleteUser()
       .then(() => {
         authService.logout();
@@ -401,14 +389,13 @@ class PageProfile extends Component {
       message: "",
     });
 
-    this.form.validateAll();
+    // this.form.validate("currentPassword", "newPassword", "confirmNewPassword");
 
     if (this.checkBtn.context._errors.length === 0) {
       authService.changeProfilePassword(
         this.state.currentPassword,
         this.state.newPassword,
         this.state.confirmNewPassword,
-
       ).then(
         response => {
           this.setState({
@@ -429,12 +416,12 @@ class PageProfile extends Component {
             error.message ||
             error.toString();
 
-            toast.error("Tente novamente mais tarde!", {
-              autoClose: 2000,
-            })
-            setTimeout(() => {
-              window.location.reload();
-            }, 2000);
+          toast.error("Tente novamente mais tarde!", {
+            autoClose: 2000,
+          })
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
 
           this.setState({
             message: resMessage,
@@ -445,13 +432,15 @@ class PageProfile extends Component {
   }
 
   componentDidMount() {
+
+    authService.verifyLogin()
+
     authService.getSelf().then(data => {
       data.data.birthday = new Date(data.data.birthday)
       this.setState({
         ...this.state, profile: data.data
       })
     })
-
 
     authService.getSub().then(data => {
       data.data.data.expiresAt = new Date(data.data.data.expiresAt)
@@ -465,7 +454,7 @@ class PageProfile extends Component {
         })
       })
     })
-    
+
     //Header
     document.body.classList = "";
     document.getElementById("topnav").classList.add("nav-sticky");
@@ -581,7 +570,7 @@ class PageProfile extends Component {
                     <ul className="list-unstyled sidebar-nav mb-4" id="navmenu-nav">
                       {this.state.suporte.map((widget, key) => (
                         <li className={widget.className} key={key}>
-                          <Link to={widget.link} className="navbar-link d-flex shadow align-items-center py-2 px-4">
+                          <HashLink to={widget.link} className="navbar-link d-flex shadow align-items-center py-2 px-4">
                             <span className="h4 mb-0">
                               <FeatherIcon
                                 icon={widget.icon}
@@ -589,7 +578,7 @@ class PageProfile extends Component {
                               />
                             </span>
                             <p className="mb-0 ms-2">{widget.title}</p>
-                          </Link>
+                          </HashLink>
                         </li>
                       ))}
                     </ul>
@@ -615,184 +604,189 @@ class PageProfile extends Component {
               <Col lg="8" xs="12">
                 <Card className="border-0 rounded shadow">
                   <CardBody>
-                    <Form
-                      onSubmit={this.handleProfile}
-                      ref={c => {
-                        this.form = c
-                      }}
-                    >
-                      <Row className="mt-4">
-                        <Col md="6">
-                          <div className="mb-3">
-                            <Label className="form-label">Seu nome</Label>
-                            <Input
-                              name="name"
-                              id="first"
-                              type="text"
-                              className="form-control ps-2"
-                              placeholder={profile.full_name}
-                              value={this.state.fullName}
-                              onChange={this.onChangeFullName}
-                              maxLength="30"
-                            />
-                          </div>
-                        </Col>
-                        <Col md="6">
-                          <div className="mb-3">
-                            <Label className="form-label">Data de Nascimento</Label>
-                            <Input
-                              name="birthday"
-                              id="birthday"
-                              type="text"
-                              className="form-control ps-2"
-                              // placeholder={profile.birthday}
-                              placeholder={profile != null && profile.birthday ? (`${this.lepDay(profile.birthday.getDate())}/${this.lepMonth(profile.birthday.getMonth())}/${profile.birthday.getFullYear()}`) : null}
-                              value={this.state.birthday}
-                              onChange={this.onChangeBirthday}
-                              maxLength="10"
-                              validations={[vbirthday]}
-                            />
-                          </div>
-                        </Col>
-                        <Col md="6">
-                          <div className="mb-3">
-                            <Label className="form-label">Telefone</Label>
-                            <Input
-                              name="phone"
-                              id="phone"
-                              type="phone"
-                              className="form-control ps-2"
-                              placeholder={profile.phone}
-                              value={this.state.phone}
-                              onChange={this.onChangePhone}
-                              maxLength="14"
-                            />
-                          </div>
-                        </Col>
-                        <Col md="6">
-                          <div className="mb-3">
-                            <Label className="form-label">CRM</Label>
-                            <Input
-                              name="crm"
-                              id="crm"
-                              type="text"
-                              className="form-control ps-2"
-                              placeholder={profile.crm}
-                              value={this.state.crm}
-                              onChange={this.onChangeCrm}
-                            />
-                          </div>
-                        </Col>
-                        {/* Here*/}
-                        <h3 className="text-md-start text-center mt-5">
-                          Endereço de cobrança
-                        </h3>
-                        <Col md="6">
-                          <div className="mb-3">
-                            <Label className="form-label">CEP</Label>
-                            <Input
-                              name="cep"
-                              id="cep"
-                              type="text"
-                              className="form-control ps-2"
-                              placeholder={profile.cep}
-                              value={this.state.cep}
-                              onChange={this.onChangeCep}
-                              maxLength="9"
-                              validations={[vcep]}
-                            />
-                          </div>
-                        </Col>
-                        <Col md="6">
-                          <div className="mb-3">
-                            <Label className="form-label">Endereço</Label>
-                            <Input
-                              name="street"
-                              id="street"
-                              type="text"
-                              className="form-control ps-2"
-                              placeholder={profile.street}
-                              value={this.state.street}
-                              onChange={this.onChangeStreet}
-                            />
-                          </div>
-                        </Col>
-                        <Col md="4">
-                          <div className="mb-3">
-                            <Label className="form-label">Número</Label>
-                            <Input
-                              name="number"
-                              id="number"
-                              type="text"
-                              className="form-control ps-2"
-                              placeholder={profile.number}
-                              value={this.state.number}
-                              onChange={this.onChangeNumber}
-                              maxLength="5"
-                            />
-                          </div>
-                        </Col>
-                        <Col md="8">
-                          <div className="mb-3">
-                            <Label className="form-label">Bairro</Label>
-                            <Input
-                              name="neighborhood"
-                              id="neighborhood"
-                              type="text"
-                              className="form-control ps-2"
-                              placeholder={profile.neighborhood}
-                              value={this.state.neighborhood}
-                              onChange={this.onChangeNeighborhood}
-                              maxLength="25"
-                            />
-                          </div>
-                        </Col>
-                        <Col md="4">
-                          <div className="mb-3">
-                            <Label className="form-label">Estado</Label>
-                            <Input
-                              name="state"
-                              id="state"
-                              type="text"
-                              className="form-control ps-2"
-                              placeholder={profile.state}
-                              value={this.state.state}
-                              onChange={this.onChangeState}
-                              maxLength="20"
-                            />
-                          </div>
-                        </Col>
-                        <Col md="8">
-                          <div className="mb-3">
-                            <Label className="form-label">Cidade</Label>
-                            <Input
-                              name="city"
-                              id="city"
-                              type="text"
-                              className="form-control ps-2"
-                              placeholder={profile.city}
-                              value={this.state.city}
-                              onChange={this.onChangeCity}
-                              maxLength="20"
-                            />
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col sm="12">
-                          <Button color="primary">
-                            Salvar alterações
-                          </Button>
-                        </Col>
-                      </Row>
-                      <CheckButton
-                        style={{ display: "none" }}
-                        ref={c => {
-                          this.checkBtn = c;
+                      <h3>Informações Pessoais</h3>
+                      <Form
+                        onSubmit={this.handleProfile}
+                        ref={i => {
+                          this.form = i
                         }}
-                      />
-                    </Form>
+                      >
+                        <Row className="mt-4">
+                          <Col md="6">
+                            <div className="mb-3">
+                              <Label className="form-label">Seu nome</Label>
+                              <Input
+                                name="name"
+                                id="first"
+                                type="text"
+                                className="form-control ps-2"
+                                placeholder={profile.full_name}
+                                value={this.state.fullName}
+                                onChange={this.onChangeFullName}
+                                maxLength="30"
+                                validations={[]}
+                              />
+                            </div>
+                          </Col>
+                          <Col md="6">
+                            <div className="mb-3">
+                              <Label className="form-label">Data de Nascimento</Label>
+                              <Input
+                                name="birthday"
+                                id="birthday"
+                                type="text"
+                                className="form-control ps-2"
+                                placeholder={profile != null && profile.birthday ? (`${this.lepDay(profile.birthday.getDate())}/${this.lepMonth(profile.birthday.getMonth())}/${profile.birthday.getFullYear()}`) : null}
+                                value={this.state.birthday}
+                                onChange={this.onChangeBirthday}
+                                maxLength="10"
+                              validations={[vbirthday]}
+                              />
+                            </div>
+                          </Col>
+                          <Col md="6">
+                            <div className="mb-3">
+                              <Label className="form-label">Telefone</Label>
+                              <Input
+                                name="phone"
+                                id="phone"
+                                type="phone"
+                                className="form-control ps-2"
+                                placeholder={profile.phone}
+                                value={this.state.phone}
+                                onChange={this.onChangePhone}
+                                maxLength="14"
+                              />
+                            </div>
+                          </Col>
+                          <Col md="6">
+                            <div className="mb-3">
+                              <Label className="form-label">CRM</Label>
+                              <Input
+                                name="crm"
+                                id="crm"
+                                type="text"
+                                className="form-control ps-2"
+                                placeholder={profile.crm}
+                                value={this.state.crm}
+                                onChange={this.onChangeCrm}
+                              />
+                            </div>
+                          </Col>
+                          {/* Here*/}
+                          <h3 className="text-md-start text-center mt-5">
+                            Endereço de cobrança
+                          </h3>
+                          <Col md="6">
+                            <div className="mb-3">
+                              <Label className="form-label">CEP</Label>
+                              <Input
+                                name="cep"
+                                id="cep"
+                                type="text"
+                                className="form-control ps-2"
+                                placeholder={profile.cep}
+                                value={this.state.cep}
+                                onChange={this.onChangeCep}
+                                maxLength="9"
+                              // validations={[vcep]}
+                              />
+                            </div>
+                          </Col>
+                          <Col md="6">
+                            <div className="mb-3">
+                              <Label className="form-label">Endereço</Label>
+                              <Input
+                                name="street"
+                                id="street"
+                                type="text"
+                                className="form-control ps-2"
+                                placeholder={profile.street}
+                                value={this.state.street}
+                                onChange={this.onChangeStreet}
+                              />
+                            </div>
+                          </Col>
+                          <Col md="4">
+                            <div className="mb-3">
+                              <Label className="form-label">Número</Label>
+                              <Input
+                                name="number"
+                                id="number"
+                                type="text"
+                                className="form-control ps-2"
+                                placeholder={profile.number}
+                                value={this.state.number}
+                                onChange={this.onChangeNumber}
+                                maxLength="5"
+                              />
+                            </div>
+                          </Col>
+                          <Col md="8">
+                            <div className="mb-3">
+                              <Label className="form-label">Bairro</Label>
+                              <Input
+                                name="neighborhood"
+                                id="neighborhood"
+                                type="text"
+                                className="form-control ps-2"
+                                placeholder={profile.neighborhood}
+                                value={this.state.neighborhood}
+                                onChange={this.onChangeNeighborhood}
+                                maxLength="25"
+                              />
+                            </div>
+                          </Col>
+                          <Col md="4">
+                            <div className="mb-3">
+                              <Label className="form-label">Estado</Label>
+                              <Input
+                                name="state"
+                                id="state"
+                                type="text"
+                                className="form-control ps-2"
+                                placeholder={profile.state}
+                                value={this.state.state}
+                                onChange={this.onChangeState}
+                                maxLength="20"
+                              />
+                            </div>
+                          </Col>
+                          <Col md="8">
+                            <div className="mb-3">
+                              <Label className="form-label">Cidade</Label>
+                              <Input
+                                name="city"
+                                id="city"
+                                type="text"
+                                className="form-control ps-2"
+                                placeholder={profile.city}
+                                value={this.state.city}
+                                onChange={this.onChangeCity}
+                                maxLength="20"
+                              />
+                            </div>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col sm="12">
+                            <Button color="primary">
+                              Salvar alterações
+                            </Button>
+                          </Col>
+                        </Row>
+                        {/* <CheckButton
+                          style={{ display: "none" }}
+                          ref={i => {
+                            this.checkBtn = i;
+                          }}
+                        /> */}
+                      </Form>
+                  </CardBody>
+                </Card>
 
+                <Card>
+                  <CardBody>
                     <Row>
                       <Col md="6" className="mt-5 pt-2">
                         <h3>Alterar Senha</h3>

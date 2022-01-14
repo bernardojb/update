@@ -423,19 +423,18 @@ export default class PageCoverSignup extends Component {
             register: false,
             register_profile: true,
           });
-          window.location.reload()
-          // if (response.data.token) {
-          //   console.log(response, '#############################')
-          //   localStorage.setItem("user", JSON.stringify({
-          //     data: {
-          //       access_token: response.data.token,
-          //       refresh_token: response.data.token,
-          //       "has_profile": false,
-          //       "has_card": false,
-          //       "has_subs": false
-          //     }
-          //   }));
-          // }
+          if (response.data.token) {
+            console.log(response, '#############################')
+            localStorage.setItem("user", JSON.stringify({
+              data: {
+                access_token: response.data.token,
+                refresh_token: response.data.token,
+                "has_profile": false,
+                "has_card": false,
+                "has_subs": false
+              }
+            }));
+          }
           // window.location.reload();
         },
         error => {
@@ -459,11 +458,13 @@ export default class PageCoverSignup extends Component {
   handleProfile(e) {
     e.preventDefault();
 
-    this.setState({
-      message: "",
-      register: false,
-      register_profile: true
-    });
+    authService.getCurrentUser()
+
+    // this.setState({
+    //   message: "",
+    //   register: false,
+    //   register_profile: true
+    // });
 
     this.form.validateAll();
 
@@ -504,7 +505,7 @@ export default class PageCoverSignup extends Component {
             register_plano: false
           });
 
-          window.location.reload();
+          // window.location.reload();
         }
       );
     }
@@ -544,7 +545,7 @@ export default class PageCoverSignup extends Component {
               this.state.identifier
             )
           }
-          this.props.history.push("/page-profile")
+          this.props.history.push("/perfil")
           window.location.reload()
         },
         error => {
@@ -912,12 +913,6 @@ export default class PageCoverSignup extends Component {
                                       }}>
                                       Próximo
                                     </a>
-                                    {/* <CheckButton
-                                      style={{ display: "none" }}
-                                      ref={c => {
-                                        this.checkBtn = c;
-                                      }}
-                                    /> */}
                                   </div>
                                 </>) : null}
 

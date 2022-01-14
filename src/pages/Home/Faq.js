@@ -58,7 +58,7 @@ class Faq extends Component {
                                 <div className="section-title">
                                     <h4 className="title mb-4">Have Question ? Get in touch!</h4>
                                     <p className="text-muted para-desc mx-auto">Start working with <span className="text-primary fw-bold">Landrick</span> that can provide everything you need to generate awareness, drive traffic, connect.</p>
-                                    <Link to="page-contact-two" className="btn btn-primary mt-4"> <i className="uil uil-phone"></i> Contact us</Link>
+                                    <Link to="/contato" className="btn btn-primary mt-4"> <i className="uil uil-phone"></i> Contact us</Link>
                                 </div>
                             </Col>
                         </Row>

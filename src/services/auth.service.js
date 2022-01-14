@@ -24,14 +24,18 @@ class AuthService {
     localStorage.removeItem("user");
     localStorage.removeItem("profile");
     localStorage.removeItem("subs");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("Cards");
   }
 
   register(email, password, confirmPassword) {
-    return axios.post(API_URL + "user", {
+    return axios
+    .post(API_URL + "user", {
       email,
       password,
       confirmPassword,
-    });
+    })
+    ;
   }
 
   registerProfile(
@@ -219,13 +223,15 @@ class AuthService {
       const user = localStorage.getItem('user')
 
       if (user) {
+        // console.log("USER >>>>>>>>>>>", user)
         axios.get(`${API_URL}mySubs`, { headers: authHeader() })
           .then((data) => {
+            // console.log("MY SUBS >>>>>>>>>>>>>>>>>>>>>>", data)
             res(data)
             return data
           })
           .catch((err) => {
-            console.log(">>> ERROR ", err);
+            // console.log(">>> ERROR ", err);
             rej(err)
             return err
           })
@@ -235,18 +241,18 @@ class AuthService {
     })
   }
 
-  getCard(){
+  getCard() {
     return new Promise((res, rej) => {
-        axios.get(`${API_URL}card`, { headers: authHeader() })
-          .then((data) => {
-            res(data)
-            return data
-          })
-          .catch((err) => {
-            console.log(">>> ERROR ", err);
-            rej(err)
-            return err
-          })
+      axios.get(`${API_URL}card`, { headers: authHeader() })
+        .then((data) => {
+          res(data)
+          return data
+        })
+        .catch((err) => {
+          console.log(">>> ERROR ", err);
+          rej(err)
+          return err
+        })
     })
   }
 
@@ -306,29 +312,29 @@ class AuthService {
 
   deleteUser() {
     axios.get(API_URL + 'user', { headers: authHeader() })
-    .then((data) => {
-      console.log("PROFILEEEEEEEEEEE", data.data);
-      localStorage.setItem('userId', JSON.stringify(data.data))
-    })
-    .catch((err) => {
-      console.log("PROFILEEEEEEEEEEE error", err);
-      return err
-    })
+      .then((data) => {
+        console.log("PROFILEEEEEEEEEEE", data.data);
+        localStorage.setItem('userId', JSON.stringify(data.data))
+      })
+      .catch((err) => {
+        console.log("PROFILEEEEEEEEEEE error", err);
+        return err
+      })
     const userId = JSON.parse(localStorage.getItem('userId'))
-    return axios.delete(API_URL + `user/${userId.id}`, 
-    {
-      headers: authHeader()
-    });
+    return axios.delete(API_URL + `user/${userId.id}`,
+      {
+        headers: authHeader()
+      });
   }
 
-  deleteCard(cardIndex){
-    return axios.delete(API_URL + `card/${cardIndex.paymentMethodId}`, 
-    {
-      headers: authHeader()
-    });
+  deleteCard(cardIndex) {
+    return axios.delete(API_URL + `card/${cardIndex.paymentMethodId}`,
+      {
+        headers: authHeader()
+      });
   }
 
-  setDefaultCard(cardIndex){
+  setDefaultCard(cardIndex) {
     return axios.put(API_URL + `card/${cardIndex.paymentMethodId}`, {
       //Profile
       cardIndex,
@@ -369,19 +375,45 @@ class AuthService {
       newPassword,
       confirmNewPassword,
     },
-    {
-      headers: authHeader()
-    }
+      {
+        headers: authHeader()
+      }
     );
   }
 
-  getFaturas(){
-      return axios.post(API_URL + "user/invoices",  
+  // getFaturas() {
+  //   return new Promise((res, rej) => {
+  //     axios.post(API_URL + "user/invoices",
+  //       {},
+  //       {
+  //         headers: authHeader()
+  //       }).then((data) => {
+  //         res(data)
+  //         return data
+  //       })
+  //       .catch((err) => {
+  //         console.log(">Fatura err", err);
+  //         rej(err)
+  //         return err
+  //       })
+  //   })
+  // }
+
+  getFaturas() {
+    return axios.post(API_URL + "user/invoices",
       {},
       {
         headers: authHeader()
       });
+  }
+
+  verifyLogin() {
+    const user = localStorage.getItem('user')
+
+    if (!user) {
+      window.location.href = "/login";
     }
+  }
 }
 
 export default new AuthService();

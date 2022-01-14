@@ -115,7 +115,7 @@ class PageCoverLogin extends Component {
           
           if (hasCard && hasSubs) {
             console.log("REDIRECT TO PROFILE (Login)")
-            this.props.history.push("/page-profile");
+            this.props.history.push("/perfil");
             window.location.reload();
           } else {
             console.log("REDIRECT TO REGISTRO (Login)")

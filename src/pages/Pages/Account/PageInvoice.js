@@ -4,6 +4,7 @@ import { Container, Row, Col, Table, Card, CardBody } from "reactstrap";
 
 //Import Icons
 import FeatherIcon from "feather-icons-react";
+import logoUpdate from "../../../assets/images/LogoUpdate.svg";
 
 class PageInvoice extends Component {
   constructor(props) {
@@ -49,7 +50,7 @@ class PageInvoice extends Component {
   render() {
     return (
       <React.Fragment>
-        <section className="bg-invoice bg-light">
+        <section className="bg-profile">
           <Container>
             <Row className="mt-5 pt-4 pt-sm-0 justify-content-center">
               <Col lg="10">
@@ -58,22 +59,14 @@ class PageInvoice extends Component {
                     <div className="invoice-top pb-4 border-bottom">
                       <Row>
                         <Col md="8">
-                          <div className="logo-invoice mb-2">
-                            Landrick<span className="text-primary">.</span>
+                          <div className="logo-invoice mb-4" style={{ maxWidth: "88px" }}>
+                            <img src={logoUpdate} />
                           </div>
-                          <Link to="#" className="text-primary h6">
-                            <i>
-                              <FeatherIcon
-                                icon="link"
-                                className="fea icon-sm text-muted me-2"
-                              />
-                            </i>
-                            www.landrick.corp
-                          </Link>
+                          <p className="text-muted" style={{ fontSize: "14px" }}>LIFESAVERS TREINAMENTO PROFISSIONAL E GERENCIAL LTDA CNPJ - 10.535.504/0001-60</p>
                         </Col>
 
                         <Col md="4" className="mt-4 mt-sm-0">
-                          <h5>Address :</h5>
+                          <h3>CONTATO</h3>
                           <dl className="row mb-0">
                             <dt className="col-2 text-muted">
                               <i>
@@ -84,28 +77,15 @@ class PageInvoice extends Component {
                               </i>
                             </dt>
                             <dd className="col-10 text-muted">
-                              <Link
-                                to="#"
+                              <a
+                                href="https://www.google.com.br/maps/place/Medicine+Cursos/@-23.5997646,-46.6522202,17z/data=!3m1!4b1!4m5!3m4!1s0x94ce5a2294aa820d:0x95ef4b47d0c9ab0c!8m2!3d-23.5997774!4d-46.6500333?shorturl=1"
+                                target="_blank"
                                 className="video-play-icon text-muted lightbox"
                               >
-                                <p className="mb-0">1419 Riverwood Drive,</p>
-                                <p className="mb-0">Redding, CA 96001</p>
-                              </Link>
+                                <p className="mb-0">Rua Marcos Lopes, 272, Vila Nova Conceição, CEP 04.513-080 São Paulo - SP</p>
+                              </a>
                             </dd>
 
-                            <dt className="col-2 text-muted">
-                            <i className="uil uil-envelope"></i>
-                            </dt>
-                            <dd className="col-10 text-muted">
-                              <Link
-                                to="#"
-                                id="mail"
-                                onClick={this.sendMail}
-                                className="text-muted"
-                              >
-                                info@landrick.com
-                              </Link>
-                            </dd>
 
                             <dt className="col-2 text-muted">
                               <i>
@@ -116,14 +96,23 @@ class PageInvoice extends Component {
                               </i>
                             </dt>
                             <dd className="col-10 text-muted">
-                              <Link
-                                to="#"
-                                id="call"
-                                onClick={this.callNumber}
+                              <a
+                                href="tel:+5511999998181"
+                                className="text-muted "
+                              >
+                                +55 (11) 9 9999-8181
+                              </a>
+                            </dd>
+                            <dt className="col-2 text-muted">
+                              <i className="uil uil-envelope"></i>
+                            </dt>
+                            <dd className="col-10 text-muted">
+                              <a
+                                href="mailto:contato@grupoupdate.com.br"
                                 className="text-muted"
                               >
-                                (+12) 1546-456-856
-                              </Link>
+                                contato@grupoupdate.com.br
+                              </a>
                             </dd>
                           </dl>
                         </Col>
@@ -131,52 +120,50 @@ class PageInvoice extends Component {
                     </div>
 
                     <div className="invoice-middle py-4">
-                      <h5>Invoice Details :</h5>
+                      <h3 className="mb-5">DETALHES DA COMPRA:</h3>
                       <Row className="mb-0">
                         <Col md={{ size: 8, order: 1 }} xs={{ order: 2 }}>
                           <dl className="row">
                             <dt className="col-md-3 col-5 fw-normal">
-                              Invoice No. :
+                              Código:
                             </dt>
                             <dd className="col-md-9 col-7 text-muted">
-                              land45845621
+                              x
                             </dd>
 
                             <dt className="col-md-3 col-5 fw-normal">
-                              Name :
+                              Nome:
                             </dt>
                             <dd className="col-md-9 col-7 text-muted">
-                              Calvin Carlo
+                              x
                             </dd>
 
                             <dt className="col-md-3 col-5 fw-normal">
-                              Address :
+                              Endereço:
                             </dt>
                             <dd className="col-md-9 col-7 text-muted">
-                              <p className="mb-0">1962 Pike Street,</p>
-                              <p className="mb-0">Diego, CA 92123</p>
+                              <p className="mb-0">x</p>
                             </dd>
 
                             <dt className="col-md-3 col-5 fw-normal">
-                              Phone :
+                              Telefone:
                             </dt>
                             <dd className="col-md-9 col-7 text-muted">
-                              (+45) 4584-458-695
+                              x
                             </dd>
-                          </dl>
-                        </Col>
 
-                        <Col
-                          md={{ size: 4, order: 2 }}
-                          xs={{ order: 1 }}
-                          className="mt-2 mt-sm-0"
-                        >
-                          <dl className="row mb-0">
-                            <dt className="col-md-4 col-5 fw-normal">
-                              Date :
+                            <dt className="col-md-3 col-5 fw-normal">
+                              Data:
                             </dt>
-                            <dd className="col-md-8 col-7 text-muted">
-                              15th Oct, 2019
+                            <dd className="col-md-9 col-7 text-muted">
+                              x
+                            </dd>
+
+                            <dt className="col-md-3 col-5 fw-normal">
+                              Cartão:
+                            </dt>
+                            <dd className="col-md-9 col-7 text-muted">
+                              x
                             </dd>
                           </dl>
                         </Col>
@@ -184,18 +171,17 @@ class PageInvoice extends Component {
                     </div>
 
                     <div className="invoice-table pb-4">
-                      <div className="table-responsive bg-white shadow rounded">
+                      {/* <div className="table-responsive bg-white shadow rounded">
                         <Table className="mb-0 table-center invoice-tb">
-                          <thead className="bg-light">
+                          <thead className="bg-white">
                             <tr>
                               <th scope="col" className="border-bottom text-start">
-                                No.
+                                Tipo
                               </th>
                               <th scope="col" className="border-bottom text-start">
-                                Item
+                                Quantidade
                               </th>
-                              <th scope="col" className="border-bottom">Qty</th>
-                              <th scope="col" className="border-bottom">Rate</th>
+                              <th scope="col" className="border-bottom">Preço</th>
                               <th scope="col" className="border-bottom">Total</th>
                             </tr>
                           </thead>
@@ -213,9 +199,26 @@ class PageInvoice extends Component {
                             ))}
                           </tbody>
                         </Table>
-                      </div>
+                      </div> */}
+                      <Col>
+                        <div className="rounded shadow mb-5">
+                          <div className="d-flex flex-row justify-content-between detalhes-invoice p-4">
+                            <p>Tipo</p>
+                            <p>Quantidade</p>
+                            <p>Preço</p>
+                            <p>Total</p>
+                          </div>
+                          <div className="d-flex flex-row justify-content-between px-4">
+                            <p>x</p>
+                            <p>x</p>
+                            <p>x</p>
+                            <p>x</p>
+                          </div>
+                        </div>
 
-                      <Row>
+                      </Col>
+
+                      {/* <Row>
                         <Col lg="4" md="5" className="ms-auto">
                           <ul className="list-unstyled h6 fw-normal mt-4 mb-0 ms-md-5 ms-lg-4">
                             <li className="text-muted d-flex justify-content-between">
@@ -229,37 +232,35 @@ class PageInvoice extends Component {
                             </li>
                           </ul>
                         </Col>
-                      </Row>
+                      </Row> */}
                     </div>
 
-                    <div className="invoice-footer border-top pt-4">
+                    <div className="invoice-footer pt-4">
                       <Row>
                         <Col sm="6">
                           <div className="text-sm-start text-muted text-center">
-                            <h6 className="mb-0">
-                              Customer Services :{" "}
+                            <p className="mb-0" style={{ fontSize: "14px" }}>
+                              Está com problemas?{" "}
                               <Link
-                                to="#"
-                                onClick={this.callNumber}
-                                className="text-warning"
+                                to="/ajuda"
+                                className="text-primary"
                               >
-                                (+12) 1546-456-856
+                                Ajuda
                               </Link>
-                            </h6>
+                            </p>
                           </div>
                         </Col>
 
                         <Col sm="6">
-                          <div className="text-sm-end text-muted text-center">
-                            <h6 className="mb-0">
+                          <div className="text-sm-end text-primary text-center">
+                            <p className="mb-0" style={{ fontSize: "14px" }}>
                               <Link
-                                to="/page-terms"
-                                target="_blank"
+                                to="/termos-de-uso"
                                 className="text-primary"
                               >
-                                Terms & Conditions
+                                Termos e Condições
                               </Link>
-                            </h6>
+                            </p>
                           </div>
                         </Col>
                       </Row>

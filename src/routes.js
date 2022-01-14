@@ -488,12 +488,12 @@ const routes = [
   { path: "/page-work-masonry", component: PageWorkMasonry, isTopbarDark: true },
 
   //Page Profile
-  { path: "/page-profile", component: PageProfile, isTopbarDark: true },
+  { path: "/perfil", component: PageProfile, isTopbarDark: true },
   { path: "/page-members", component: PageMembers },
   { path: "/page-works", component: PageWorks },
   { path: "/page-messages", component: PageMessages },
   { path: "/page-profile-edit", component: PageProfileEdit },
-  { path: "/page-payments", component: PagePayments, isTopbarDark: true },
+  { path: "/assinatura", component: PagePayments, isTopbarDark: true },
   { path: "/page-invoice", component: PageInvoice, isTopbarDark: true },
 
   //Page Job
@@ -521,7 +521,7 @@ const routes = [
   //Page Contact
   { path: "/page-contact-one", component: PageContactOne, isTopbarDark: true },
   { path: "/page-contact-three", component: PageContactThree, isTopbarDark: true },
-  { path: "/page-contact-two", component: PageContactTwo, isTopbarDark: true },
+  { path: "/contato", component: PageContactTwo, isTopbarDark: true },
 
   // forums
   { path: "/forums", component: Overview, isTopbarDark: true },

@@ -37,7 +37,7 @@ const Contato = () => {
 
   return (
     <div>
-      <section className="section pt-5 mt-4">
+      <section className="section pt-5">
 
         <h1 className="text-center">Contato</h1>
 

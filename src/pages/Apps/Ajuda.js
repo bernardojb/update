@@ -10,7 +10,7 @@ import {
   CardHeader,
   Collapse,
 } from "reactstrap";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 
 import Contact from './PageContactTwo2'
 
@@ -108,13 +108,13 @@ class PageTerms extends Component {
     return (
       <React.Fragment>
         <Helmet>
-                <meta charSet="utf-8" />
-                <title>Ajuda | Update Anestesiologia</title>
-                <link rel="canonical" href="https://www.grupoupdate.com.br/sobre" />
-                </Helmet>
+          <meta charSet="utf-8" />
+          <title>Ajuda | Update Anestesiologia</title>
+          <link rel="canonical" href="https://www.grupoupdate.com.br/sobre" />
+        </Helmet>
         {/* breadcrumb */}
         <PageBreadcrumb pathItems={this.state.pathItems} >
-            <h1>perguntas frequentes</h1>
+          <h1>perguntas frequentes</h1>
         </PageBreadcrumb>
         <div className="position-relative">
           <div className="shape overflow-hidden text-white">
@@ -154,7 +154,7 @@ class PageTerms extends Component {
                               id="headingOne"
                             >
                               <h6 className="title mb-0">
-                              Onde posso fazer o download do app?
+                                Onde posso fazer o download do app?
                                 <i
                                   className={
                                     this.state.col1
@@ -168,11 +168,11 @@ class PageTerms extends Component {
                           <Collapse isOpen={this.state.col1}>
                             <CardBody>
                               <p className="mb-0 faq-ans">
-                              Nosso app ainda está em desenvolvimento! Acompanhe nossas redes sociais para ficar por dentro das novidades. <a className="text-primary" target="_blank" rel="noreferrer" href="https://www.instagram.com/update.anestesiologia/">@update.anestesiologia</a>
+                                Nosso app ainda está em desenvolvimento! Acompanhe nossas redes sociais para ficar por dentro das novidades. <a className="text-primary" target="_blank" rel="noreferrer" href="https://www.instagram.com/update.anestesiologia/">@update.anestesiologia</a>
                               </p>
-                              <br/>
+                              <br />
                               <div className="d-flex flex-column">
-                              {/* <a className="text-primary">{'>'} Download iOS </a>
+                                {/* <a className="text-primary">{'>'} Download iOS </a>
                               <a className="text-primary">{'>'} Download Android </a> */}
                               </div>
                             </CardBody>
@@ -208,7 +208,7 @@ class PageTerms extends Component {
                           <Collapse isOpen={this.state.col2}>
                             <CardBody>
                               <p className="mb-0 faq-ans">
-                              Aceitamos os seguintes cartões de crédito: American Express, Diners, Elo, MasterCard, Visa.
+                                Aceitamos os seguintes cartões de crédito: American Express, Diners, Elo, MasterCard, Visa.
                               </p>
                             </CardBody>
                           </Collapse>
@@ -229,7 +229,7 @@ class PageTerms extends Component {
                               id="headingfive"
                             >
                               <h6 className="title mb-0">
-                              Quais planos disponíveis?
+                                Quais planos disponíveis?
                                 <i
                                   className={
                                     this.state.col3
@@ -243,7 +243,7 @@ class PageTerms extends Component {
                           <Collapse isOpen={this.state.col3}>
                             <CardBody>
                               <p className="mb-0 faq-ans">
-                              Plano mensal, Semestral e Anual!
+                                Plano mensal, Semestral e Anual!
                               </p>
                             </CardBody>
                           </Collapse>
@@ -264,7 +264,7 @@ class PageTerms extends Component {
                               id="headingfive"
                             >
                               <h6 className="title mb-0">
-                              O app está disponível em quais plataformas?
+                                O app está disponível em quais plataformas?
                                 <i
                                   className={
                                     this.state.col4
@@ -278,7 +278,7 @@ class PageTerms extends Component {
                           <Collapse isOpen={this.state.col4}>
                             <CardBody>
                               <p className="mb-0 faq-ans">
-                              O app será disponibilizado para iOS e Android!
+                                O app será disponibilizado para iOS e Android!
                               </p>
                             </CardBody>
                           </Collapse>
@@ -299,8 +299,8 @@ class PageTerms extends Component {
                 </Card>
               </Col>
             </Row>
-
-            <Contact></Contact>
+            <div id="contato" style={{ paddingTop: "125px" }}></div>
+            <Contact />
           </Container>
         </section>
       </React.Fragment>

@@ -28,7 +28,7 @@ class PageProfileEdit extends Component {
         //id must required
         { id: 1, name: "Landrick", link: "/index" },
         { id: 2, name: "Page", link: "#" },
-        { id: 3, name: "Account", link: "/page-profile" },
+        { id: 3, name: "Account", link: "/perfil" },
         { id: 4, name: "Setting" },
       ],
       widgets: [
@@ -37,7 +37,7 @@ class PageProfileEdit extends Component {
           icon: "uil uil-dashboard",
           className: "navbar-item account-menu px-0",
           title: "Profile",
-          link: "/page-profile",
+          link: "/perfil",
         },
         {
           id: 2,
@@ -65,7 +65,7 @@ class PageProfileEdit extends Component {
           icon: "uil uil-transaction",
           className: "navbar-item account-menu px-0 mt-2",
           title: "Payments",
-          link: "/page-payments",
+          link: "/assinatura",
         },
         {
           id: 6,

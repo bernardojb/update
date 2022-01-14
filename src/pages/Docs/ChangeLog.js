@@ -1275,7 +1275,7 @@ class ChangeLog extends Component {
                             />
                           </i>
                           User Profile{" "}
-                          <Link to="page-profile" className="h6 text-danger">
+                          <Link to="/perfil" className="h6 text-danger">
                             Live Preview
                           </Link>
                         </li>

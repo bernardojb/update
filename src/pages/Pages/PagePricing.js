@@ -553,7 +553,7 @@ class PagePricing extends Component {
                     drive traffic, connect.
                   </p>
                   <div className="mt-4 pt-2">
-                    <Link to="page-contact-two" className="btn btn-primary">
+                    <Link to="/contato" className="btn btn-primary">
                       Contact us <i className="mdi mdi-arrow-right"></i>
                     </Link>
                   </div>

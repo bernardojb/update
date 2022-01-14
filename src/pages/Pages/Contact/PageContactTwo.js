@@ -66,7 +66,7 @@ class PageContactTwo extends Component {
   render() {
     return (
       <React.Fragment>
-        <section className="section pt-5 mt-4">
+        <section className="section pt-5" style={{marginTop:"150px"}}>
 
           <h1 className="text-center">Contato</h1>
 

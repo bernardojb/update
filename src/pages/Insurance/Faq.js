@@ -111,7 +111,7 @@ class Faq extends Component {
                   that can provide everything you need to generate awareness,
                   drive traffic, connect.
                 </p>
-                <Link to="page-contact-two" className="btn btn-primary mt-4">
+                <Link to="/contato" className="btn btn-primary mt-4">
                   <i className="mdi mdi-phone"></i> Contact us
                 </Link>
               </div>

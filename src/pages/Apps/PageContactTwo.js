@@ -240,13 +240,12 @@ class PageContactTwo extends Component {
                     </div>
                     <div className="flex-1 content">
                       <h6 className="title mb-0">Email</h6>
-                      <Link
-                        to=""
-                        onClick={this.sendMail}
-                        className="text-primary"
-                      >
-                        contato@grupoupdate.com.br
-                      </Link>
+                      <a
+                      href="mailto:contato@grupoupdate.com.br"
+                      className="text-primary"
+                    >
+                      contato@grupoupdate.com.br
+                    </a>
                     </div>
                   </div>
 
@@ -261,13 +260,12 @@ class PageContactTwo extends Component {
                     </div>
                     <div className="flex-1 content">
                       <h6 className="title mb-0">Telefone</h6>
-                      <Link
-                        to="#"
-                        onClick={this.callNumber}
-                        className="text-primary "
-                      >
-                        +55 (11) 9 9999-8181
-                      </Link>
+                      <a
+                      href="tel:+5511999998181"
+                      className="text-primary "
+                    >
+                      +55 (11) 9 9999-8181
+                    </a>
                     </div>
                   </div>
 

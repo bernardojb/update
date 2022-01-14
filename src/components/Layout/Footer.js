@@ -35,8 +35,8 @@ class Footer extends Component {
       grid4: [
         { title: "Como funciona", link: "/sobre" },
         { title: "Planos", link: "/home" },
-        { title: "Perfil", link: "/page-profile" },
-        { title: "Assinatura", link: "/page-payments" },
+        { title: "Perfil", link: "/perfil" },
+        { title: "Assinatura", link: "/assinatura" },
       ],
       isLogged: false
     };
