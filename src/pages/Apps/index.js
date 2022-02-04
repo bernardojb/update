@@ -79,6 +79,7 @@ class Index extends Component {
 
         {/* Pricing */}
         {/* <Pricing /> */}
+        <div id="planos"></div>
         <Price />
 
         <Contact />

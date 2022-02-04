@@ -6,36 +6,40 @@ const API_URL = "https://api.grupoupdate.com.br/api/v1/";
 
 class AuthService {
   login(login, password) {
-    return axios
-      .post(API_URL + 'Profile/Token', {
-        login,
-        password
-      })
-      .then(response => {
-        console.log("RESPONSE >>>>>>>>>>>>>>", response)
-        if (response.data.data.access_token) {
-          localStorage.setItem("user", JSON.stringify(response.data));
-        }
-        return response.data;
-      });
+    return new Promise((res, rej) => {
+      axios
+        .post(API_URL + 'Profile/Token', {
+          login,
+          password
+        })
+        .then(response => {
+          // console.log("RESPONSE >>>>>>>>>>>>>>>>>>>>>", response)
+          if (response.data.data.access_token) {
+            localStorage.setItem("user", JSON.stringify(response.data));
+          }
+          res(response.data)
+        })
+        .catch(err => { rej(err) })
+    })
   }
 
   logout() {
     localStorage.removeItem("user");
+    localStorage.removeItem("getUser");
     localStorage.removeItem("profile");
     localStorage.removeItem("subs");
     localStorage.removeItem("userId");
     localStorage.removeItem("Cards");
+    localStorage.removeItem("plan");
   }
 
   register(email, password, confirmPassword) {
     return axios
-    .post(API_URL + "user", {
-      email,
-      password,
-      confirmPassword,
-    })
-    ;
+      .post(API_URL + "user", {
+        email,
+        password,
+        confirmPassword,
+      });
   }
 
   registerProfile(
@@ -53,8 +57,8 @@ class AuthService {
     city
   ) {
     const token = localStorage.getItem('user')
-    console.error('**************', token, authHeader())
-    return axios.post(API_URL + "profile", {
+    console.log("PROFILE TOKEN", token);
+    const profile = axios.post(API_URL + "profile", {
       //Profile
       fullName,
       birthday,
@@ -72,6 +76,7 @@ class AuthService {
       {
         headers: authHeader()
       });
+    return profile;
   }
 
   updateProfile(
@@ -129,8 +134,8 @@ class AuthService {
     first_name,
     last_name
   ) {
-    const user = localStorage.getItem('user')
-    console.error('**************', user, authHeader())
+    // const user = localStorage.getItem('user')
+    // console.log("CARD USER", user);
     return axios.post(API_URL + "profile/generateCCToken", {
       //Card
       card_number,
@@ -148,8 +153,8 @@ class AuthService {
   registerPlano(
     identifier
   ) {
-    const user = localStorage.getItem('user')
-    console.error('**************', user, authHeader())
+    // const user = localStorage.getItem('user')
+    // console.log("PLANO USER", user);
     return axios.post(API_URL + "subscription", {
       identifier
     },
@@ -174,7 +179,6 @@ class AuthService {
   }
 
   getCurrentUser() {
-    // console.log('>>>>>>>>>>>>>>', JSON.parse(localStorage.getItem('user') ))
     return JSON.parse(localStorage.getItem('user'));
   }
 
@@ -185,6 +189,8 @@ class AuthService {
       if (user) {
         axios.get(`${API_URL}profile`, { headers: authHeader() })
           .then((data) => {
+            // console.log("GET SELF", data.data);
+            localStorage.setItem('profile', JSON.stringify(data.data))
             res(data)
             return data
           })
@@ -192,6 +198,7 @@ class AuthService {
             rej(err)
             return err
           })
+
       } else {
         return rej('Unauthorized')
       }
@@ -223,15 +230,13 @@ class AuthService {
       const user = localStorage.getItem('user')
 
       if (user) {
-        // console.log("USER >>>>>>>>>>>", user)
         axios.get(`${API_URL}mySubs`, { headers: authHeader() })
           .then((data) => {
-            // console.log("MY SUBS >>>>>>>>>>>>>>>>>>>>>>", data)
+            localStorage.setItem('subs', JSON.stringify(data.data))
             res(data)
             return data
           })
           .catch((err) => {
-            // console.log(">>> ERROR ", err);
             rej(err)
             return err
           })
@@ -263,7 +268,7 @@ class AuthService {
       {
         headers: authHeader()
       }
-    );
+    )
   }
 
   updateCupom() {
@@ -381,24 +386,6 @@ class AuthService {
     );
   }
 
-  // getFaturas() {
-  //   return new Promise((res, rej) => {
-  //     axios.post(API_URL + "user/invoices",
-  //       {},
-  //       {
-  //         headers: authHeader()
-  //       }).then((data) => {
-  //         res(data)
-  //         return data
-  //       })
-  //       .catch((err) => {
-  //         console.log(">Fatura err", err);
-  //         rej(err)
-  //         return err
-  //       })
-  //   })
-  // }
-
   getFaturas() {
     return axios.post(API_URL + "user/invoices",
       {},
@@ -414,6 +401,81 @@ class AuthService {
       window.location.href = "/login";
     }
   }
+
+  getUpdatedUser() {
+    const user = JSON.parse(localStorage.getItem('user')) 
+
+    if (user) {
+      return axios.get(API_URL + 'user', { headers: authHeader() })
+        .then((response) => {
+          localStorage.setItem('getUser', JSON.stringify(response.data))
+          const getUser = JSON.parse(localStorage.getItem('getUser'))
+          console.log("UPDATED USER", getUser);
+          // const getOldUser = JSON.parse(user)
+          console.log("old USER", user.data);
+
+          if (user.data.has_profile != getUser.has_profile ||
+            user.data.has_card != getUser.has_card ||
+            user.data.has_subs != getUser.has_subs ||
+            user.data.access_until != getUser.has_access_until
+          ) {
+            console.log("RESPONSE DATA BEFORE", response.data);
+            localStorage.setItem("user", JSON.stringify({
+              data: {
+                access_token: user.data.access_token,
+                refresh_token: user.data.refresh_token,
+                has_profile: getUser.has_profile,
+                has_subs: getUser.has_subs,
+                has_card: getUser.has_card,
+                access_until: getUser.has_access_until
+              }
+            }));
+          } else {
+            console.log("ELSE RESPONSE DATA", response.data);
+          }
+        })
+        .catch((err) => {
+          console.log("UPDATED error", err);
+          return err
+        })
+    }
+  }
+
+  //PREVELAT
+
+  // getUpdatedUser() {
+  //   let user = JSON.parse(localStorage.getItem('user'));
+  //   console.log('local user', user.data);
+
+  //   if (user) {
+
+  //   axios.get(API_URL + 'user', { headers: authHeader() }).then(response => {
+  //     console.log('response', response.data);
+  //     let f = false;
+  //     if (response.data.has_profile != user.data.has_profile) {
+  //       user.data.has_profile = response.data.has_profile;
+  //       f = true;
+  //     }
+  //     if (response.data.has_card != user.data.has_card) {
+  //       user.data.has_card = response.data.has_card;
+  //       f = true;
+  //     }
+  //     if (response.data.has_subs != user.data.has_subs) {
+  //       user.data.has_subs = response.data.has_subs;
+  //       f = true;
+  //     }
+  //     if (response.data.has_access_until != user.data.has_access_until) {
+  //       user.data.access_until = response.data.has_access_until;
+  //       f = true;
+  //     }
+  //     if (f) {
+  //       console.log(user.data);
+  //       // localStorage.setItem('user', JSON.stringify(user.data));
+  //     }
+  //     console.log(response.data)
+  //   });
+  // }
+  // }
 }
 
 export default new AuthService();

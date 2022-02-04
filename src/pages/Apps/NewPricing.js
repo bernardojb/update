@@ -91,7 +91,7 @@ class Price extends Component {
                 <section className="section">
                     <Container>
                         {/* section title */}
-                        <div className="d-flex flex-column text-center">
+                        <div className="d-flex flex-column text-center mt-4">
                             <h1>não perca tempo, {" "}<span className="text-primary">registre-se agora!</span></h1>
                             <p>Escolha seu plano e aproveite agora mesmo todos os benefícios disponíveis:</p>
                         </div>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect} from "react-router-dom";
 import {
   Container,
   Row,
@@ -141,13 +141,13 @@ class PagePayments extends Component {
       },
     };
 
-    console.log(obj)
+    // console.log(obj)
 
     obj.modal[id] = !obj.modal[id]
 
     this.setState(obj);
 
-    console.log("MODAL IS:", this.state.modal)
+    // console.log("MODAL IS:", this.state.modal)
   };
 
   handleCancelSub() {
@@ -179,7 +179,7 @@ class PagePayments extends Component {
 
   componentDidMount() {
 
-    authService.verifyLogin()
+    // authService.verifyLogin()
 
     authService.getSelf().then(data => {
       data.data.birthday = new Date(data.data.birthday)
@@ -294,6 +294,7 @@ class PagePayments extends Component {
         ...this.state,
         invoice: data.data.inv.items
       })
+      // console.log("invoice", this.state.invoice[0].items)
     })
 
     document.body.classList = "";
@@ -317,6 +318,11 @@ class PagePayments extends Component {
     const { profile } = this.state
     const { plano } = this.state
     const { sub } = this.state
+    const user = JSON.parse(localStorage.getItem('user'))
+    if (!user) return (
+      <Redirect to={'/login'}></Redirect>
+    )
+    user.data.access_until = new Date(user.data.access_until)
 
     return (
       <React.Fragment>
@@ -357,15 +363,14 @@ class PagePayments extends Component {
                             md="7"
                             className="text-md-start text-center mt-4 mt-sm-0 d-flex flex-column"
                           >
-                            <h3 className="title mb-2"> {profile.full_name} </h3>
-                            <p>{plano != null && plano.name ? `Plano ${plano.name.charAt(0).toUpperCase()}${plano.name.slice(1)}` : null}</p>
-                            {sub != null && sub.expiresAt ?
-                              <p>Próximo pagamento: <span className="text-primary">{`${this.lepDay(sub.expiresAt.getDate())}/${this.lepMonth(sub.expiresAt.getMonth())}/${sub.expiresAt.getFullYear()}`}</span></p>
-                              : null
-                            }
+                            <h3 className="title mb-3"> {profile.full_name} </h3>
+
+                            <p className="p-0 mb-3">{plano != null && plano.name ? `Plano ${plano.name.charAt(0).toUpperCase()}${plano.name.slice(1)}` : "Nenhum plano cadastrado"}</p>
+
+                            {user != null && user.data.access_until ?
+                              <p>Assinatura válida até: <span className="text-primary">{`${this.lepDay(user.data.access_until.getDate())}/${this.lepMonth(user.data.access_until.getMonth())}/${user.data.access_until.getFullYear()}`}</span></p>
+                              : null}
                           </Col>
-                          {/* <Col md="5" className="text-md-end text-center">
-                          </Col> */}
                         </Row>
                       </Col>
                     </Row>
@@ -452,14 +457,24 @@ class PagePayments extends Component {
                   <h3>Assinatura</h3>
                   <Row className="d-flex justify-content-between">
                     <Col sm={6} className="mb-sm-0 mb-5">
-                      <p style={{ fontSize: "21px", fontWeight: "600" }}>{plano != null && plano.name ? `Plano ${plano.name.charAt(0).toUpperCase()}${plano.name.slice(1)}` : null}</p>
-                      <p className="text-muted">{`R$${parseInt(plano.value_cents) / 100}0`}</p>
-                      <Link to="/registro" className="btn btn-primary disabled">Alterar Plano</Link>
+                      {plano != null && plano.name ?
+                        <p style={{ fontSize: "21px", fontWeight: "600" }}>
+                          Plano {plano.name.charAt(0).toUpperCase()}{plano.name.slice(1)}
+                        </p>
+                        :
+                        <p style={{ fontSize: "21px", fontWeight: "600" }}>
+                          Nenhum plano selecionado
+                        </p>
+                      }
+                      <p className="text-muted">
+                        {plano != null && plano.value_cents ? `R$${parseInt(plano.value_cents) / 100}0` : '-'}
+                      </p>
+                      <Link to="/registro" className="btn btn-primary">Alterar Plano</Link>
                     </Col>
                     <Col sm={6}>
                       <p style={{ fontSize: "21px", fontWeight: "600" }}>Assinatura válida até</p>
-                      {sub != null && sub.expiresAt ?
-                        <p>{`${this.lepDay(sub.expiresAt.getDate())}/${this.lepMonth(sub.expiresAt.getMonth())}/${sub.expiresAt.getFullYear()}`}</p>
+                      {user != null && user.data.access_until ?
+                        <p>Assinatura válida até: <span className="text-primary">{`${this.lepDay(user.data.access_until.getDate())}/${this.lepMonth(user.data.access_until.getMonth())}/${user.data.access_until.getFullYear()}`}</span></p>
                         : null
                       }
                       <button className="btn btn-danger" onClick={this.handleCancelSub}>Cancelar Assinatura</button>
@@ -707,19 +722,22 @@ class PagePayments extends Component {
                                               </div>
                                               <div className="px-4">
                                                 <Row>
-                                                  <Col lg={4} className="d-flex flex-row" style={{margin:"8px 0"}}>
+                                                  <Col lg={4} className="d-flex flex-row" style={{ margin: "8px 0" }}>
                                                     <span className="detalhes-mobile me-1">Tipo - </span>
                                                     <span>{`${invoice.items.find((ele) => ele.price_cents > 0).description}`}</span>
                                                   </Col>
-                                                  <Col lg={3} className="d-flex flex-row" style={{margin:"8px 0"}}>
+                                                  <Col lg={3} className="d-flex flex-row" style={{ margin: "8px 0" }}>
                                                     <span className="detalhes-mobile me-1">Preço - </span>
                                                     <span>{`R$${invoice.items.find((ele) => ele.price_cents > 0).price_cents / 100}0`}</span>
                                                   </Col>
-                                                  <Col lg={3} className="d-flex flex-row" style={{margin:"8px 0"}}>
+                                                  <Col lg={3} className="d-flex flex-row" style={{ margin: "8px 0" }}>
                                                     <span className="detalhes-mobile me-1">Cupom - </span>
-                                                    <span>{`${invoice.items.find((ele) => ele.price_cents < 0).description}`}</span>
+                                                    {invoice.items.find((ele) => ele.price_cents < 0) ?
+                                                      <span>{`${invoice.items.find((ele) => ele.price_cents < 0).description}`}</span> :
+                                                      "Sem cupom"
+                                                    }
                                                   </Col>
-                                                  <Col lg={2} className="d-flex flex-row" style={{margin:"8px 0"}}>
+                                                  <Col lg={2} className="d-flex flex-row" style={{ margin: "8px 0" }}>
                                                     <span className="detalhes-mobile me-1">Total - </span>
                                                     <span>{`${invoice.total_paid}`}</span>
                                                   </Col>

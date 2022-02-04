@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
+import { HashLink } from 'react-router-hash-link';
 
 //Import Icons
 import FeatherIcon from "feather-icons-react";
@@ -18,7 +19,7 @@ class Footer extends Component {
     this.state = {
       grid1: [
         { title: "Como funciona", link: "/sobre" },
-        { title: "Planos", link: "/home" },
+        { title: "Planos", link: "/#planos" },
         { title: "Login", link: "/login" },
         { title: "Registrar", link: "/registro" },
       ],
@@ -34,7 +35,7 @@ class Footer extends Component {
       ],
       grid4: [
         { title: "Como funciona", link: "/sobre" },
-        { title: "Planos", link: "/home" },
+        { title: "Planos", link: "/#planos" },
         { title: "Perfil", link: "/perfil" },
         { title: "Assinatura", link: "/assinatura" },
       ],
@@ -148,7 +149,7 @@ class Footer extends Component {
                     <>
                     {this.state.grid4.map((grid, key) => (
                       <li key={key}>
-                        <Link
+                        <HashLink
                           to={grid.link}
                           className={
                             this.props.isLight ? "text-muted" : "text-foot"
@@ -156,7 +157,7 @@ class Footer extends Component {
                         >
                           <i className="mdi mdi-chevron-right me-1"></i>{" "}
                           {grid.title}
-                        </Link>
+                        </HashLink>
                       </li>
                     ))}
                     </>
@@ -164,7 +165,7 @@ class Footer extends Component {
                     <>
                     {this.state.grid1.map((grid, key) => (
                       <li key={key}>
-                        <Link
+                        <HashLink
                           to={grid.link}
                           className={
                             this.props.isLight ? "text-muted" : "text-foot"
@@ -172,7 +173,7 @@ class Footer extends Component {
                         >
                           <i className="mdi mdi-chevron-right me-1"></i>{" "}
                           {grid.title}
-                        </Link>
+                        </HashLink>
                       </li>
                     ))}
                     </>

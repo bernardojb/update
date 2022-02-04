@@ -42,26 +42,6 @@ const required = value => {
   }
 };
 
-const email = value => {
-  if (!isEmail(value)) {
-    return (
-      <div className="alert alert-danger mt-2" role="alert">
-        Este não é um email válido!
-      </div>
-    );
-  }
-};
-
-const vpassword = value => {
-  if (value.length < 6 || value.length > 40) {
-    return (
-      <div className="alert alert-danger mt-2" role="alert">
-        Sua senha precisa ter pelo menos 6 caracteres.
-      </div>
-    );
-  }
-};
-
 const vyear = value => {
   if (value.length < 4 || value.length > 4) {
     return (
@@ -92,36 +72,6 @@ const vmonth = value => {
   }
 };
 
-const vcpf = value => {
-  if (value.length < 14) {
-    return (
-      <div className="alert alert-danger mt-2" role="alert">
-        Digite um CPF válido!
-      </div>
-    );
-  }
-};
-
-const vbirthday = value => {
-  if (value.length < 10) {
-    return (
-      <div className="alert alert-danger mt-2" role="alert">
-        Digite sua data de nascimento completa!
-      </div>
-    );
-  }
-};
-
-const vcep = value => {
-  if (value.length < 9) {
-    return (
-      <div className="alert alert-danger mt-2" role="alert">
-        Digite um CEP válido!
-      </div>
-    );
-  }
-};
-
 const vcard = value => {
   if (value.length < 19) {
     return (
@@ -139,19 +89,6 @@ const vcvv = value => {
         Digite um CVV válido!
       </div>
     );
-  }
-};
-
-const isEqual = (value, props, components) => {
-  const bothUsed = components.password[0].isUsed && components.confirmPassword[0].isUsed;
-  const bothChanged = components.password[0].isChanged && components.confirmPassword[0].isChanged;
-
-  if (bothChanged && bothUsed && components.password[0].value !== components.confirmPassword[0].value) {
-    return (
-      <div className="alert alert-danger mt-2" role="alert">
-        As senhas não coincidem
-      </div>
-    )
   }
 };
 
@@ -220,7 +157,7 @@ export default class PageCoverSignup extends Component {
       //Cupom
       code: "",
       //Plano
-      identifier: "anual",
+      identifier: "",
       plano_month: "",
       plano_half: "",
       plano_year: "active",
@@ -235,14 +172,13 @@ export default class PageCoverSignup extends Component {
       register: false,
       register_profile: false,
       register_plano: false,
-      loading: false,
       message: "",
     };
   }
 
   onChangeEmail(e) {
     this.setState({
-      email: e.target.value.toLowerCase()
+      email: e.target.value
     });
   }
 
@@ -372,7 +308,6 @@ export default class PageCoverSignup extends Component {
     this.setState({
       identifier: e.target.value
     });
-    console.log("IDENTIFIER", this.state.identifier)
   }
 
   //Cupom
@@ -419,13 +354,14 @@ export default class PageCoverSignup extends Component {
         this.state.confirmPassword,
       ).then(
         response => {
+          console.log(response, 'aaaaaaaaaaaaaaaaaaaaaaaa')
           this.setState({
             message: response.data.message,
             register: false,
             register_profile: true,
           });
-
           if (response.data.token) {
+            console.log(response, '#############################')
             localStorage.setItem("user", JSON.stringify({
               data: {
                 access_token: response.data.token,
@@ -485,7 +421,6 @@ export default class PageCoverSignup extends Component {
         this.state.city,
       ).then(
         response => {
-          authService.getUpdatedUser();
           this.setState({
             message: response.data.message,
             register_profile: false,
@@ -506,6 +441,7 @@ export default class PageCoverSignup extends Component {
             register_profile: true,
             register_plano: false
           });
+
           // window.location.reload();
         }
       );
@@ -515,14 +451,11 @@ export default class PageCoverSignup extends Component {
   handlePayment(e) {
     e.preventDefault();
 
-    authService.getCurrentUser()
-
     this.setState({
       message: "",
-      loading: true
     });
 
-    this.form.validateAll();    
+    this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
       authService.registerCard(
@@ -532,28 +465,25 @@ export default class PageCoverSignup extends Component {
         this.state.year,
         this.state.first_name,
         this.state.last_name,
+
       ).then(
-        async (response) => {
-          await authService.getUpdatedUser();
+        response => {
           this.setState({
             message: response.data.message,
           })
 
           if (this.state.code != "") {
-            await authService.registerPlanoCoupon(
+            authService.registerPlanoCoupon(
               this.state.identifier,
               this.state.code
             )
-
-            await authService.getUpdatedUser();
           } else {
-            await authService.registerPlano(
+            authService.registerPlano(
               this.state.identifier
             )
           }
-          await authService.getUpdatedUser();
-          
           this.props.history.push("/perfil")
+          window.location.reload()
         },
         error => {
           const resMessage =
@@ -565,15 +495,11 @@ export default class PageCoverSignup extends Component {
 
           this.setState({
             message: resMessage,
-            loading: false
           });
         }
       );
-    } else {
-      this.setState({
-        loading: false
-      });
     }
+
   }
 
   handleCouponCheck(e) {
@@ -582,7 +508,7 @@ export default class PageCoverSignup extends Component {
 
     this.form.validateAll();
 
-    if (this.state.code != "") {
+    if(this.state.code != ""){
       authService.checkCoupon(
         this.state.code,
       ).then(
@@ -591,7 +517,6 @@ export default class PageCoverSignup extends Component {
             autoClose: 2000,
           })
           setTimeout(() => {
-            console.log(response, response.data, response.message, response.error)
             this.setState({
               message: response.data.message,
               passo4: false,
@@ -599,8 +524,7 @@ export default class PageCoverSignup extends Component {
             })
             // window.location.reload();
           }, 2000);
-        }
-      ).catch(
+        },
         error => {
           const resMessage =
             (error.response &&
@@ -608,7 +532,7 @@ export default class PageCoverSignup extends Component {
               error.response.data.message) ||
             error.message ||
             error.toString();
-
+  
           // this.setState({
           //   message: resMessage,
           // });
@@ -616,9 +540,6 @@ export default class PageCoverSignup extends Component {
             autoClose: 2000,
           })
           setTimeout(() => {
-            // this.setState({
-            //     message: resMessage,
-            // })
             window.location.reload();
           }, 2000);
         }
@@ -632,8 +553,8 @@ export default class PageCoverSignup extends Component {
   }
 
   componentDidMount() {
-
     const user = JSON.parse(localStorage.getItem('user'))
+
     if (user) {
       if (user.data.has_card && user.data.has_subs) {
         console.log(">>>>> HAS CARD + HAS SUBS")
@@ -658,6 +579,8 @@ export default class PageCoverSignup extends Component {
         register_plano: false
       })
     }
+
+
   }
 
   render() {
@@ -699,384 +622,6 @@ export default class PageCoverSignup extends Component {
                       <CardBody className="p-0">
                         <h1 className="card-title text-center">REGISTRAR</h1>
 
-                        {this.state.register ? (
-                          <Form
-                            className="login-form mt-4"
-                            onSubmit={this.handleRegister}
-                            ref={c => {
-                              this.form = c;
-                            }}>
-                            <Row className="px-2">
-                              <Col md="12">
-                                <div className="mb-3">
-                                  <Label className="form-label" for="email">
-                                    Seu Email{" "}
-                                    <span className="text-danger">*</span>
-                                  </Label>
-                                  <Input
-                                    type="text"
-                                    className="form-control"
-                                    name="email"
-                                    id="email"
-                                    placeholder="Email"
-                                    value={this.state.email}
-                                    onChange={this.onChangeEmail}
-                                    validations={[required, email]}
-                                  />
-                                </div>
-                              </Col>
-                              <Col md="12">
-                                <div className="mb-3">
-                                  <Label className="form-label" for="password">
-                                    Sua senha{" "}
-                                    <span className="text-danger">*</span>
-                                  </Label>
-                                  <Input
-                                    type="password"
-                                    className="form-control"
-                                    name="password"
-                                    id="password"
-                                    placeholder="Senha"
-                                    value={this.state.password}
-                                    onChange={this.onChangePassword}
-                                    validations={[required, isEqual, vpassword]}
-                                  />
-                                </div>
-                              </Col>
-                              <Col md="12">
-                                <div className="mb-3">
-                                  <Label className="form-label" for="confirmPassword">
-                                    Confirmação de senha{" "}
-                                    <span className="text-danger">*</span>
-                                  </Label>
-                                  <Input
-                                    type="password"
-                                    className="form-control"
-                                    name="confirmPassword"
-                                    id="confirmPassword"
-                                    placeholder="Confirmação de senha"
-                                    value={this.state.confirmPassword}
-                                    onChange={this.onChangeConfirmPassword}
-                                    validations={[required, isEqual, vpassword]}
-                                  />
-                                </div>
-                              </Col>
-                              <>
-                                <div className="d-grid">
-                                  <Button color="primary">
-                                    Criar conta
-                                  </Button>
-                                </div>
-                                <div className="mx-auto">
-                                  <p className="mb-0 mt-3">
-                                    <small className="text-dark me-2">
-                                      Já tem uma conta?
-                                    </small>{" "}
-                                    <Link
-                                      to="/login"
-                                      className="text-primary fw-bold"
-                                    >
-                                      Login
-                                    </Link>
-                                  </p>
-                                </div>
-                              </>
-                            </Row>
-                            {this.state.message && (
-                              <div className="form-group">
-                                <div
-                                  className={
-                                    this.state.successful
-                                      ? "alert alert-success mt-2"
-                                      : "alert alert-danger mt-2"
-                                  }
-                                  role="alert"
-                                >
-                                  {this.state.message}
-                                </div>
-                              </div>
-                            )}
-                            <CheckButton
-                              style={{ display: "none" }}
-                              ref={c => {
-                                this.checkBtn = c;
-                              }}
-                            />
-                          </Form>
-                        ) : (null)}
-
-                        {this.state.register_profile ? (
-                          <Form
-                            className="login-form mt-4"
-                            onSubmit={this.handleProfile}
-                            ref={c => {
-                              this.form = c;
-                            }}
-                          >
-                            <Row className="px-2">
-                              {this.state.passo2 ? (
-                                <>
-                                  <Col md="12">
-                                    <div className="mb-3">
-                                      <div className="etapas-registro">
-                                        <p className="etapa">Passo 2 de 5</p>
-                                        <p className="etapa-title" >Informações Pessoais</p>
-                                      </div>
-                                      <Label className="form-label" for="name">
-                                        Seu Nome{" "}
-                                        <span className="text-danger">*</span>
-                                      </Label>
-                                      <Input
-                                        type="text"
-                                        className="form-control"
-                                        name="fullName"
-                                        id="fullName"
-                                        placeholder="Nome completo"
-                                        value={this.state.fullName}
-                                        onChange={this.onChangeFullName}
-                                        validations={[required]}
-                                        maxLength="30"
-                                      />
-                                    </div>
-                                  </Col>
-                                  <Col md="12">
-                                    <div className="mb-3">
-                                      <Label className="form-label" for="birthday">
-                                        Data de nascimento{" "}
-                                        <span className="text-danger">*</span>
-                                      </Label>
-                                      <Input
-                                        type="text"
-                                        className="form-control"
-                                        name="birthday"
-                                        id="birthday"
-                                        placeholder="dd/mm/aaaa"
-                                        value={this.state.birthday}
-                                        onChange={this.onChangeBirthday}
-                                        validations={[required, vbirthday]}
-                                        maxLength="10"
-                                      />
-                                    </div>
-                                  </Col>
-                                  <Col md="12">
-                                    <div className="mb-3">
-                                      <Label className="form-label" for="cpf">
-                                        CPF{" "}
-                                        <span className="text-danger">*</span>
-                                      </Label>
-                                      <Input
-                                        type="text"
-                                        className="form-control"
-                                        name="cpf"
-                                        id="cpf"
-                                        placeholder="CPF"
-                                        value={this.state.cpf}
-                                        onChange={this.onChangeCpf}
-                                        validations={[required, vcpf]}
-                                        maxLength="14"
-                                      />
-                                    </div>
-                                  </Col>
-                                  <Col md="12">
-                                    <div className="mb-3">
-                                      <Label className="form-label" for="phone">
-                                        Telefone{" "}
-                                        {/* <span className="text-danger">*</span> */}
-                                      </Label>
-                                      <Input
-                                        type="text"
-                                        className="form-control"
-                                        name="phone"
-                                        id="phone"
-                                        placeholder="Telefone"
-                                        value={this.state.phone}
-                                        onChange={this.onChangePhone}
-                                        maxLength="14"
-                                      // validations={[required]}
-                                      />
-                                    </div>
-                                  </Col>
-                                  <Col md="12">
-                                    <div className="mb-3">
-                                      <Label className="form-label" for="crm">
-                                        CRM{" "}
-                                        {/* <span className="text-danger">*</span> */}
-                                      </Label>
-                                      <Input
-                                        type="text"
-                                        className="form-control"
-                                        name="crm"
-                                        id="crm"
-                                        placeholder="CRM"
-                                        value={this.state.crm}
-                                        onChange={this.onChangeCrm}
-                                      // validations={[required]}
-                                      />
-                                    </div>
-                                  </Col>
-
-                                  <div className="d-grid">
-                                    <a
-                                      className="btn-primary d-flex justify-content-center align-items-center"
-                                      style={{ height: "42px" }}
-                                      onClick={() => {
-                                        this.handleRequired()
-                                      }}>
-                                      Próximo
-                                    </a>
-                                  </div>
-                                </>) : null}
-
-                              {/* /////////////////////// 3 */}
-                              {this.state.passo3 ? (
-                                <>
-                                  <Col md="12">
-                                    <div className="mb-3">
-                                      <div className="etapas-registro">
-                                        <p className="etapa">Passo 3 de 5</p>
-                                        <p className="etapa-title" >Endereço de Cobrança</p>
-                                      </div>
-                                      <Label className="form-label" for="cep">
-                                        CEP{" "}
-                                        <span className="text-danger">*</span>
-                                      </Label>
-                                      <Input
-                                        type="text"
-                                        className="form-control"
-                                        name="cep"
-                                        id="cep"
-                                        placeholder="CEP"
-                                        value={this.state.cep}
-                                        onChange={this.onChangeCep}
-                                        validations={[required, vcep]}
-                                        maxLength="9"
-                                      />
-                                    </div>
-                                  </Col>
-                                  <Col md="12">
-                                    <div className="mb-3">
-                                      <Label className="form-label" for="street">
-                                        Endereço{" "}
-                                        <span className="text-danger">*</span>
-                                      </Label>
-                                      <Input
-                                        type="text"
-                                        className="form-control"
-                                        name="street"
-                                        id="street"
-                                        placeholder="Endereço"
-                                        value={this.state.street}
-                                        onChange={this.onChangeStreet}
-                                        validations={[required]}
-                                      />
-                                    </div>
-                                  </Col>
-                                  <Col md="4">
-                                    <div className="mb-3">
-                                      <Label className="form-label" for="number">
-                                        Número{" "}
-                                        <span className="text-danger">*</span>
-                                      </Label>
-                                      <Input
-                                        type="text"
-                                        className="form-control"
-                                        name="number"
-                                        id="number"
-                                        placeholder="Número"
-                                        value={this.state.number}
-                                        onChange={this.onChangeNumber}
-                                        validations={[required]}
-                                        maxLength="5"
-                                      />
-                                    </div>
-                                  </Col>
-                                  <Col md="8">
-                                    <div className="mb-3">
-                                      <Label className="form-label" for="neighborhood">
-                                        Bairro{" "}
-                                        <span className="text-danger">*</span>
-                                      </Label>
-                                      <Input
-                                        type="text"
-                                        className="form-control"
-                                        name="neighborhood"
-                                        id="neighborhood"
-                                        placeholder="Bairro"
-                                        value={this.state.neighborhood}
-                                        onChange={this.onChangeNeighborhood}
-                                        validations={[required]}
-                                        maxLength="25"
-                                      />
-                                    </div>
-                                  </Col>
-                                  <Col md="4">
-                                    <div className="mb-3">
-                                      <Label className="form-label" for="state">
-                                        Estado{" "}
-                                        <span className="text-danger">*</span>
-                                      </Label>
-                                      <Input
-                                        type="text"
-                                        className="form-control"
-                                        name="state"
-                                        id="state"
-                                        placeholder="Estado"
-                                        value={this.state.state}
-                                        onChange={this.onChangeState}
-                                        validations={[required]}
-                                        maxLength="20"
-                                      />
-                                    </div>
-                                  </Col>
-                                  <Col md="8">
-                                    <div className="mb-3">
-                                      <Label className="form-label" for="city">
-                                        Cidade{" "}
-                                        <span className="text-danger">*</span>
-                                      </Label>
-                                      <Input
-                                        type="text"
-                                        className="form-control"
-                                        name="city"
-                                        id="city"
-                                        placeholder="Cidade"
-                                        value={this.state.city}
-                                        onChange={this.onChangeCity}
-                                        validations={[required]}
-                                        maxLength="20"
-                                      />
-                                    </div>
-                                  </Col>
-                                  <div className="d-grid">
-                                    <Button color="primary ">
-                                      Próximo
-                                    </Button>
-                                  </div>
-                                </>
-                              ) : (null)}
-                            </Row>
-                            {this.state.message && (
-                              <div className="form-group">
-                                <div className={
-                                  this.state.successful
-                                    ? "alert alert-success mt-2"
-                                    : "alert alert-danger mt-2"
-                                }
-                                  role="alert"
-                                >
-                                  {this.state.message}
-                                </div>
-                              </div>
-                            )}
-                            <CheckButton
-                              style={{ display: "none" }}
-                              ref={c => {
-                                this.checkBtn = c;
-                              }}
-                            />
-                          </Form>
-                        ) : (null)}
-
                         {/* //////////////////////// */}
                         {this.state.register_plano ? (
                           <Form
@@ -1089,7 +634,7 @@ export default class PageCoverSignup extends Component {
                               {this.state.passo4 ? (
                                 <>
                                   <div className="etapas-registro">
-                                    <p className="etapa">Passo 4 de 5</p>
+                                    {/* <p className="etapa">Passo 4 de 5</p> */}
                                     <p className="etapa-title" >Escolha seu Plano</p>
                                   </div>
                                   <Col md="12">
@@ -1347,13 +892,8 @@ export default class PageCoverSignup extends Component {
                                     </div>
                                   </Col>
                                   <div className="d-grid">
-                                    <Button 
-                                    color="primary"
-                                    disabled={this.state.loading}>
-                                       {this.state.loading && (
-                                      <span className="spinner-border spinner-border-sm"></span>
-                                    )}
-                                    <span>Próximo</span>  
+                                    <Button color="primary">
+                                      Próximo
                                     </Button>
                                   </div>
                                 </div>

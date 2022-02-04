@@ -86,8 +86,9 @@ class PageCoverLogin extends Component {
 
   onChangeUsername(e) {
     this.setState({
-      login: e.target.value
+      login: e.target.value.toLowerCase()
     });
+    console.log(this.state.login);
   }
 
   onChangePassword(e) {
@@ -109,16 +110,21 @@ class PageCoverLogin extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.login(this.state.login, this.state.password).then(
         (user) => {
-          // const hasProfile = user.data.has_profile
+          const hasProfile = user.data.has_profile
           const hasCard = user.data.has_card
           const hasSubs = user.data.has_subs
-          
+          const accessUntil = user.data.access_until
+          const todayDate = Date.now()
+          const today = new Date(todayDate);
+          const accessFormat = new Date(accessUntil)
+
           if (hasCard && hasSubs) {
-            console.log("REDIRECT TO PROFILE (Login)")
+            this.props.history.push("/perfil");
+            window.location.reload();
+          } else if (hasProfile && accessFormat > today) {
             this.props.history.push("/perfil");
             window.location.reload();
           } else {
-            console.log("REDIRECT TO REGISTRO (Login)")
             this.props.history.push("/registro");
             window.location.reload();
           }
