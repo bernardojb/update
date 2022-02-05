@@ -522,10 +522,13 @@ class PageProfile extends Component {
                           >
                             <h3 className="title mb-2"> {profile.full_name} </h3>
                             <p>{plano != null && plano.name ? `Plano ${plano.name.charAt(0).toUpperCase()}${plano.name.slice(1)}` : "Nenhum plano cadastrado"}</p>
-                            {user != null && user.data.access_until ?
+                            {user != null && user.data.access_until != null && user.data.access_until > new Date(Date.now()) ?
                               <p>Assinatura válida até: <span className="text-primary">{`${this.lepDay(user.data.access_until.getDate())}/${this.lepMonth(user.data.access_until.getMonth())}/${user.data.access_until.getFullYear()}`}</span></p>
-                              : null
+                              : 
+                              <p>Assinatura válida até: <span className="spinner-border spinner-border-sm"/></p>
                             }
+                            {console.log("USER DATE NOW", new Date(Date.now()))}
+                            {console.log("ACCESS UNTIL NOW", user.data.access_until)}
                           </Col>
                         </Row>
                       </Col>

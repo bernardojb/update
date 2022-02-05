@@ -220,10 +220,10 @@ export default class PageCoverSignup extends Component {
       //Cupom
       code: "",
       //Plano
-      identifier: "anual",
+      identifier: null,
       plano_month: "",
       plano_half: "",
-      plano_year: "active",
+      plano_year: "",
       plano_price: "",
       plano_name: "",
       //States
@@ -380,10 +380,6 @@ export default class PageCoverSignup extends Component {
     this.setState({
       code: e.target.value
     });
-
-    if (this.state.code.value != "") {
-      console.log("COM CUPOM");
-    }
   }
 
   ////////////////////////////////////////Handles
@@ -408,6 +404,7 @@ export default class PageCoverSignup extends Component {
     this.setState({
       message: "",
       register: true,
+      loading: true
     });
 
     this.form.validateAll();
@@ -439,20 +436,24 @@ export default class PageCoverSignup extends Component {
           // window.location.reload();
         },
         error => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
             error.message ||
             error.toString();
 
-          // this.setState({
-          //   register: true,
-          //   message: resMessage,
-          // });
-          window.location.reload()
+          if (error.message === "Request failed with status code 422") {
+            this.setState({
+              message: "Este email já está cadastrado.",
+              loading: false
+            })
+          }
         }
       );
+    } else {
+      this.setState({
+        loading: false
+      })
     }
   }
 
@@ -461,11 +462,10 @@ export default class PageCoverSignup extends Component {
 
     authService.getCurrentUser()
 
-    // this.setState({
-    //   message: "",
-    //   register: false,
-    //   register_profile: true
-    // });
+    this.setState({
+      message: "",
+      loading: true
+    });
 
     this.form.validateAll();
 
@@ -489,26 +489,32 @@ export default class PageCoverSignup extends Component {
           this.setState({
             message: response.data.message,
             register_profile: false,
-            register_plano: true
+            register_plano: true,
+            loading: false
           });
         },
         error => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
             error.message ||
             error.toString();
 
-          this.setState({
-            message: resMessage,
-            register: false,
-            register_profile: true,
-            register_plano: false
-          });
-          // window.location.reload();
+          if (error.message === "Request failed with status code 422") {
+            this.setState({
+              passo2: true,
+              passo3: false,
+              message: "Este CPF já está sendo usado por outra conta.",
+              register: false,
+              loading: false
+            })
+          }
         }
       );
+    } else {
+      this.setState({
+        loading: false
+      })
     }
   }
 
@@ -522,7 +528,7 @@ export default class PageCoverSignup extends Component {
       loading: true
     });
 
-    this.form.validateAll();    
+    this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
       authService.registerCard(
@@ -552,7 +558,7 @@ export default class PageCoverSignup extends Component {
             )
           }
           await authService.getUpdatedUser();
-          
+
           this.props.history.push("/perfil")
         },
         error => {
@@ -590,6 +596,7 @@ export default class PageCoverSignup extends Component {
           toast.success("Cupom válido!", {
             autoClose: 2000,
           })
+          authService.getCupom(this.state.code)
           setTimeout(() => {
             console.log(response, response.data, response.message, response.error)
             this.setState({
@@ -597,30 +604,17 @@ export default class PageCoverSignup extends Component {
               passo4: false,
               passo5: true
             })
-            // window.location.reload();
           }, 2000);
         }
       ).catch(
         error => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-
-          // this.setState({
-          //   message: resMessage,
-          // });
+          console.log("ERROR CUPOM", error);
           toast.error("Cupom inválido!", {
             autoClose: 2000,
           })
           setTimeout(() => {
-            // this.setState({
-            //     message: resMessage,
-            // })
             window.location.reload();
-          }, 2000);
+          }, 2000)
         }
       );
     } else {
@@ -634,11 +628,11 @@ export default class PageCoverSignup extends Component {
   componentDidMount() {
 
     const user = JSON.parse(localStorage.getItem('user'))
+
     if (user) {
       if (user.data.has_card && user.data.has_subs) {
-        console.log(">>>>> HAS CARD + HAS SUBS")
+        this.props.history.push("/perfil");
       } else if (user.data.has_profile) {
-        console.log(">>>>> HAS ONLY PROFILE")
         this.setState({
           register: false,
           register_profile: false,
@@ -661,6 +655,8 @@ export default class PageCoverSignup extends Component {
   }
 
   render() {
+    const cupom = JSON.parse(localStorage.getItem('cupom'))
+
     return (
       <React.Fragment>
         <Helmet>
@@ -763,7 +759,13 @@ export default class PageCoverSignup extends Component {
                               </Col>
                               <>
                                 <div className="d-grid">
-                                  <Button color="primary">
+                                  <Button
+                                    color="primary"
+                                    disabled={this.state.loading}
+                                  >
+                                    {this.state.loading && (
+                                      <span className="spinner-border spinner-border-sm"></span>
+                                    )}
                                     Criar conta
                                   </Button>
                                 </div>
@@ -921,6 +923,9 @@ export default class PageCoverSignup extends Component {
                                       style={{ height: "42px" }}
                                       onClick={() => {
                                         this.handleRequired()
+                                        this.setState({
+                                          message: null
+                                        })
                                       }}>
                                       Próximo
                                     </a>
@@ -1048,7 +1053,13 @@ export default class PageCoverSignup extends Component {
                                     </div>
                                   </Col>
                                   <div className="d-grid">
-                                    <Button color="primary ">
+                                    <Button
+                                      color="primary"
+                                      disabled={this.state.loading}
+                                    >
+                                      {this.state.loading && (
+                                        <span className="spinner-border spinner-border-sm"></span>
+                                      )}
                                       Próximo
                                     </Button>
                                   </div>
@@ -1106,6 +1117,7 @@ export default class PageCoverSignup extends Component {
                                           plano_price: "R$39,90/mês",
                                           plano_name: "Anual"
                                         })
+                                        console.log('IDENTIFIER', this.state.identifier);
                                       }}
                                     >
                                       <div className="plano-button-container">
@@ -1134,6 +1146,7 @@ export default class PageCoverSignup extends Component {
                                           plano_price: "R$49,90/mês",
                                           plano_name: "Semestral"
                                         })
+                                        console.log('IDENTIFIER', this.state.identifier);
                                       }}
                                     >
                                       <div className="plano-button-container">
@@ -1163,6 +1176,7 @@ export default class PageCoverSignup extends Component {
                                           plano_price: "R$59,90/mês",
                                           plano_name: "Mensal"
                                         })
+                                        console.log('IDENTIFIER', this.state.identifier);
                                       }}
                                     >
                                       <div className="plano-button-container">
@@ -1191,9 +1205,6 @@ export default class PageCoverSignup extends Component {
                                         value={this.state.code}
                                         onChange={this.onChangeCoupon}
                                       />
-                                      {/* <a onClick={this.handleCouponCheck} style={{ backgroundColor: "white", color: "black" }}>
-                                        check
-                                      </a> */}
                                     </div>
                                   </Col>
                                   <a className="btn-primary d-flex justify-content-center align-items-center"
@@ -1322,10 +1333,14 @@ export default class PageCoverSignup extends Component {
                                     </div>
                                   </Col>
                                   <Col md="12">
-                                    <div className="selected-plano mb-4">
+                                    <div className="selected-plano mb-4 py-2">
                                       <div className="selected-plano-container">
                                         <p className="selected-plano-title">{this.state.plano_name}</p>
                                         <p className="selected-plano-price">{this.state.plano_price}</p>
+                                        {cupom != null ?
+                                          (<p className="selected-plano-title pb-0">
+                                            Cupom: <span className="selected-plano-title text-primary">{cupom.data.coupon_code}</span><span className="selected-plano-title text-primary ">{cupom.data != null && cupom.data.percentage ? `(${cupom.data.price_cents}%)` : `(R$${cupom.data.price_cents})`}</span>
+                                          </p>) : null}
                                       </div>
                                       <div className="selected-plano-price">
                                         <a className="text-primary" onClick={() => {
@@ -1347,13 +1362,13 @@ export default class PageCoverSignup extends Component {
                                     </div>
                                   </Col>
                                   <div className="d-grid">
-                                    <Button 
-                                    color="primary"
-                                    disabled={this.state.loading}>
-                                       {this.state.loading && (
-                                      <span className="spinner-border spinner-border-sm"></span>
-                                    )}
-                                    <span>Próximo</span>  
+                                    <Button
+                                      color="primary"
+                                      disabled={this.state.loading}>
+                                      {this.state.loading && (
+                                        <span className="spinner-border spinner-border-sm"></span>
+                                      )}
+                                      <span>Próximo</span>
                                     </Button>
                                   </div>
                                 </div>

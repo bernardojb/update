@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, Redirect} from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import {
   Container,
   Row,
@@ -469,7 +469,7 @@ class PagePayments extends Component {
                       <p className="text-muted">
                         {plano != null && plano.value_cents ? `R$${parseInt(plano.value_cents) / 100}0` : '-'}
                       </p>
-                      <Link to="/registro" className="btn btn-primary">Alterar Plano</Link>
+                      <Link to="/registrar-novo-plano" className="btn btn-primary">Alterar Plano</Link>
                     </Col>
                     <Col sm={6}>
                       <p style={{ fontSize: "21px", fontWeight: "600" }}>Assinatura válida até</p>

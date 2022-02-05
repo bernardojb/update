@@ -130,18 +130,18 @@ class PageCoverLogin extends Component {
           }
         },
         error => {
-          const resMessage =
             (error.response &&
               error.response.data &&
               error.response.data.message) ||
             error.message ||
             error.toString();
 
-          // this.props.history.push("/registro");
-          this.setState({
-            loading: false,
-            message: resMessage
-          });
+          if (error.message === "Request failed with status code 422") {
+            this.setState({
+              message: "Esta conta não existe. Faça o registro e tente novamente.",
+              loading: false,
+            })
+          }
         }
       );
     } else {

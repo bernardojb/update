@@ -31,6 +31,7 @@ class AuthService {
     localStorage.removeItem("userId");
     localStorage.removeItem("Cards");
     localStorage.removeItem("plan");
+    localStorage.removeItem("cupom");
   }
 
   register(email, password, confirmPassword) {
@@ -178,6 +179,30 @@ class AuthService {
       });
   }
 
+  updatePlano(
+    identifier
+  ) {
+    return axios.put(API_URL + "subscription", {
+      identifier
+    },
+      {
+        headers: authHeader()
+      });
+  }
+
+  updatePlanoCoupon(
+    identifier,
+    code
+  ) {
+    return axios.put(API_URL + "subscription/coupon", {
+      identifier,
+      code
+    },
+      {
+        headers: authHeader()
+      });
+  }
+
   getCurrentUser() {
     return JSON.parse(localStorage.getItem('user'));
   }
@@ -271,16 +296,16 @@ class AuthService {
     )
   }
 
-  updateCupom() {
-    axios.get(API_URL + 'cupom', { headers: authHeader() })
+  getCupom(code) {
+    axios.get(API_URL + `coupon/${code}`, { headers: authHeader() })
       .then((response) => {
-        console.log("PROFILEEEEEEEEEEE", response.data);
-        localStorage.setItem('profile', JSON.stringify(response.data))
+        console.log("auth CUPOM", response.data);
+        localStorage.setItem('cupom', JSON.stringify(response.data))
       })
       .catch((err) => {
-        console.log("PROFILEEEEEEEEEEE error", err);
+        console.log("authCUPOM error", err);
         return err
-      })
+      })      
   }
 
   forgotPassword(email) {
@@ -403,7 +428,7 @@ class AuthService {
   }
 
   getUpdatedUser() {
-    const user = JSON.parse(localStorage.getItem('user')) 
+    const user = JSON.parse(localStorage.getItem('user'))
 
     if (user) {
       return axios.get(API_URL + 'user', { headers: authHeader() })

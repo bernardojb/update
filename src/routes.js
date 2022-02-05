@@ -39,6 +39,10 @@ const PageCoverSignup = React.lazy(() =>
 const PageUpdateCard = React.lazy(() =>
   import("./pages/Pages/AuthPages/PageUpdateCard")
 );
+const PageCoverNewSub = React.lazy(() =>
+  import("./pages/Pages/AuthPages/PageCoverNewSub")
+);
+
 const PageSignupThree = React.lazy(() =>
   import("./pages/Pages/AuthPages/PageSignupThree")
 );
@@ -362,6 +366,11 @@ const routes = [
   {
     path: "/update-card",
     component: PageUpdateCard,
+    isWithoutLayout: true,
+  },
+  {
+    path: "/registrar-novo-plano",
+    component: PageCoverNewSub,
     isWithoutLayout: true,
   },
   {
