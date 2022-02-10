@@ -268,7 +268,7 @@ class PageCoverLogin extends Component {
                                   </div>
                                   <p className="forgot-pass mb-0">
                                     <Link
-                                      to="auth-cover-re-password"
+                                      to="/esqueci-minha-senha"
                                       className="text-dark fw-bold"
                                     >
                                       Esqueci minha senha

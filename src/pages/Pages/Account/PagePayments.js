@@ -10,7 +10,8 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Button
+  Button,
+  Tooltip
 } from "reactstrap";
 
 //Import Icons
@@ -49,14 +50,19 @@ class PagePayments extends Component {
     super(props);
 
     this.state = {
+      message: "",
+      loading: false,
+      //
       profile: {},
       plano: {},
       sub: {},
       cards: [],
       fatura: [],
       cardIndex: null,
-      message: "",
+      //Modal - Tooltip
       modal: {},
+      tooltipOpen: false,
+      //Hidratação
       conta: [
         {
           id: 1,
@@ -129,25 +135,19 @@ class PagePayments extends Component {
         }
       ],
     };
+
     this.togglemodal.bind(this);
   }
 
   togglemodal = (id) => {
-
     const obj = {
       ...this.state,
       modal: {
         ...this.state.modal,
       },
     };
-
-    // console.log(obj)
-
     obj.modal[id] = !obj.modal[id]
-
     this.setState(obj);
-
-    // console.log("MODAL IS:", this.state.modal)
   };
 
   handleCancelSub() {
@@ -188,7 +188,6 @@ class PagePayments extends Component {
       })
     })
 
-
     authService.getSub().then(data => {
       data.data.data.expiresAt = new Date(data.data.data.expiresAt)
       this.setState({
@@ -214,9 +213,18 @@ class PagePayments extends Component {
       if (cards.length > 0)
         creditCardArr = cards.map((card, index) => (
           <Col md={6} className={`mt-4 pt-2 mb-5 p-relative`} key={index} >
-            <a className={`social-media-icons selected-default-icon ${card.paymentMethodId === data.data.deafultPayment ? ("selected-default-card") : ("")}`} style={{ zIndex: "2" }}
+            <Tooltip placement="right" isOpen={this.state.tooltipOpen} target="TooltipExample" toggle={this.toggle} style={{background:"red"}}>
+              Hello world!
+            </Tooltip>
+            <a
+              className={`social-media-icons selected-default-icon ${card.paymentMethodId === data.data.deafultPayment ? ("selected-default-card") : ("")}`}
+              style={{ zIndex: "2" }}
+              id="TooltipExample"
               onClick={() => {
-                // console.log("paymentMethodId", card.paymentMethodId);
+                this.setState({
+                  loading: true,
+                  message: ""
+                })
                 authService.setDefaultCard(card).then(
                   response => {
                     toast.success("Cartão principal alterado com sucesso!", {
@@ -235,9 +243,7 @@ class PagePayments extends Component {
                   }
                 )
               }}>
-              <FeatherIcon
-                icon="check-square"
-                className="fea icon-sm" />
+              <FeatherIcon icon="check-square" className="fea icon-sm" />
             </a>
             <a className="social-media-icons delete-card" style={{ zIndex: "2" }}
               onClick={() => {
@@ -310,7 +316,7 @@ class PagePayments extends Component {
   }
 
   lepDay(day) {
-    return `${day < 10 ? `0${day}` : day + 1}`
+    return `${day < 10 ? `0${day}` : day}`
   }
 
   render() {
@@ -732,10 +738,12 @@ class PagePayments extends Component {
                                                   </Col>
                                                   <Col lg={3} className="d-flex flex-row" style={{ margin: "8px 0" }}>
                                                     <span className="detalhes-mobile me-1">Cupom - </span>
-                                                    {invoice.items.find((ele) => ele.price_cents < 0) ?
+                                                    {invoice.items.length > 1 ?
+                                                      // <span>{`${invoice.items.find((ele) => ele.price_cents < 0).description.match(/\|([^\|]*)\|?/)}`}</span> :
                                                       <span>{`${invoice.items.find((ele) => ele.price_cents < 0).description}`}</span> :
                                                       "Sem cupom"
                                                     }
+                                                    {console.log("infos invoice  - ", invoice)}
                                                   </Col>
                                                   <Col lg={2} className="d-flex flex-row" style={{ margin: "8px 0" }}>
                                                     <span className="detalhes-mobile me-1">Total - </span>

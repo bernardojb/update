@@ -8,7 +8,10 @@ import {
   CardBody,
   Button,
   Label,
-  Modal
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from "reactstrap";
 
 //Import Icons
@@ -139,8 +142,15 @@ class PageProfile extends Component {
     this.onChangeNewPassword = this.onChangeNewPassword.bind(this);
     this.onChangeConfirmNewPassword = this.onChangeConfirmNewPassword.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this)
+    this.handleDeleteModalOpen = this.handleDeleteModalOpen.bind(this)
+    this.handleDeleteModalClose = this.handleDeleteModalClose.bind(this)
 
     this.state = {
+      modal: false,
+      disabled: true,
+      count: 10,
+      message: "",
+      loading: false,
       profile: {},
       plano: {},
       sub: {},
@@ -227,7 +237,6 @@ class PageProfile extends Component {
       neighborhood: "",
       state: "",
       city: "",
-      message: "",
       //senha
       currentPassword: "",
       newPassword: "",
@@ -319,6 +328,7 @@ class PageProfile extends Component {
 
     this.setState({
       message: "",
+      loading: true
     });
 
     // this.form.validateAll();
@@ -342,6 +352,7 @@ class PageProfile extends Component {
       response => {
         this.setState({
           message: response.data.message,
+          loading: false
         });
         toast.success("Perfil alterado com sucesso!", {
           autoClose: 2000,
@@ -360,6 +371,7 @@ class PageProfile extends Component {
 
         this.setState({
           message: resMessage,
+          loading: false
         });
         toast.error("Tente novamente mais tarde!", {
           autoClose: 2000,
@@ -381,6 +393,32 @@ class PageProfile extends Component {
         window.location.reload()
       })
   }
+
+  handleDeleteModalOpen() {
+    this.setState({
+      ...this.state, modal: true
+    })
+
+    this.myInterval = setInterval(() => {
+      this.setState(prevState => ({
+        count: prevState.count - 1
+      }))
+    }, 1000)
+
+    setTimeout(() => {
+      this.setState({
+        ...this.state, disabled: false
+      })
+    }, 10000)
+  }
+
+  handleDeleteModalClose() {
+    clearInterval(this.myInterval)
+    this.setState({
+      ...this.state, modal: false, disabled: true, count: 10
+    })
+  }
+
 
   handleChangePassword(e) {
     e.preventDefault();
@@ -456,10 +494,15 @@ class PageProfile extends Component {
         })
       })
     })
-  
+
+    //Count
+
     //Header
     document.body.classList = "";
     document.getElementById("topnav").classList.add("nav-sticky");
+  }
+
+  componentWillUnmount() {
   }
 
   lepMonth(month) {
@@ -471,7 +514,7 @@ class PageProfile extends Component {
   }
 
   render() {
-    // const { user } = this.state
+    const { count } = this.state
     const { profile } = this.state
     const { plano } = this.state
     const { sub } = this.state
@@ -524,8 +567,8 @@ class PageProfile extends Component {
                             <p>{plano != null && plano.name ? `Plano ${plano.name.charAt(0).toUpperCase()}${plano.name.slice(1)}` : "Nenhum plano cadastrado"}</p>
                             {user != null && user.data.access_until != null && user.data.access_until > new Date(Date.now()) ?
                               <p>Assinatura válida até: <span className="text-primary">{`${this.lepDay(user.data.access_until.getDate())}/${this.lepMonth(user.data.access_until.getMonth())}/${user.data.access_until.getFullYear()}`}</span></p>
-                              : 
-                              <p>Assinatura válida até: <span className="spinner-border spinner-border-sm"/></p>
+                              :
+                              <p>Assinatura válida até: <span className="spinner-border spinner-border-sm" /></p>
                             }
                             {console.log("USER DATE NOW", new Date(Date.now()))}
                             {console.log("ACCESS UNTIL NOW", user.data.access_until)}
@@ -778,7 +821,13 @@ class PageProfile extends Component {
                       </Row>
                       <Row>
                         <Col sm="12">
-                          <Button color="primary">
+                          <Button
+                            color="primary"
+                            disabled={this.state.loading}
+                          >
+                            {this.state.loading && (
+                              <span className="spinner-border spinner-border-sm"></span>
+                            )}
                             Salvar alterações
                           </Button>
                         </Col>
@@ -847,7 +896,15 @@ class PageProfile extends Component {
                               </div>
                             </Col>
                             <Col lg="12" className="mt-2 mb-0">
-                              <Button color="primary">Salvar Senha</Button>
+                              <Button
+                                color="primary"
+                                disabled={this.state.loading}
+                              >
+                                {this.state.loading && (
+                                  <span className="spinner-border spinner-border-sm"></span>
+                                )}
+                                Salvar Senha
+                              </Button>
                             </Col>
                           </Row>
                           <CheckButton
@@ -871,9 +928,51 @@ class PageProfile extends Component {
                       Você deseja excluir essa conta? Atenção: Essa opção é irreversível
                     </p>
                     <div className="mt-4">
-                      <button className="btn btn-danger" onClick={this.handleDeleteUser}>Excluir Conta</button>
+                      <button className="btn btn-danger"
+                        onClick={this.handleDeleteModalOpen}
+                      >
+                        Excluir Conta</button>
                     </div>
                   </div>
+                  <Modal
+                    isOpen={this.state.modal}
+                    toggle={this.handleDeleteModalClose}
+                    modalTransition={{ timeout: 500 }}
+                    centered
+                  >
+                    <ModalHeader>
+                      <h1>Excluir conta</h1>
+                    </ModalHeader>
+                    <ModalBody>
+                      Você tem certeza que deseja excluir essa conta?
+                      <br />
+                      <br />
+                      <div style={{ backgroundColor: '#e91e361a', display:'flex', flexDirection:'column', padding:'20px', borderRadius:'15px' }}>
+                        <FeatherIcon
+                          icon='alert-triangle'
+                          className="fea"
+                          color='#e91e35' />
+                        <span style={{ color: '#e91e35' }}>Atenção!</span>
+                        <br/>
+                        <span style={{ color: '#e91e35' }}>
+                          Esta opção é irreversível e todos os dados desta conta serão perdidos.
+                        </span>
+
+                      </div>
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button
+                        onClick={this.handleDeleteModalClose}>
+                        Cancelar
+                      </Button>
+                      <Button
+                        className="btn-danger"
+                        disabled={this.state.disabled}
+                        onClick={this.handleDeleteUser}>
+                        {count > 0 ? (`${count}`) : ('Deletar')}
+                      </Button>
+                    </ModalFooter>
+                  </Modal>
                 </div>
               </Col>
             </Row>

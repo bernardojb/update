@@ -375,14 +375,14 @@ export default class PageCoverSignup extends Component {
     console.log("IDENTIFIER", this.state.identifier)
   }
 
-  //Cupom
+  /////////////////Cupom
   onChangeCoupon(e) {
     this.setState({
       code: e.target.value
     });
   }
 
-  ////////////////////////////////////////Handles
+  /////////////////Handles
 
   handleRequired() {
     this.form.validateAll()
@@ -420,6 +420,7 @@ export default class PageCoverSignup extends Component {
             message: response.data.message,
             register: false,
             register_profile: true,
+            loading: false
           });
 
           if (response.data.token) {
@@ -588,7 +589,7 @@ export default class PageCoverSignup extends Component {
 
     this.form.validateAll();
 
-    if (this.state.code != "") {
+    if (this.state.identifier != null && this.state.code != "") {
       authService.checkCoupon(
         this.state.code,
       ).then(
@@ -613,15 +614,25 @@ export default class PageCoverSignup extends Component {
             autoClose: 2000,
           })
           setTimeout(() => {
+            localStorage.removeItem("cupom");
             window.location.reload();
           }, 2000)
         }
       );
-    } else {
+    } else if (this.state.identifier != null) {
+      localStorage.removeItem("cupom");
       this.setState({
         passo4: false,
         passo5: true
       })
+    } else {
+      toast.error("Selecione algum plano", {
+        autoClose: 2000,
+      })
+      setTimeout(() => {
+        localStorage.removeItem("cupom");
+        window.location.reload();
+      }, 2000)
     }
   }
 
@@ -1114,7 +1125,8 @@ export default class PageCoverSignup extends Component {
                                           plano_year: "active",
                                           plano_half: "",
                                           plano_month: "",
-                                          plano_price: "R$39,90/mês",
+                                          // plano_price: "R$39,90/mês",
+                                          plano_price: 39.90,
                                           plano_name: "Anual"
                                         })
                                         console.log('IDENTIFIER', this.state.identifier);
@@ -1143,7 +1155,7 @@ export default class PageCoverSignup extends Component {
                                           plano_year: "",
                                           plano_half: "active",
                                           plano_month: "",
-                                          plano_price: "R$49,90/mês",
+                                          plano_price: 49.90,
                                           plano_name: "Semestral"
                                         })
                                         console.log('IDENTIFIER', this.state.identifier);
@@ -1173,7 +1185,7 @@ export default class PageCoverSignup extends Component {
                                           plano_year: "",
                                           plano_half: "",
                                           plano_month: "active",
-                                          plano_price: "R$59,90/mês",
+                                          plano_price: 59.90,
                                           plano_name: "Mensal"
                                         })
                                         console.log('IDENTIFIER', this.state.identifier);
@@ -1336,10 +1348,16 @@ export default class PageCoverSignup extends Component {
                                     <div className="selected-plano mb-4 py-2">
                                       <div className="selected-plano-container">
                                         <p className="selected-plano-title">{this.state.plano_name}</p>
-                                        <p className="selected-plano-price">{this.state.plano_price}</p>
+                                        {cupom != null ?
+                                          <p className="mb-0">
+                                            {cupom.data != null && cupom.data.percentage ?
+                                              (`R$${(this.state.plano_price * (1 - cupom.data.price_cents / 100)).toFixed(2)}/mês`) :
+                                              (`R$${(this.state.plano_price).toFixed(2)}/mês - R$${(cupom.data.price_cents / 100).toFixed(2)}`)}
+                                          </p> :
+                                          <p className="mb-0">{`R$${(this.state.plano_price).toFixed(2)}`}</p>}
                                         {cupom != null ?
                                           (<p className="selected-plano-title pb-0">
-                                            Cupom: <span className="selected-plano-title text-primary">{cupom.data.coupon_code}</span><span className="selected-plano-title text-primary ">{cupom.data != null && cupom.data.percentage ? `(${cupom.data.price_cents}%)` : `(R$${cupom.data.price_cents})`}</span>
+                                            Cupom: <span className="selected-plano-title text-primary">{cupom.data.coupon_code}</span><span className="selected-plano-title text-primary ">{cupom.data != null && cupom.data.percentage ? ` (${cupom.data.price_cents}%)` : ` (R$${(cupom.data.price_cents / 100).toFixed(2)})`}</span>
                                           </p>) : null}
                                       </div>
                                       <div className="selected-plano-price">

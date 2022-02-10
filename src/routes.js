@@ -385,12 +385,12 @@ const routes = [
     isWithoutLayout: true,
   },
   {
-    path: "/auth-cover-re-password",
+    path: "/esqueci-minha-senha",
     component: PageCoverRePassword,
     isWithoutLayout: true,
   },
   {
-    path: "/forgot/:email",
+    path: "/redefinir-senha/:email",
     component: PageCoverRePasswordRedefine,
     isWithoutLayout: true,
   },
