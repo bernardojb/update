@@ -387,11 +387,24 @@ class PageProfile extends Component {
   handleDeleteUser(e) {
     e.preventDefault();
     authService.deleteUser()
-      .then(() => {
-        authService.logout();
-        this.props.history.push("/");
-        window.location.reload()
-      })
+      .then(response => {
+        toast.success("Conta deletada com sucesso!", {
+          autoClose: 2000,
+        })
+        setTimeout(() => {
+          authService.logout();
+          window.location.replace("http://www.grupoupdate.com.br/")
+        }, 2000);
+      },
+      error => {
+        toast.error("Não foi possível deletar sua conta. Tente novamente mais tarde ou entre em contato.", {
+          autoClose: 4000,
+        })
+        setTimeout(() => {
+          window.location.reload()
+        }, 4000);
+      }
+      )
   }
 
   handleDeleteModalOpen() {
@@ -570,8 +583,8 @@ class PageProfile extends Component {
                               :
                               <p>Assinatura válida até: <span className="spinner-border spinner-border-sm" /></p>
                             }
-                            {console.log("USER DATE NOW", new Date(Date.now()))}
-                            {console.log("ACCESS UNTIL NOW", user.data.access_until)}
+                            {/* {console.log("USER DATE NOW", new Date(Date.now()))}
+                            {console.log("ACCESS UNTIL NOW", user.data.access_until)} */}
                           </Col>
                         </Row>
                       </Col>
@@ -944,16 +957,16 @@ class PageProfile extends Component {
                       <h1>Excluir conta</h1>
                     </ModalHeader>
                     <ModalBody>
-                      Você tem certeza que deseja excluir essa conta?
-                      <br />
-                      <br />
-                      <div style={{ backgroundColor: '#e91e361a', display:'flex', flexDirection:'column', padding:'20px', borderRadius:'15px' }}>
+                      <span className="pb-3">
+                        Você tem certeza que deseja excluir essa conta?
+                      </span>
+                    
+                      <div style={{ backgroundColor: '#e91e361a', display: 'flex', flexDirection: 'column', padding: '20px', borderRadius: '15px', marginTop:'20px' }}>
                         <FeatherIcon
                           icon='alert-triangle'
-                          className="fea"
+                          className="fea mb-2"
                           color='#e91e35' />
-                        <span style={{ color: '#e91e35' }}>Atenção!</span>
-                        <br/>
+                        <span className="mb-3" style={{ color: '#e91e35' }}>Atenção!</span>
                         <span style={{ color: '#e91e35' }}>
                           Esta opção é irreversível e todos os dados desta conta serão perdidos.
                         </span>
@@ -963,13 +976,13 @@ class PageProfile extends Component {
                     <ModalFooter>
                       <Button
                         onClick={this.handleDeleteModalClose}>
-                        Cancelar
+                        Voltar
                       </Button>
                       <Button
                         className="btn-danger"
                         disabled={this.state.disabled}
                         onClick={this.handleDeleteUser}>
-                        {count > 0 ? (`${count}`) : ('Deletar')}
+                        {count > 0 ? (`${count}`) : ('Deletar Conta')}
                       </Button>
                     </ModalFooter>
                   </Modal>

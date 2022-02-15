@@ -279,7 +279,6 @@ class AuthService {
           return data
         })
         .catch((err) => {
-          console.log(">>> ERROR ", err);
           rej(err)
           return err
         })
@@ -316,11 +315,11 @@ class AuthService {
   }
 
   forgotPasswordRedefine(email, signature, password, confirmPassword) {
-    return axios.post(API_URL + `Profile/forgot/${email}?signature=${signature}`, {
+    // return axios.post(API_URL + `Profile/forgot/${email}?signature=${signature}`, {
+    return axios.post(API_URL + `Profile/forgot${email}?signature=${signature}`, {
       password,
       confirmPassword
-    }
-    );
+    });
   }
 
   cancelSub() {
@@ -341,16 +340,17 @@ class AuthService {
   }
 
   deleteUser() {
-    axios.get(API_URL + 'user', { headers: authHeader() })
-      .then((data) => {
-        console.log("PROFILEEEEEEEEEEE", data.data);
-        localStorage.setItem('userId', JSON.stringify(data.data))
-      })
-      .catch((err) => {
-        console.log("PROFILEEEEEEEEEEE error", err);
-        return err
-      })
-    const userId = JSON.parse(localStorage.getItem('userId'))
+    // axios.get(API_URL + 'user', { headers: authHeader() })
+    //   .then((data) => {
+    //     // localStorage.setItem('userId', JSON.stringify(data.data))
+    //     console.log(data.data);
+    //   })
+    //   .catch((err) => {
+    //     return err
+    //   })
+
+    const userId = JSON.parse(localStorage.getItem('getUser'))
+    console.log('USER IDDDDDD', userId.id);
     return axios.delete(API_URL + `user/${userId.id}`,
       {
         headers: authHeader()
@@ -452,7 +452,8 @@ class AuthService {
                 has_profile: getUser.has_profile,
                 has_subs: getUser.has_subs,
                 has_card: getUser.has_card,
-                access_until: getUser.has_access_until
+                access_until: getUser.has_access_until,
+                'id': getUser.id
               }
             }));
           } else {

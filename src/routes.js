@@ -364,7 +364,7 @@ const routes = [
     isWithoutLayout: true,
   },
   {
-    path: "/update-card",
+    path: "/adicionar-cartao",
     component: PageUpdateCard,
     isWithoutLayout: true,
   },

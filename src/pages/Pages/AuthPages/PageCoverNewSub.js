@@ -72,6 +72,178 @@ export default class PageCoverSignup extends Component {
 
   ////////////////////////////////////////Handles
   handleCouponCheck(e) {
+    const user = JSON.parse(localStorage.getItem('user'))
+
+    // if (user.data.has_subs && this.state.code != "") {
+    //   // alert('has subs + has cupom')
+    //   authService.checkCoupon(
+    //     this.state.code,
+    //   ).then(
+    //     response => {
+    //       toast.success("Cupom válido!", {
+    //         autoClose: 2000,
+    //       })
+    //       authService.updatePlanoCoupon(
+    //         this.state.identifier,
+    //         this.state.code
+    //       ).then(
+    //         response => {
+    //           console.log('RESPONSE PLANO CUPOM', response);
+    //           toast.success("Atualização de plano concluída com sucesso!", {
+    //             autoClose: 2000,
+    //           })
+    //           setTimeout(() => {
+    //             this.props.history.push("/perfil")
+    //           }, 2000);
+    //         },
+    //         error => {
+    //           console.log('ERROR PLANO CUPOM', error);
+    //           this.setState({
+    //             // message: error.data.message,
+    //             loading: false
+    //           })
+    //           toast.error("Não foi possível atualizar o plano, tente novamente mais tarde!", {
+    //             autoClose: 2000,
+    //           })
+    //           setTimeout(() => {
+    //             this.props.history.push("/perfil")
+    //           }, 2000);
+    //         }
+    //       )
+    //     },
+    //     error => {
+    //       const resMessage =
+    //         (error.response &&
+    //           error.response.data &&
+    //           error.response.data.message) ||
+    //         error.message ||
+    //         error.toString();
+
+    //       toast.error("Cupom inválido!", {
+    //         autoClose: 2000,
+    //       })
+    //       setTimeout(() => {
+    //         window.location.reload();
+    //       }, 2000);
+    //     }
+    //   );
+    // } else if (user.data.has_subs && this.state.code === "") {
+    //   // alert('has subs + no cupom')
+    //   authService.updatePlano(
+    //     this.state.identifier
+    //   ).then(
+    //     response => {
+    //       toast.success("Atualização de plano concluída com sucesso!", {
+    //         autoClose: 2000,
+    //       })
+    //       setTimeout(() => {
+    //         this.props.history.push("/perfil")
+    //       }, 2000);
+    //       // console.log('RESPONSE PLANO', response);
+    //     },
+    //     error => {
+    //       console.log('ERROR PLANO', error);
+    //       const resMessage =
+    //         (error.response &&
+    //           error.response.data &&
+    //           error.response.data.message) ||
+    //         error.message ||
+    //         error.toString();
+
+    //       if (error.message === "Request failed with status code 422") {
+    //         this.setState({
+    //           message: "Selecione um novo plano!",
+    //           loading: false
+    //         });
+    //       }
+    //     }
+    //   )
+    // } else if (user.data.has_subs === false && this.state.code != "") {
+    //   // alert('no subs + has cupom')
+
+    //   authService.checkCoupon(
+    //     this.state.code,
+    //   ).then(
+    //     response => {
+    //       toast.success("Cupom válido!", {
+    //         autoClose: 2000,
+    //       })
+
+    //       authService.registerPlanoCoupon(
+    //         this.state.identifier,
+    //         this.state.code
+    //       ).then(
+    //         response => {
+    //           // console.log('RESPONSE PLANO CUPOM', response);
+    //           toast.success("Atualização de plano concluída com sucesso!", {
+    //             autoClose: 2000,
+    //           })
+    //           setTimeout(() => {
+    //             this.props.history.push("/perfil")
+    //           }, 2000);
+    //         },
+    //         error => {
+    //           // console.log('ERROR PLANO CUPOM', error);
+    //           toast.error("Não foi possível atualizar o plano, tente novamente mais tarde!", {
+    //             autoClose: 2000,
+    //           })
+    //           this.setState({
+    //             message: error.data.message,
+    //             loading: false
+    //           })
+    //           setTimeout(() => {
+    //             this.props.history.push("/perfil")
+    //           }, 2000);
+    //         }
+    //       )
+    //     },
+    //     error => {
+    //       const resMessage =
+    //         (error.response &&
+    //           error.response.data &&
+    //           error.response.data.message) ||
+    //         error.message ||
+    //         error.toString();
+
+    //       toast.error("Cupom inválido!", {
+    //         autoClose: 2000,
+    //       })
+    //       setTimeout(() => {
+    //         window.location.reload();
+    //       }, 2000);
+    //     }
+    //   );
+    // } else if (user.data.has_subs === false && this.state.code === "") {
+    //   // alert('no subs + no cupom')
+    //   authService.registerPlano(
+    //     this.state.identifier
+    //   ).then(
+    //     response => {
+    //       toast.success("Atualização de plano concluída com sucesso!", {
+    //         autoClose: 2000,
+    //       })
+    //       setTimeout(() => {
+    //         this.props.history.push("/perfil")
+    //       }, 2000);
+    //     },
+    //     error => {
+    //       console.log('ERROR PLANO', error);
+    //       const resMessage =
+    //         (error.response &&
+    //           error.response.data &&
+    //           error.response.data.message) ||
+    //         error.message ||
+    //         error.toString();
+
+    //       if (error.message === "Request failed with status code 422") {
+    //         this.setState({
+    //           message: "Selecione um novo plano!",
+    //           loading: false
+    //         });
+    //       }
+    //     }
+    //   )
+    // }
 
     e.preventDefault();
 
@@ -100,8 +272,15 @@ export default class PageCoverSignup extends Component {
             },
             error => {
               console.log('ERROR PLANO CUPOM', error);
+              const resMessage =
+              (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+              error.message ||
+              error.toString();
+
               this.setState({
-                message: error.data.message,
+                message: resMessage,
                 loading: false
               })
             }
@@ -114,6 +293,11 @@ export default class PageCoverSignup extends Component {
               error.response.data.message) ||
             error.message ||
             error.toString();
+
+            this.setState({
+              message: resMessage,
+              loading: false
+            })
 
           toast.error("Cupom inválido!", {
             autoClose: 2000,
@@ -151,12 +335,19 @@ export default class PageCoverSignup extends Component {
     }
   }
 
+  componentDidMount() {
+    authService.getUpdatedUser()
+    const user = JSON.parse(localStorage.getItem('user'))
+    console.log("USER", user.data);
+
+  }
+
   render() {
     const user = JSON.parse(localStorage.getItem('user'))
     if (!user) return (
       <Redirect to={'/login'}></Redirect>
     )
-    
+
     return (
       <React.Fragment>
         <Helmet>

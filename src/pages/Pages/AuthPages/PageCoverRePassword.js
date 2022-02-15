@@ -22,6 +22,7 @@ import FeatherIcon from "feather-icons-react";
 // import images
 import user03 from "../../../assets/images/user/03.jpg";
 
+//teste
 class PageCoverRePassword extends Component {
 
   constructor(props) {

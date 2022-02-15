@@ -49,6 +49,9 @@ class PagePayments extends Component {
   constructor(props) {
     super(props);
 
+    this.handleCancelSubModalOpen = this.handleCancelSubModalOpen.bind(this)
+    this.handleCancelSubModalClose = this.handleCancelSubModalClose.bind(this)
+
     this.state = {
       message: "",
       loading: false,
@@ -61,6 +64,9 @@ class PagePayments extends Component {
       cardIndex: null,
       //Modal - Tooltip
       modal: {},
+      subModal: false,
+      disabled: true,
+      count: 10,
       tooltipOpen: false,
       //Hidratação
       conta: [
@@ -150,6 +156,31 @@ class PagePayments extends Component {
     this.setState(obj);
   };
 
+  handleCancelSubModalOpen() {
+    this.setState({
+      ...this.state, subModal: true
+    })
+
+    this.myInterval = setInterval(() => {
+      this.setState(prevState => ({
+        count: prevState.count - 1
+      }))
+    }, 1000)
+
+    setTimeout(() => {
+      this.setState({
+        ...this.state, disabled: false
+      })
+    }, 10000)
+  }
+
+  handleCancelSubModalClose() {
+    clearInterval(this.myInterval)
+    this.setState({
+      ...this.state, subModal: false, disabled: true, count: 10
+    })
+  }
+
   handleCancelSub() {
     authService.cancelSub().then(
       response => {
@@ -213,9 +244,6 @@ class PagePayments extends Component {
       if (cards.length > 0)
         creditCardArr = cards.map((card, index) => (
           <Col md={6} className={`mt-4 pt-2 mb-5 p-relative`} key={index} >
-            <Tooltip placement="right" isOpen={this.state.tooltipOpen} target="TooltipExample" toggle={this.toggle} style={{background:"red"}}>
-              Hello world!
-            </Tooltip>
             <a
               className={`social-media-icons selected-default-icon ${card.paymentMethodId === data.data.deafultPayment ? ("selected-default-card") : ("")}`}
               style={{ zIndex: "2" }}
@@ -300,7 +328,7 @@ class PagePayments extends Component {
         ...this.state,
         invoice: data.data.inv.items
       })
-      // console.log("invoice", this.state.invoice[0].items)
+      console.log("invoice", this.state.invoice)
     })
 
     document.body.classList = "";
@@ -320,7 +348,7 @@ class PagePayments extends Component {
   }
 
   render() {
-
+    const { count } = this.state
     const { profile } = this.state
     const { plano } = this.state
     const { sub } = this.state
@@ -483,7 +511,46 @@ class PagePayments extends Component {
                         <p>Assinatura válida até: <span className="text-primary">{`${this.lepDay(user.data.access_until.getDate())}/${this.lepMonth(user.data.access_until.getMonth())}/${user.data.access_until.getFullYear()}`}</span></p>
                         : null
                       }
-                      <button className="btn btn-danger" onClick={this.handleCancelSub}>Cancelar Assinatura</button>
+                      <button className="btn btn-danger" onClick={this.handleCancelSubModalOpen}>Cancelar Assinatura</button>
+                      <Modal
+                        isOpen={this.state.subModal}
+                        toggle={this.handleCancelSubModalClose}
+                        modalTransition={{ timeout: 500 }}
+                        centered
+                      >
+                        <ModalHeader>
+                          <h1>Cancelar Assinatura</h1>
+                        </ModalHeader>
+                        <ModalBody>
+                          <span className="pb-3">
+                            Você tem certeza que deseja cancelar sua assinatura?
+                          </span>
+
+                          <div style={{ backgroundColor: '#e91e361a', display: 'flex', flexDirection: 'column', padding: '20px', borderRadius: '15px', marginTop: '20px' }}>
+                            <FeatherIcon
+                              icon='alert-triangle'
+                              className="fea mb-2"
+                              color='#e91e35' />
+                            <span className="mb-3" style={{ color: '#e91e35' }}>Atenção!</span>
+                            <span style={{ color: '#e91e35' }}>
+                            Ao cancelar a assinatura recorrente, você perderá acesso aos serviços <span style={{fontWeight:'bold'}}>UPDATE</span> a partir da data de vencimento do seu plano.
+                            </span>
+
+                          </div>
+                        </ModalBody>
+                        <ModalFooter>
+                          <Button
+                            onClick={this.handleCancelSubModalClose}>
+                            Voltar
+                          </Button>
+                          <Button
+                            className="btn-danger"
+                            disabled={this.state.disabled}
+                            onClick={this.handleCancelSub}>
+                            {count > 0 ? (`${count}`) : ('Cancelar Assinatura')}
+                          </Button>
+                        </ModalFooter>
+                      </Modal>
                     </Col>
                   </Row>
                 </div>
@@ -491,7 +558,7 @@ class PagePayments extends Component {
                   <div className="d-flex align-items-center justify-content-between">
                     <h3 className="mb-0">MEUS CARTÕES</h3>
                     <Link
-                      to="/update-card"
+                      to="/atualizar-cartao"
                       className="btn btn-primary"
                     >
                       Adicionar cartão
@@ -743,7 +810,7 @@ class PagePayments extends Component {
                                                       <span>{`${invoice.items.find((ele) => ele.price_cents < 0).description}`}</span> :
                                                       "Sem cupom"
                                                     }
-                                                    {console.log("infos invoice  - ", invoice)}
+                                                    {/* {console.log("infos invoice  - ", invoice)} */}
                                                   </Col>
                                                   <Col lg={2} className="d-flex flex-row" style={{ margin: "8px 0" }}>
                                                     <span className="detalhes-mobile me-1">Total - </span>

@@ -610,7 +610,7 @@ export default class PageCoverSignup extends Component {
       ).catch(
         error => {
           console.log("ERROR CUPOM", error);
-          toast.error("Cupom inválido!", {
+          toast.error("Cupom expirado ou inválido!", {
             autoClose: 2000,
           })
           setTimeout(() => {
