@@ -316,7 +316,7 @@ class AuthService {
 
   forgotPasswordRedefine(email, signature, password, confirmPassword) {
     // return axios.post(API_URL + `Profile/forgot/${email}?signature=${signature}`, {
-    return axios.post(API_URL + `Profile/forgot${email}?signature=${signature}`, {
+    return axios.post(API_URL + `Profile/forgot/${email}?signature=${signature}`, {
       password,
       confirmPassword
     });
