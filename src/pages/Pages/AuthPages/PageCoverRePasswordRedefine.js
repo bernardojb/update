@@ -32,7 +32,7 @@ class PageCoverRePassword extends Component {
 
     this.state = {
       signature: props.location.search.replace(/\?signature=(.*)/gi, '$1').replace(/&.*/gi, ''),
-      email: props.location.pathname.replace('/forgot/', ''),
+      email: props.location.pathname.replace('/redefinir-senha/', ''),
       password: "",
       confirmPassword: "",
       message: ""
