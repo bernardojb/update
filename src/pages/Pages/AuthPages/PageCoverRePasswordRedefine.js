@@ -71,12 +71,12 @@ class PageCoverRePassword extends Component {
       this.state.confirmPassword,
     ).then(
       response => {
-        this.setState({
-          message: response.data.message,
-        });
         toast.success("Senha redefinida com sucesso!", {
           autoClose: 2000,
         })
+        this.setState({
+          message: response.data.message,
+        });
         setTimeout(() => {
           this.props.history.push("/login");
         }, 2000);

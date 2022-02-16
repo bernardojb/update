@@ -130,9 +130,9 @@ class PageCoverLogin extends Component {
           }
         },
         error => {
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
             error.message ||
             error.toString();
 
@@ -141,7 +141,7 @@ class PageCoverLogin extends Component {
               message: "Esta conta não existe. Faça o registro e tente novamente.",
               loading: false,
             })
-          } else if (error.message === "Request failed with status code 400"){
+          } else if (error.message === "Request failed with status code 400") {
             this.setState({
               message: "As credenciais inseridas estão incorretas.",
               loading: false,
@@ -182,6 +182,17 @@ class PageCoverLogin extends Component {
   render() {
     return (
       <React.Fragment>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <Helmet>
           <meta charSet="utf-8" />
           <title>Login | Update Anestesiologia</title>
