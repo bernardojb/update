@@ -78,7 +78,7 @@ class PageCoverRePassword extends Component {
           autoClose: 2000,
         })
         setTimeout(() => {
-          this.props.history.push("/perfil");
+          this.props.history.push("/login");
         }, 2000);
       },
       error => {
