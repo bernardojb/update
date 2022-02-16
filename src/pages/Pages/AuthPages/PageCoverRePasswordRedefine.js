@@ -106,6 +106,17 @@ class PageCoverRePassword extends Component {
   render() {
     return (
       <React.Fragment>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <div className="back-to-home rounded d-none d-sm-block">
           <Link to="/" className="btn btn-icon btn-primary">
             <i>
