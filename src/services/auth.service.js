@@ -307,6 +307,19 @@ class AuthService {
       })      
   }
 
+  getCupomFaturas(subs_id){
+    axios.get(API_URL + `coupon/from/${subs_id}`, { headers: authHeader() })
+    .then((response) => {
+      console.log("auth CUPOM", response.data);
+      // return response.data
+      localStorage.setItem('cupomInvoice', JSON.stringify(response.data))
+    })
+    .catch((err) => {
+      console.log("authCUPOM error", err);
+      return err
+    })      
+  }
+
   forgotPassword(email) {
     return axios.post(API_URL + "Profile/forgot", {
       email
@@ -435,9 +448,6 @@ class AuthService {
         .then((response) => {
           localStorage.setItem('getUser', JSON.stringify(response.data))
           const getUser = JSON.parse(localStorage.getItem('getUser'))
-          console.log("UPDATED USER", getUser);
-          // const getOldUser = JSON.parse(user)
-          console.log("old USER", user.data);
 
           if (user.data.has_profile != getUser.has_profile ||
             user.data.has_card != getUser.has_card ||
@@ -456,9 +466,7 @@ class AuthService {
                 'id': getUser.id
               }
             }));
-          } else {
-            console.log("ELSE RESPONSE DATA", response.data);
-          }
+          } 
         })
         .catch((err) => {
           console.log("UPDATED error", err);

@@ -141,6 +141,11 @@ class PageCoverLogin extends Component {
               message: "Esta conta não existe. Faça o registro e tente novamente.",
               loading: false,
             })
+          } else if (error.message === "Request failed with status code 400"){
+            this.setState({
+              message: "As credenciais inseridas estão incorretas.",
+              loading: false,
+            })
           }
         }
       );

@@ -42,6 +42,7 @@ import logoUpdate from "../../../assets/images/LogoUpdate.svg";
 
 //Input mask
 import { mask, unMask } from 'remask'
+let invoiceCupom 
 
 let creditCardArr
 
@@ -533,7 +534,7 @@ class PagePayments extends Component {
                               color='#e91e35' />
                             <span className="mb-3" style={{ color: '#e91e35' }}>Atenção!</span>
                             <span style={{ color: '#e91e35' }}>
-                            Ao cancelar a assinatura recorrente, você perderá acesso aos serviços <span style={{fontWeight:'bold'}}>UPDATE</span> a partir da data de vencimento do seu plano.
+                              Ao cancelar a assinatura recorrente, você perderá acesso aos serviços <span style={{ fontWeight: 'bold' }}>UPDATE</span> a partir da data de vencimento do seu plano.
                             </span>
 
                           </div>
@@ -810,7 +811,11 @@ class PagePayments extends Component {
                                                       <span>{`${invoice.items.find((ele) => ele.price_cents < 0).description}`}</span> :
                                                       "Sem cupom"
                                                     }
-                                                    {/* {console.log("infos invoice  - ", invoice)} */}
+                                                    {/* {console.log('invoice subs id', invoice.variables.find((ele) => ele.variable === 'subscription_id').value)} */}
+                                                    {/* {
+                                                    invoiceCupom = authService.getCupomFaturas(invoice.variables.find((ele) => ele.variable === 'subscription_id').value),
+                                                    console.log('INVOOOOOOOOICE', localStorage.getItem('cupomInvoice') )
+                                                    } */}
                                                   </Col>
                                                   <Col lg={2} className="d-flex flex-row" style={{ margin: "8px 0" }}>
                                                     <span className="detalhes-mobile me-1">Total - </span>

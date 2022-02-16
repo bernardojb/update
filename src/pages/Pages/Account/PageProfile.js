@@ -700,7 +700,7 @@ class PageProfile extends Component {
                               id="birthday"
                               type="text"
                               className="form-control ps-2"
-                              placeholder={profile != null && profile.birthday ? (`${this.lepDay(profile.birthday.getDate())}/${this.lepMonth(profile.birthday.getMonth())}/${profile.birthday.getFullYear()}`) : null}
+                              placeholder={profile != null && profile.birthday ? (`${this.lepDay(profile.birthday.getDate()+1)}/${this.lepMonth(profile.birthday.getMonth())}/${profile.birthday.getFullYear()}`) : null}
                               value={this.state.birthday}
                               onChange={this.onChangeBirthday}
                               maxLength="10"
@@ -941,7 +941,7 @@ class PageProfile extends Component {
                       Você deseja excluir essa conta? Atenção: Essa opção é irreversível
                     </p>
                     <div className="mt-4">
-                      <button className="btn btn-danger"
+                      <button className="btn btn-danger" disabled
                         onClick={this.handleDeleteModalOpen}
                       >
                         Excluir Conta</button>

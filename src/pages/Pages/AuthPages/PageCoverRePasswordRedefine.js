@@ -1,6 +1,8 @@
 // React Basic and Bootstrap
 import React, { Component } from "react";
 import { Link, useParams } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+
 import {
   Container,
   Row,
@@ -72,6 +74,12 @@ class PageCoverRePassword extends Component {
         this.setState({
           message: response.data.message,
         });
+        toast.success("Senha redefinida com sucesso!", {
+          autoClose: 2000,
+        })
+        setTimeout(() => {
+          this.props.history.push("/perfil");
+        }, 2000);
       },
       error => {
         const resMessage =
@@ -80,6 +88,13 @@ class PageCoverRePassword extends Component {
             error.response.data.message) ||
           error.message ||
           error.toString();
+
+        toast.error("Algo deu errado. Tente novamente mais tarde ou entre em contato.", {
+          autoClose: 2000,
+        })
+        setTimeout(() => {
+          window.location.reload()
+        }, 2000);
 
         this.setState({
           message: resMessage,
