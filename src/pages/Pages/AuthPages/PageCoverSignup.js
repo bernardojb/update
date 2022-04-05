@@ -226,6 +226,7 @@ export default class PageCoverSignup extends Component {
       plano_year: "",
       plano_price: "",
       plano_name: "",
+      months: null,
       //States
       passo2: true,
       passo3: false,
@@ -1127,7 +1128,8 @@ export default class PageCoverSignup extends Component {
                                           plano_month: "",
                                           // plano_price: "R$39,90/mês",
                                           plano_price: 39.90,
-                                          plano_name: "Anual"
+                                          plano_name: "Anual",
+                                          months: 12
                                         })
                                         console.log('IDENTIFIER', this.state.identifier);
                                       }}
@@ -1156,7 +1158,8 @@ export default class PageCoverSignup extends Component {
                                           plano_half: "active",
                                           plano_month: "",
                                           plano_price: 49.90,
-                                          plano_name: "Semestral"
+                                          plano_name: "Semestral",
+                                          months: 6
                                         })
                                         console.log('IDENTIFIER', this.state.identifier);
                                       }}
@@ -1186,7 +1189,8 @@ export default class PageCoverSignup extends Component {
                                           plano_half: "",
                                           plano_month: "active",
                                           plano_price: 59.90,
-                                          plano_name: "Mensal"
+                                          plano_name: "Mensal",
+                                          months: 1
                                         })
                                         console.log('IDENTIFIER', this.state.identifier);
                                       }}
@@ -1349,16 +1353,40 @@ export default class PageCoverSignup extends Component {
                                       <div className="selected-plano-container">
                                         <p className="selected-plano-title">{this.state.plano_name}</p>
                                         {cupom != null ?
-                                          <p className="mb-0">
+                                          <p className="mb-0 text-primary">
                                             {cupom.data != null && cupom.data.percentage ?
                                               (`R$${(this.state.plano_price * (1 - cupom.data.price_cents / 100)).toFixed(2)}/mês`) :
-                                              (`R$${(this.state.plano_price).toFixed(2)}/mês - R$${(cupom.data.price_cents / 100).toFixed(2)}`)}
+                                              (`R$${(this.state.plano_price - ((cupom.data.price_cents / 100) / this.state.months )).toFixed(2)}/mês`)
+                                            }
                                           </p> :
-                                          <p className="mb-0">{`R$${(this.state.plano_price).toFixed(2)}`}</p>}
-                                        {cupom != null ?
+                                          <p className="mb-0 text-primary">{`R$${(this.state.plano_price).toFixed(2)}/mês`}</p>
+                                        }
+                                        {/* {cupom != null ?
                                           (<p className="selected-plano-title pb-0">
                                             Cupom: <span className="selected-plano-title text-primary">{cupom.data.coupon_code}</span><span className="selected-plano-title text-primary ">{cupom.data != null && cupom.data.percentage ? ` (${cupom.data.price_cents}%)` : ` (R$${(cupom.data.price_cents / 100).toFixed(2)})`}</span>
-                                          </p>) : null}
+                                          </p>) : null
+                                        } */}
+                                        {cupom != null ?
+                                          (
+                                            <p className="selected-plano-title pb-0">
+                                              Total: <span className="selected-plano-title ">
+                                                {cupom.data != null && cupom.data.percentage ? (
+                                                  `R$${((this.state.plano_price * this.state.months) * (1 - cupom.data.price_cents / 100)).toFixed(2)} (-${cupom.data.price_cents}%) `
+                                                ) : (
+                                                  `R$${((this.state.plano_price * this.state.months) - (cupom.data.price_cents / 100)).toFixed(2)} (-R$${cupom.data.price_cents / 100}) `
+                                                )}
+                                              </span>
+                                            </p>
+
+                                          ) :
+                                          (
+                                            <p className="selected-plano-title pb-0">
+                                              Total: <span className="selected-plano-title">
+                                                {`R$${(this.state.plano_price * this.state.months).toFixed(2)}`}
+                                              </span>
+                                            </p>
+                                          )
+                                        }
                                       </div>
                                       <div className="selected-plano-price">
                                         <a className="text-primary" onClick={() => {

@@ -32,6 +32,7 @@ class AuthService {
     localStorage.removeItem("Cards");
     localStorage.removeItem("plan");
     localStorage.removeItem("cupom");
+    localStorage.removeItem("cupomInvoice");
   }
 
   register(email, password, confirmPassword) {

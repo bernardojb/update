@@ -327,9 +327,11 @@ class PagePayments extends Component {
     authService.getFaturas().then(data => {
       this.setState({
         ...this.state,
-        invoice: data.data.inv.items
+        invoice: data.data.inv.items,
+        // invoice_subs_id: data.data.inv.items[0].variables[41].value
       })
       console.log("invoice", this.state.invoice)
+      // console.log("invoice", this.state.invoice_subs_id)
     })
 
     document.body.classList = "";
@@ -354,6 +356,7 @@ class PagePayments extends Component {
     const { plano } = this.state
     const { sub } = this.state
     const user = JSON.parse(localStorage.getItem('user'))
+    const cupomInvoice = JSON.parse(localStorage.getItem('cupomInvoice'))
     if (!user) return (
       <Redirect to={'/login'}></Redirect>
     )
@@ -559,7 +562,7 @@ class PagePayments extends Component {
                   <div className="d-flex align-items-center justify-content-between">
                     <h3 className="mb-0">MEUS CARTÕES</h3>
                     <Link
-                      to="/atualizar-cartao"
+                      to="/adicionar-cartao"
                       className="btn btn-primary"
                     >
                       Adicionar cartão
@@ -806,16 +809,11 @@ class PagePayments extends Component {
                                                   </Col>
                                                   <Col lg={3} className="d-flex flex-row" style={{ margin: "8px 0" }}>
                                                     <span className="detalhes-mobile me-1">Cupom - </span>
+                                                    {authService.getCupomFaturas(invoice.variables.find( ele => ele.variable === 'subscription_id' ).value)}
                                                     {invoice.items.length > 1 ?
-                                                      // <span>{`${invoice.items.find((ele) => ele.price_cents < 0).description.match(/\|([^\|]*)\|?/)}`}</span> :
-                                                      <span>{`${invoice.items.find((ele) => ele.price_cents < 0).description}`}</span> :
+                                                      <span>{`${ JSON.parse(localStorage.getItem('cupomInvoice')).coupon_code} (${ JSON.parse(localStorage.getItem('cupomInvoice')).percentage ? (`-${JSON.parse(localStorage.getItem('cupomInvoice')).price_cents}%`) : (`-R$${JSON.parse(localStorage.getItem('cupomInvoice')).price_cents / 100}`) })`}</span> :
                                                       "Sem cupom"
                                                     }
-                                                    {/* {console.log('invoice subs id', invoice.variables.find((ele) => ele.variable === 'subscription_id').value)} */}
-                                                    {/* {
-                                                    invoiceCupom = authService.getCupomFaturas(invoice.variables.find((ele) => ele.variable === 'subscription_id').value),
-                                                    console.log('INVOOOOOOOOICE', localStorage.getItem('cupomInvoice') )
-                                                    } */}
                                                   </Col>
                                                   <Col lg={2} className="d-flex flex-row" style={{ margin: "8px 0" }}>
                                                     <span className="detalhes-mobile me-1">Total - </span>

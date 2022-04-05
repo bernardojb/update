@@ -532,8 +532,8 @@ class PageProfile extends Component {
     const { plano } = this.state
     const { sub } = this.state
     const user = JSON.parse(localStorage.getItem('user'))
-    if (!user) return (
-      <Redirect to={'/login'}></Redirect>
+    if (user === null || user.data.access_until === null || user.data.access_until < new Date(Date.now())) return (
+      <Redirect to={'/registro'}></Redirect>
     )
     user.data.access_until = new Date(user.data.access_until)
 
@@ -941,7 +941,7 @@ class PageProfile extends Component {
                       Você deseja excluir essa conta? Atenção: Essa opção é irreversível
                     </p>
                     <div className="mt-4">
-                      <button className="btn btn-danger" disabled
+                      <button className="btn btn-danger"
                         onClick={this.handleDeleteModalOpen}
                       >
                         Excluir Conta</button>
@@ -968,7 +968,7 @@ class PageProfile extends Component {
                           color='#e91e35' />
                         <span className="mb-3" style={{ color: '#e91e35' }}>Atenção!</span>
                         <span style={{ color: '#e91e35' }}>
-                          Esta opção é irreversível e todos os dados desta conta serão perdidos.
+                          Esta opção é irreversível e todos os dados desta conta serão perdidos, seguindo as diretrizes previstas na LGPD.
                         </span>
 
                       </div>
