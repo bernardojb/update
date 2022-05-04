@@ -153,7 +153,7 @@ class EmailContent {
 module.exports = (req, res) => {
     let validator = new LepyValidator()
     let msg = new EmailContent({
-        to: 'bernardo@hokup.com.br',
+        to: ['bernardo@hokup.com.br','bernardojbraga@gmail.com'],
         from: 'administrativo@grupoupdate.com.br',
         subject: 'UPDATE - Administrativo',
         text: 'Grupo UPDATE',
