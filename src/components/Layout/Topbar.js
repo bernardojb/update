@@ -263,11 +263,21 @@ class Topbar extends Component {
                               height="20px"
                               color="red"
                             />
-                            <Link style={{}} className="" to="/">
+                            <Button
+                            className="logout-btn"
+                            onClick={() => {
+                              authService.logout()
+                              if (window.location.pathname === "/") {
+                                window.location.reload()
+                              } else {
+                                this.props.history.push("/");
+                              }
+                            }}
+                            >
                               <p className="my-3" style={{ fontWeight: "bold", color: "red" }}>
                                 Sair
                               </p>
-                            </Link>
+                            </Button>
                           </div>
 
                         </>

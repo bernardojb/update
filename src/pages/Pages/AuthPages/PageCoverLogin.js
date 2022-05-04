@@ -287,10 +287,10 @@ class PageCoverLogin extends Component {
                                     color="primary"
                                     disabled={this.state.loading}
                                   >
-                                    {this.state.loading && (
-                                      <span className="spinner-border spinner-border-sm"></span>
-                                    )}
                                     <span>Entrar</span>
+                                    {this.state.loading && (
+                                      <span className="spinner-border spinner-border-sm ms-2"></span>
+                                    )}
                                   </Button>
                                 </div>
                               </Col>

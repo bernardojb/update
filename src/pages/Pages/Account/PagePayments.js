@@ -11,7 +11,8 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  Tooltip
+  Tooltip,
+  UncontrolledTooltip
 } from "reactstrap";
 
 //Import Icons
@@ -25,6 +26,8 @@ import master from "../../../assets/images/payments/payment/master.png";
 import visaa from "../../../assets/images/payments/payment/visaa.png";
 import rupay from "../../../assets/images/payments/payment/rupay.png";
 import paypals from "../../../assets/images/payments/payment/paypals.png";
+import ucard from "../../../assets/images/u-card.png"
+import chip from "../../../assets/images/chip.png"
 
 //Auth
 import authService from "../../../services/auth.service";
@@ -42,7 +45,7 @@ import logoUpdate from "../../../assets/images/LogoUpdate.svg";
 
 //Input mask
 import { mask, unMask } from 'remask'
-let invoiceCupom 
+let invoiceCupom
 
 let creditCardArr
 
@@ -141,6 +144,7 @@ class PagePayments extends Component {
           link: "/termos-de-uso",
         }
       ],
+      spinner:true
     };
 
     this.togglemodal.bind(this);
@@ -182,6 +186,14 @@ class PagePayments extends Component {
     })
   }
 
+  handleDeleteCardOpen() {
+
+  }
+
+  handleDeleteCardClose() {
+
+  }
+
   handleCancelSub() {
     authService.cancelSub().then(
       response => {
@@ -212,6 +224,12 @@ class PagePayments extends Component {
   componentDidMount() {
 
     // authService.verifyLogin()
+
+    setTimeout(() => { 
+      this.setState({
+        spinner: false
+      });
+     }, 10000)
 
     authService.getSelf().then(data => {
       data.data.birthday = new Date(data.data.birthday)
@@ -244,11 +262,15 @@ class PagePayments extends Component {
       const cards = this.state.cards
       if (cards.length > 0)
         creditCardArr = cards.map((card, index) => (
-          <Col md={6} className={`mt-4 pt-2 mb-5 p-relative`} key={index} >
+          <Col md={6} className={`mt-4 pt-2 mb-5 p-relative`} key={index}
+            style={{
+              maxWidth: '400px'
+            }}
+          >
             <a
               className={`social-media-icons selected-default-icon ${card.paymentMethodId === data.data.deafultPayment ? ("selected-default-card") : ("")}`}
               style={{ zIndex: "2" }}
-              id="TooltipExample"
+              id={`TooltipDefault${index}`}
               onClick={() => {
                 this.setState({
                   loading: true,
@@ -274,7 +296,14 @@ class PagePayments extends Component {
               }}>
               <FeatherIcon icon="check-square" className="fea icon-sm" />
             </a>
+            <UncontrolledTooltip
+              target={`TooltipDefault${index}`}
+              placement="top"
+            >
+              Definir como cartão principal
+            </UncontrolledTooltip>
             <a className="social-media-icons delete-card" style={{ zIndex: "2" }}
+              id={`TooltipDelete${index}`}
               onClick={() => {
                 authService.deleteCard(card).then(
                   response => {
@@ -298,20 +327,38 @@ class PagePayments extends Component {
                 icon="trash-2"
                 className="fea icon-sm" />
             </a>
+            <UncontrolledTooltip
+              target={`TooltipDelete${index}`}
+              placement="top"
+            >
+              Excluir cartão
+            </UncontrolledTooltip>
             {/* <Link to="/update-card"> */}
             <Card className={`rounded shadow border-0 card-container ${card.paymentMethodId === data.data.deafultPayment ? ("default-card") : ("")}`}>
               <CardBody>
-                <img
-                  src={master}
-                  height="60"
-                  className="text-end"
-                  alt=""
-                />
+                <div>
+                  <img
+                    src={chip}
+                    height="60"
+                    className="text-end"
+                    alt=""
+                  />
+                </div>
                 <div className="mt-4">
                   <p className="text-dark">{mask(`${card.number}`, ['AAAA AAAA AAAA 9999'])}</p>
                   <div className="d-flex justify-content-between">
-                    <p className="mb-0">{card.name}</p>
-                    <p className="mb-0 text-dark">Exp: <span className="">{card.month}/{card.year}</span></p>
+                    <div>
+                      <p className="mb-0" style={{
+                        fontSize: '12px'
+                      }}>Nome:</p>
+                      <p className="mb-0">{card.name}</p>
+                    </div>
+                    <div>
+                      <p className="mb-0 text-dark" style={{
+                        fontSize: '12px'
+                      }}>Validade:</p>
+                      <p className="">{card.month}/{card.year}</p>
+                    </div>
                   </div>
                 </div>
               </CardBody>
@@ -403,8 +450,11 @@ class PagePayments extends Component {
                           >
                             <h3 className="title mb-3"> {profile.full_name} </h3>
 
-                            <p className="p-0 mb-3">{plano != null && plano.name ? `Plano ${plano.name.charAt(0).toUpperCase()}${plano.name.slice(1)}` : "Nenhum plano cadastrado"}</p>
-
+                            {plano != null && plano.name ? (<p>{`Plano ${plano.name.charAt(0).toUpperCase()}${plano.name.slice(1)}`}</p>) :
+                              (<>
+                                {this.state.spinner === true ? (<span className="spinner-border spinner-border-sm" style={{ marginBottom: '16px' }} />) : <p>Nenhum plano cadastrado</p>}
+                              </>)
+                            }
                             {user != null && user.data.access_until ?
                               <p>Assinatura válida até: <span className="text-primary">{`${this.lepDay(user.data.access_until.getDate())}/${this.lepMonth(user.data.access_until.getMonth())}/${user.data.access_until.getFullYear()}`}</span></p>
                               : null}
@@ -500,9 +550,12 @@ class PagePayments extends Component {
                           Plano {plano.name.charAt(0).toUpperCase()}{plano.name.slice(1)}
                         </p>
                         :
-                        <p style={{ fontSize: "21px", fontWeight: "600" }}>
-                          Nenhum plano selecionado
-                        </p>
+                        // <p style={{ fontSize: "21px", fontWeight: "600" }}>
+                        //   Nenhum plano selecionado
+                        // </p>
+                        <>
+                        {this.state.spinner === true ? (<span className="spinner-border spinner-border-sm" style={{ marginBottom: '16px' }} />) : <p style={{fontSize: "21px", fontWeight: "600"}}>Nenhum plano cadastrado</p>}
+                        </>
                       }
                       <p className="text-muted">
                         {plano != null && plano.value_cents ? `R$${parseInt(plano.value_cents) / 100}0` : '-'}
@@ -809,10 +862,27 @@ class PagePayments extends Component {
                                                   </Col>
                                                   <Col lg={3} className="d-flex flex-row" style={{ margin: "8px 0" }}>
                                                     <span className="detalhes-mobile me-1">Cupom - </span>
-                                                    {authService.getCupomFaturas(invoice.variables.find( ele => ele.variable === 'subscription_id' ).value)}
-                                                    {invoice.items.length > 1 ?
-                                                      <span>{`${ JSON.parse(localStorage.getItem('cupomInvoice')).coupon_code} (${ JSON.parse(localStorage.getItem('cupomInvoice')).percentage ? (`-${JSON.parse(localStorage.getItem('cupomInvoice')).price_cents}%`) : (`-R$${JSON.parse(localStorage.getItem('cupomInvoice')).price_cents / 100}`) })`}</span> :
-                                                      "Sem cupom"
+
+                                                    {console.log('INVOICE ITEMS', invoice.items)}
+
+                                                    {authService.getCupomFaturas(invoice.variables.find(ele => ele.variable === 'subscription_id').value)}
+
+                                                    {localStorage.getItem('cupomInvoice') != null ? console.log('INVOICE VARIABLES') : console.log('INVOICE ERROR')}
+
+                                                    {localStorage.getItem('cupomInvoice') != null ?
+                                                      (
+                                                        <>
+                                                          {invoice.items.length > 1 && invoice.variables.find(ele => ele.variable === 'subscription_id').value != null ?
+                                                            (<span>{`${JSON.parse(localStorage.getItem('cupomInvoice')).coupon_code} (${JSON.parse(localStorage.getItem('cupomInvoice')).percentage ? (`-${JSON.parse(localStorage.getItem('cupomInvoice')).price_cents}%`) : (`-R$${JSON.parse(localStorage.getItem('cupomInvoice')).price_cents / 100}`)})`}</span>)
+                                                            :
+                                                            ("Sem cupom")
+                                                          }
+                                                        </>
+                                                      )
+                                                      :
+                                                      (
+                                                        <span className="spinner-border spinner-border-sm" />
+                                                      )
                                                     }
                                                   </Col>
                                                   <Col lg={2} className="d-flex flex-row" style={{ margin: "8px 0" }}>

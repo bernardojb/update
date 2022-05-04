@@ -264,6 +264,18 @@ a {
 
 .header-profile-mobile {
   display: flex !important;
+
+  .logout-btn {
+    background-color: transparent !important;
+    border: transparent !important;
+    box-shadow: none !important;
+    padding: 0px;
+
+    &:hover {
+      background-color: transparent !important;
+    }
+  }
+  
 }
 
 .navigation-menu-mobile {
@@ -845,5 +857,17 @@ a {
   &:hover {
     transition: color 0.2s ease-in !important;
     color: #1ac45e !important;
+  }
+}
+
+.tooltip{
+
+  .tooltip-inner{
+    background-color: #272727 ;
+  }
+
+  .arrow{
+    background-color: yellow;
+    left: 0 !important;
   }
 }

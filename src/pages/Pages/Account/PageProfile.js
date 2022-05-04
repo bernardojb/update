@@ -241,6 +241,7 @@ class PageProfile extends Component {
       currentPassword: "",
       newPassword: "",
       confirmNewPassword: "",
+      spinner: true
     };
   }
 
@@ -396,14 +397,14 @@ class PageProfile extends Component {
           window.location.replace("http://www.grupoupdate.com.br/")
         }, 2000);
       },
-      error => {
-        toast.error("Não foi possível deletar sua conta. Tente novamente mais tarde ou entre em contato.", {
-          autoClose: 4000,
-        })
-        setTimeout(() => {
-          window.location.reload()
-        }, 4000);
-      }
+        error => {
+          toast.error("Não foi possível deletar sua conta. Tente novamente mais tarde ou entre em contato.", {
+            autoClose: 4000,
+          })
+          setTimeout(() => {
+            window.location.reload()
+          }, 4000);
+        }
       )
   }
 
@@ -483,6 +484,12 @@ class PageProfile extends Component {
   }
 
   componentDidMount() {
+
+    setTimeout(() => { 
+      this.setState({
+        spinner: false
+      });
+     }, 10000)
 
     // authService.verifyLogin()
 
@@ -576,8 +583,14 @@ class PageProfile extends Component {
                             md="7"
                             className="text-md-start text-center mt-4 mt-sm-0 d-flex flex-column"
                           >
+                            {console.log('PLANO', plano)}
                             <h3 className="title mb-2"> {profile.full_name} </h3>
-                            <p>{plano != null && plano.name ? `Plano ${plano.name.charAt(0).toUpperCase()}${plano.name.slice(1)}` : "Nenhum plano cadastrado"}</p>
+
+                            {plano != null && plano.name ? (<p>{`Plano ${plano.name.charAt(0).toUpperCase()}${plano.name.slice(1)}`}</p>) :
+                              (<>
+                                {this.state.spinner === true ? (<span className="spinner-border spinner-border-sm" style={{marginBottom:'16px'}} />) :<p>Nenhum plano cadastrado</p>}
+                              </>)
+                            }
                             {user != null && user.data.access_until != null && user.data.access_until > new Date(Date.now()) ?
                               <p>Assinatura válida até: <span className="text-primary">{`${this.lepDay(user.data.access_until.getDate())}/${this.lepMonth(user.data.access_until.getMonth())}/${user.data.access_until.getFullYear()}`}</span></p>
                               :
@@ -700,7 +713,7 @@ class PageProfile extends Component {
                               id="birthday"
                               type="text"
                               className="form-control ps-2"
-                              placeholder={profile != null && profile.birthday ? (`${this.lepDay(profile.birthday.getDate()+1)}/${this.lepMonth(profile.birthday.getMonth())}/${profile.birthday.getFullYear()}`) : null}
+                              placeholder={profile != null && profile.birthday ? (`${this.lepDay(profile.birthday.getDate() + 1)}/${this.lepMonth(profile.birthday.getMonth())}/${profile.birthday.getFullYear()}`) : null}
                               value={this.state.birthday}
                               onChange={this.onChangeBirthday}
                               maxLength="10"
@@ -838,10 +851,10 @@ class PageProfile extends Component {
                             color="primary"
                             disabled={this.state.loading}
                           >
-                            {this.state.loading && (
-                              <span className="spinner-border spinner-border-sm"></span>
-                            )}
                             Salvar alterações
+                            {this.state.loading && (
+                              <span className="spinner-border spinner-border-sm ms-2"></span>
+                            )}
                           </Button>
                         </Col>
                       </Row>
@@ -913,10 +926,10 @@ class PageProfile extends Component {
                                 color="primary"
                                 disabled={this.state.loading}
                               >
-                                {this.state.loading && (
-                                  <span className="spinner-border spinner-border-sm"></span>
-                                )}
                                 Salvar Senha
+                                {this.state.loading && (
+                                  <span className="spinner-border spinner-border-sm ms-2"></span>
+                                )}
                               </Button>
                             </Col>
                           </Row>
@@ -960,8 +973,8 @@ class PageProfile extends Component {
                       <span className="pb-3">
                         Você tem certeza que deseja excluir essa conta?
                       </span>
-                    
-                      <div style={{ backgroundColor: '#e91e361a', display: 'flex', flexDirection: 'column', padding: '20px', borderRadius: '15px', marginTop:'20px' }}>
+
+                      <div style={{ backgroundColor: '#e91e361a', display: 'flex', flexDirection: 'column', padding: '20px', borderRadius: '15px', marginTop: '20px' }}>
                         <FeatherIcon
                           icon='alert-triangle'
                           className="fea mb-2"

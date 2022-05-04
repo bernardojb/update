@@ -102,6 +102,16 @@ const vcpf = value => {
   }
 };
 
+const vphone = value => {
+  if (value.length < 13) {
+    return (
+      <div className="alert alert-danger mt-2" role="alert">
+        Digite um telefone válido com DDD!
+      </div>
+    );
+  }
+};
+
 const vbirthday = value => {
   if (value.length < 10) {
     return (
@@ -221,6 +231,7 @@ export default class PageCoverSignup extends Component {
       code: "",
       //Plano
       identifier: null,
+      plano_teste: "",
       plano_month: "",
       plano_half: "",
       plano_year: "",
@@ -564,15 +575,20 @@ export default class PageCoverSignup extends Component {
           this.props.history.push("/perfil")
         },
         error => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
+          // const resMessage =
+          //   (error.response &&
+          //     error.response.data &&
+          //     error.response.data.message) ||
+          //   error.message ||
+          //   error.toString();
+
+          console.log('error response', error.response)
+          console.log('error response data', error.response.data)
+          console.log('error response data message', error.response.data.message)
+          console.log('error message', error.message)
 
           this.setState({
-            message: resMessage,
+            message: error.response.data.toString(),
             loading: false
           });
         }
@@ -775,10 +791,10 @@ export default class PageCoverSignup extends Component {
                                     color="primary"
                                     disabled={this.state.loading}
                                   >
-                                    {this.state.loading && (
-                                      <span className="spinner-border spinner-border-sm"></span>
-                                    )}
                                     Criar conta
+                                    {this.state.loading && (
+                                      <span className="spinner-border spinner-border-sm ms-2"></span>
+                                    )}
                                   </Button>
                                 </div>
                                 <div className="mx-auto">
@@ -896,6 +912,7 @@ export default class PageCoverSignup extends Component {
                                       <Label className="form-label" for="phone">
                                         Telefone{" "}
                                         {/* <span className="text-danger">*</span> */}
+                                        <span className="text-danger">*</span>
                                       </Label>
                                       <Input
                                         type="text"
@@ -904,6 +921,7 @@ export default class PageCoverSignup extends Component {
                                         id="phone"
                                         placeholder="Telefone"
                                         value={this.state.phone}
+                                        validations={[required, vphone]}
                                         onChange={this.onChangePhone}
                                         maxLength="14"
                                       // validations={[required]}
@@ -1069,10 +1087,10 @@ export default class PageCoverSignup extends Component {
                                       color="primary"
                                       disabled={this.state.loading}
                                     >
-                                      {this.state.loading && (
-                                        <span className="spinner-border spinner-border-sm"></span>
-                                      )}
                                       Próximo
+                                      {this.state.loading && (
+                                        <span className="spinner-border spinner-border-sm ms-2"></span>
+                                      )}
                                     </Button>
                                   </div>
                                 </>
@@ -1356,7 +1374,7 @@ export default class PageCoverSignup extends Component {
                                           <p className="mb-0 text-primary">
                                             {cupom.data != null && cupom.data.percentage ?
                                               (`R$${(this.state.plano_price * (1 - cupom.data.price_cents / 100)).toFixed(2)}/mês`) :
-                                              (`R$${(this.state.plano_price - ((cupom.data.price_cents / 100) / this.state.months )).toFixed(2)}/mês`)
+                                              (`R$${(this.state.plano_price - ((cupom.data.price_cents / 100) / this.state.months)).toFixed(2)}/mês`)
                                             }
                                           </p> :
                                           <p className="mb-0 text-primary">{`R$${(this.state.plano_price).toFixed(2)}/mês`}</p>
@@ -1411,10 +1429,10 @@ export default class PageCoverSignup extends Component {
                                     <Button
                                       color="primary"
                                       disabled={this.state.loading}>
-                                      {this.state.loading && (
-                                        <span className="spinner-border spinner-border-sm"></span>
-                                      )}
                                       <span>Próximo</span>
+                                      {this.state.loading && (
+                                        <span className="spinner-border spinner-border-sm ms-2"></span>
+                                      )}
                                     </Button>
                                   </div>
                                 </div>
